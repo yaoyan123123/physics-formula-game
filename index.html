@@ -12,8 +12,10 @@
 <meta property="og:url" content="https://wuliyan.com/">
 <meta property="og:image" content="https://wuliyan.com/og.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2324352d'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='%23ffd95e' font-family='Kaiti SC,serif'%3E物%3C/text%3E%3C/svg%3E">
+<!-- PWA 添加主屏幕功能暂时关闭，需要时取消下面两行注释即可恢复
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
+-->
 <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
 <link rel="stylesheet" href="https://fonts.loli.net/css2?family=ZCOOL+KuaiLe&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.loli.net/css2?family=ZCOOL+KuaiLe&display=swap"></noscript>
@@ -1107,9 +1109,10 @@ document.addEventListener("keydown",e=>{
 /* ================= 启动 ================= */
 $("#sndBtn").textContent=S.snd?"🔔 音效开":"🔕 音效关";
 renderHome();
-/* PWA：线上环境注册离线缓存（本地 file:// 双击打开时自动跳过） */
+/* PWA 暂时关闭：清退已注册的离线缓存。要恢复时，把下面这段换回：
+   navigator.serviceWorker.register("sw.js").catch(()=>{}); 并恢复 head 里的 manifest 两行 */
 if("serviceWorker" in navigator && location.protocol.startsWith("http")){
-  navigator.serviceWorker.register("sw.js").catch(()=>{});
+  navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>r.unregister())).catch(()=>{});
 }
 </script>
 </body>
