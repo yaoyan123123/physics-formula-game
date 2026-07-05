@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>粉笔物理 · 公式黑板大作战｜人教版2019 必修一~三 · 学考版</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+<style>
+:root{
+  --board:#24352d;
+  --board-deep:#1a2822;
+  --wood:#8a5a33;
+  --wood-dark:#6b4426;
+  --chalk:#f4efe2;
+  --chalk-dim:rgba(244,239,226,.55);
+  --yellow:#ffd95e;
+  --pink:#ff9db2;
+  --blue:#9bd7ff;
+  --ok:#a9e6a1;
+  --err:#ff9090;
+  --font-hand:'ZCOOL KuaiLe','Kaiti SC','STKaiti','KaiTi',sans-serif;
+  --font-formula:'Times New Roman','STIXGeneral',Georgia,serif;
+  --sketch:255px 15px 225px 15px / 15px 225px 15px 255px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{font-size:16px}
+body{
+  min-height:100vh;
+  padding:16px;
+  background:
+    repeating-linear-gradient(90deg,rgba(0,0,0,.08) 0 3px,transparent 3px 14px),
+    linear-gradient(180deg,var(--wood),var(--wood-dark));
+  font-family:var(--font-hand);
+  color:var(--chalk);
+}
+.board{
+  position:relative;
+  max-width:1080px;
+  margin:0 auto;
+  min-height:calc(100vh - 32px);
+  padding:28px clamp(16px,4vw,52px) 74px;
+  border-radius:10px;
+  background:radial-gradient(120% 90% at 50% 0%,#2b4036 0%,var(--board) 45%,var(--board-deep) 100%);
+  box-shadow:inset 0 0 60px rgba(0,0,0,.55),inset 0 0 6px rgba(0,0,0,.8),0 10px 30px rgba(0,0,0,.45);
+  overflow:hidden;
+}
+/* 粉笔噪点 */
+.board::before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+  background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/></filter><rect width="180" height="180" filter="url(%23n)" opacity="0.9"/></svg>');
+}
+/* 粉笔槽 */
+.tray{
+  position:absolute;left:8%;right:8%;bottom:14px;height:16px;
+  background:linear-gradient(180deg,#9c6a3f,#7a4f2c);
+  border-radius:4px;box-shadow:0 3px 6px rgba(0,0,0,.4);
+}
+.tray i{position:absolute;top:-7px;height:8px;border-radius:4px;box-shadow:0 2px 3px rgba(0,0,0,.35)}
+.tray i:nth-child(1){left:12%;width:52px;background:#f2eddc;transform:rotate(-2deg)}
+.tray i:nth-child(2){left:34%;width:38px;background:var(--yellow);transform:rotate(3deg)}
+.tray i:nth-child(3){left:58%;width:44px;background:var(--pink);transform:rotate(-1deg)}
+.tray i:nth-child(4){left:78%;width:30px;background:var(--blue);transform:rotate(4deg)}
+/* 角落涂鸦 */
+.doodle{position:absolute;pointer-events:none;opacity:.16;stroke:var(--chalk);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.doodle.d1{top:22px;right:26px;width:92px}
+.doodle.d2{bottom:70px;left:20px;width:110px}
+.doodle.d3{top:40%;right:8px;width:60px}
+
+.screen{display:none;animation:fadeUp .45s ease both}
+.screen.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* ============ 首页 ============ */
+.hero{text-align:center;margin-bottom:26px}
+.hero .kicker{
+  display:inline-block;font-size:.95rem;letter-spacing:.35em;color:var(--chalk-dim);
+  border:1.5px dashed var(--chalk-dim);padding:4px 16px 4px 20px;border-radius:var(--sketch);
+}
+h1{
+  font-size:clamp(2rem,6vw,3.4rem);
+  margin:14px 0 6px;letter-spacing:.06em;
+  text-shadow:0 0 12px rgba(244,239,226,.25);
+}
+h1 .hl{color:var(--yellow)}
+.squiggle{width:min(340px,70%);margin:0 auto;display:block}
+.squiggle path{stroke:var(--pink);stroke-width:3;fill:none;stroke-linecap:round}
+.hero .sub{color:var(--chalk-dim);font-size:1.02rem;margin-top:8px}
+
+.panel-label{
+  display:flex;align-items:center;gap:12px;margin:24px 0 12px;
+  color:var(--blue);font-size:1.15rem;letter-spacing:.12em;
+}
+.panel-label::after{content:"";flex:1;border-top:2px dashed rgba(155,215,255,.35)}
+.panel-label small{color:var(--chalk-dim);letter-spacing:.02em;font-size:.82rem}
+
+.chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(172px,1fr));gap:10px}
+.chip{
+  cursor:pointer;user-select:none;
+  border:2px solid var(--chalk-dim);border-radius:var(--sketch);
+  padding:9px 12px;line-height:1.25;
+  transition:all .18s ease;position:relative;
+  background:rgba(255,255,255,.02);
+}
+.chip:hover{transform:translateY(-2px) rotate(-.4deg)}
+.chip .no{font-size:.78rem;color:var(--chalk-dim);letter-spacing:.1em}
+.chip .nm{display:block;font-size:.98rem;margin-top:1px}
+.chip .ms{position:absolute;top:7px;right:10px;font-size:.72rem;color:var(--chalk-dim)}
+.chip.sel{border-color:var(--yellow);color:var(--yellow);background:rgba(255,217,94,.07);box-shadow:0 0 10px rgba(255,217,94,.15)}
+.chip.sel .no,.chip.sel .ms{color:rgba(255,217,94,.75)}
+.chip-tools{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(186px,1fr));gap:14px}
+.mode{
+  cursor:pointer;text-align:left;position:relative;
+  border:2.5px solid var(--chalk);border-radius:var(--sketch);
+  padding:13px 14px 11px;min-height:96px;
+  background:rgba(255,255,255,.025);
+  transition:all .2s ease;
+}
+.mode:hover{transform:translateY(-4px) rotate(.5deg);box-shadow:0 8px 18px rgba(0,0,0,.35);background:rgba(255,255,255,.05)}
+.mode:nth-child(2n):hover{transform:translateY(-4px) rotate(-.6deg)}
+.mode .ic{font-size:1.4rem}
+.mode h3{font-size:1.1rem;margin:4px 0 3px}
+.mode p{font-size:.85rem;color:var(--chalk-dim);line-height:1.45}
+.mode .tag{
+  position:absolute;top:-11px;right:12px;font-size:.72rem;
+  background:var(--board);padding:1px 9px;border:1.5px dashed var(--chalk-dim);
+  border-radius:10px;color:var(--chalk-dim);
+}
+.mode.m1 h3{color:var(--blue)}.mode.m2 h3{color:var(--yellow)}
+.mode.m3 h3{color:var(--pink)}.mode.m4 h3{color:var(--ok)}
+.mode.m5 h3{color:var(--chalk)}
+
+/* ============ 通用按钮 ============ */
+.btn{
+  font-family:var(--font-hand);cursor:pointer;user-select:none;
+  color:var(--chalk);background:rgba(255,255,255,.03);
+  border:2px solid var(--chalk);border-radius:var(--sketch);
+  padding:8px 22px;font-size:1rem;letter-spacing:.05em;
+  transition:all .15s ease;
+}
+.btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.08)}
+.btn:active{transform:translateY(0) scale(.97)}
+.btn.y{border-color:var(--yellow);color:var(--yellow)}
+.btn.p{border-color:var(--pink);color:var(--pink)}
+.btn.g{border-color:var(--ok);color:var(--ok)}
+.btn.ghost{border-style:dashed;border-color:var(--chalk-dim);color:var(--chalk-dim);font-size:.88rem;padding:5px 14px}
+.btn.ghost:hover{color:var(--chalk);border-color:var(--chalk)}
+
+/* ============ 游戏页 ============ */
+.gamebar{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  padding-bottom:12px;margin-bottom:20px;
+  border-bottom:2px dashed rgba(244,239,226,.25);
+}
+.gamebar h2{font-size:1.35rem;letter-spacing:.08em}
+.gamebar .stats{margin-left:auto;display:flex;gap:16px;align-items:center;font-size:1rem}
+.stat b{color:var(--yellow);font-size:1.15rem}
+.combo{color:var(--pink);animation:pop .3s ease}
+@keyframes pop{0%{transform:scale(.4)}70%{transform:scale(1.25)}100%{transform:scale(1)}}
+
+/* --- 翻卡 --- */
+.flash-wrap{max-width:560px;margin:0 auto;text-align:center}
+.card3d{perspective:1200px;height:368px;cursor:pointer}
+.card3d .inner{
+  position:relative;width:100%;height:100%;
+  transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,.9,.4,1.05);
+}
+.card3d.flip .inner{transform:rotateY(180deg)}
+.face{
+  position:absolute;inset:0;backface-visibility:hidden;
+  border:2.5px solid var(--chalk);border-radius:var(--sketch);
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;
+  padding:24px;background:rgba(255,255,255,.03);
+}
+.face.back{transform:rotateY(180deg);border-color:var(--yellow)}
+.face .chp{font-size:.8rem;color:var(--chalk-dim);letter-spacing:.2em}
+.face .q{font-size:1.8rem;letter-spacing:.05em}
+.face .formula{font-size:2rem;color:var(--yellow)}
+.face .note{font-size:.9rem;color:var(--chalk-dim);max-width:85%;line-height:1.5}
+.face .hint{position:absolute;bottom:12px;font-size:.78rem;color:var(--chalk-dim)}
+.flash-btns{display:flex;gap:16px;justify-content:center;margin-top:22px}
+.flash-prog{margin-top:14px;color:var(--chalk-dim);font-size:.9rem}
+
+.formula{font-family:var(--font-formula);white-space:nowrap}
+.formula.long{white-space:normal;line-height:1.4}
+
+/* --- 连连看 --- */
+.match-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:820px;margin:0 auto}
+@media(max-width:640px){.match-grid{grid-template-columns:repeat(3,1fr)}}
+.tile{
+  min-height:86px;padding:10px;cursor:pointer;user-select:none;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  border:2px solid var(--chalk-dim);border-radius:var(--sketch);
+  font-size:.95rem;line-height:1.3;background:rgba(255,255,255,.02);
+  transition:all .18s ease;
+}
+.tile .formula{font-size:1.05rem;white-space:normal}
+.tile:hover{border-color:var(--chalk);transform:translateY(-2px)}
+.tile.pick{border-color:var(--blue);color:var(--blue);box-shadow:0 0 12px rgba(155,215,255,.25);transform:scale(1.03)}
+.tile.good{border-color:var(--ok);color:var(--ok);animation:matched .5s ease forwards}
+@keyframes matched{to{opacity:.22;transform:scale(.94)}}
+.tile.good{pointer-events:none;text-decoration:line-through}
+.tile.bad{animation:shake .4s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px) rotate(-1deg)}50%{transform:translateX(7px) rotate(1deg)}75%{transform:translateX(-5px)}}
+
+/* --- 问答 / 补全 --- */
+.quiz-wrap{max-width:640px;margin:0 auto}
+.timer{height:8px;border:1.5px solid var(--chalk-dim);border-radius:6px;overflow:hidden;margin-bottom:18px}
+.timer i{display:block;height:100%;background:var(--yellow);width:100%;border-radius:4px;transition:width .1s linear}
+.timer.low i{background:var(--err)}
+.qcard{
+  border:2.5px solid var(--chalk);border-radius:var(--sketch);
+  padding:26px 22px;text-align:center;margin-bottom:18px;
+  background:rgba(255,255,255,.03);
+}
+.qcard .ask{font-size:.85rem;color:var(--chalk-dim);letter-spacing:.15em;margin-bottom:10px}
+.qcard .body{font-size:1.7rem;line-height:1.5}
+.qcard .body .formula{color:var(--blue)}
+.qcard .blankbox{
+  display:inline-block;min-width:74px;border-bottom:3px dashed var(--pink);
+  color:var(--pink);padding:0 6px;
+}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:520px){.opts{grid-template-columns:1fr}}
+.opt{
+  cursor:pointer;padding:13px 14px;text-align:center;font-size:1.08rem;
+  border:2px solid var(--chalk-dim);border-radius:var(--sketch);
+  transition:all .15s ease;background:rgba(255,255,255,.02);
+}
+.opt .formula{font-size:1.12rem;white-space:normal}
+.opt:hover{border-color:var(--chalk);transform:translateY(-2px)}
+.opt.right{border-color:var(--ok);color:var(--ok);background:rgba(169,230,161,.08)}
+.opt.wrong{border-color:var(--err);color:var(--err);animation:shake .4s ease}
+.opt.dim{opacity:.35;pointer-events:none}
+.feedback{text-align:center;min-height:30px;margin-top:14px;font-size:1.1rem}
+.feedback .okt{color:var(--ok)}.feedback .ert{color:var(--err)}
+
+/* --- 手册 --- */
+.sheet{max-width:760px;margin:0 auto}
+.sheet h4{
+  color:var(--yellow);font-size:1.1rem;margin:22px 0 8px;letter-spacing:.06em;
+  display:flex;align-items:center;gap:10px;
+}
+.sheet h4::after{content:"";flex:1;border-top:1.5px dashed rgba(255,217,94,.3)}
+.srow{
+  display:flex;align-items:baseline;gap:14px;padding:7px 4px;
+  border-bottom:1px dashed rgba(244,239,226,.12);font-size:.98rem;flex-wrap:wrap;
+}
+.srow .sn{min-width:150px;color:var(--chalk)}
+.srow .formula{color:var(--blue);font-size:1.05rem}
+.srow .st{color:var(--chalk-dim);font-size:.82rem;flex-basis:100%;padding-left:164px;margin-top:-3px}
+@media(max-width:560px){.srow .st{padding-left:0}}
+.srow .mk{color:var(--ok);font-size:.85rem}
+
+/* ============ 结算 ============ */
+.result-wrap{text-align:center;padding-top:30px}
+.result-wrap h2{font-size:2rem;margin-bottom:6px}
+.stars{font-size:2.6rem;letter-spacing:.2em;margin:14px 0}
+.stars .on{color:var(--yellow);text-shadow:0 0 14px rgba(255,217,94,.5);animation:pop .4s ease both}
+.stars .on:nth-child(2){animation-delay:.15s}.stars .on:nth-child(3){animation-delay:.3s}
+.stars .off{color:rgba(244,239,226,.2)}
+.rscore{
+  width:170px;height:170px;margin:10px auto 18px;position:relative;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  border:3px solid var(--chalk);border-radius:48% 52% 50% 50%/52% 48% 52% 48%;
+}
+.rscore b{font-size:2.6rem;color:var(--yellow)}
+.rscore span{font-size:.85rem;color:var(--chalk-dim)}
+.rlines{color:var(--chalk-dim);line-height:1.9;font-size:1rem;margin-bottom:22px}
+.rlines b{color:var(--chalk)}
+.rbtns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+
+/* ============ 成长徽章 / 闯关地图 / 折叠 ============ */
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px;font-size:.9rem}
+.badge{border:1.5px dashed var(--chalk-dim);border-radius:14px;padding:4px 13px;color:var(--chalk-dim)}
+.badge b{color:var(--yellow)}
+.badge.title{border-color:var(--yellow);color:var(--yellow);border-style:solid}
+.map{margin:2px 0 6px}
+.mrow{display:flex;align-items:flex-start;gap:4px;flex-wrap:wrap;padding:8px 0;border-bottom:1.5px dashed rgba(244,239,226,.1)}
+.mrow:last-child{border-bottom:none}
+.mbook{align-self:center;writing-mode:vertical-rl;font-size:.74rem;color:var(--chalk-dim);letter-spacing:.28em;border-left:2px dashed rgba(244,239,226,.22);padding:2px 0 2px 5px;margin-right:6px}
+.node{flex:1;min-width:76px;max-width:118px;cursor:pointer;text-align:center;padding:4px 2px 6px;transition:transform .15s ease}
+.node:hover{transform:translateY(-3px)}
+.node .cir{
+  width:54px;height:54px;margin:0 auto;display:flex;align-items:center;justify-content:center;
+  border:2.5px solid var(--chalk-dim);border-radius:47% 53% 50% 50%/53% 47% 53% 47%;
+  font-size:1.3rem;color:var(--chalk);background:rgba(255,255,255,.02);
+}
+.node .st{display:block;font-size:.76rem;letter-spacing:2px;color:rgba(244,239,226,.28);margin-top:3px}
+.node .st .got{color:var(--yellow)}
+.node .nm{display:block;font-size:.82rem;color:var(--chalk-dim)}
+.node.done .cir{border-color:var(--ok);color:var(--ok)}
+.node.next .cir{border-color:var(--yellow);color:var(--yellow);animation:pulse 1.6s infinite}
+.node.next .nm{color:var(--yellow)}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,217,94,.35)}50%{box-shadow:0 0 0 11px rgba(255,217,94,0)}}
+.node.boss .cir{width:64px;height:64px;border:4px double var(--yellow);font-size:1.6rem}
+.fold{margin-bottom:14px}
+.fold summary{cursor:pointer;color:var(--chalk-dim);font-size:.92rem;padding:6px 2px;user-select:none}
+.fold summary:hover{color:var(--chalk)}
+.fold[open] summary{color:var(--blue)}
+.fold .chips{margin-top:8px}
+.mode.m0{border-color:var(--yellow)}
+.mode.m0 h3{color:var(--yellow)}
+
+/* ============ 学考横幅 / 掌握度 / 键盘 ============ */
+.mastery{display:flex;align-items:center;gap:12px;justify-content:center;margin-top:14px;font-size:.9rem;color:var(--chalk-dim)}
+.mastery .mbar{width:min(260px,44vw);height:10px;border:1.5px solid var(--chalk-dim);border-radius:6px;overflow:hidden}
+.mastery .mbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ok),var(--yellow));transition:width .6s ease}
+.mastery b{color:var(--yellow)}
+.xk{
+  display:flex;align-items:center;gap:18px;cursor:pointer;margin:4px 0;flex-wrap:wrap;
+  border:3px double var(--yellow);border-radius:var(--sketch);
+  padding:16px 20px;background:rgba(255,217,94,.05);transition:all .2s ease;
+}
+.xk:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(0,0,0,.35);background:rgba(255,217,94,.09)}
+.xk .ic{font-size:2.2rem}
+.xk h3{color:var(--yellow);font-size:1.3rem;margin-bottom:3px}
+.xk p{color:var(--chalk-dim);font-size:.86rem;line-height:1.5}
+.xk .xkbest{margin-left:auto;border:1.5px dashed var(--yellow);border-radius:12px;padding:6px 14px;color:var(--yellow);font-size:.9rem;white-space:nowrap}
+.mode.m6 h3{color:var(--err)}
+.ol{
+  display:inline-block;font-style:normal;font-size:.72rem;color:var(--chalk-dim);
+  border:1.2px solid var(--chalk-dim);border-radius:6px;padding:0 6px;margin-right:8px;vertical-align:2px;
+}
+.opt.right .ol{border-color:var(--ok);color:var(--ok)}
+.opt.wrong .ol{border-color:var(--err);color:var(--err)}
+.kbd-hint{text-align:center;margin-top:12px;color:var(--chalk-dim);font-size:.78rem;opacity:.85}
+@media(hover:none){.kbd-hint{display:none}}
+
+/* 粉笔灰粒子 */
+.dust{position:fixed;width:5px;height:5px;border-radius:50%;pointer-events:none;z-index:99;animation:dust .7s ease-out forwards}
+@keyframes dust{to{transform:translate(var(--dx),var(--dy)) scale(.2);opacity:0}}
+
+.topline{display:flex;justify-content:flex-end;gap:10px;margin-bottom:4px}
+
+/* ============ 物理模型示意图（数形结合） ============ */
+.dg svg{display:block;margin:0 auto;width:min(215px,78%);height:auto}
+.dgq svg{width:min(185px,64%)}
+.dgs,.dgy,.dgp,.dgb{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.dgs{stroke:rgba(244,239,226,.8)}
+.dgy{stroke:var(--yellow)}.dgp{stroke:var(--pink)}.dgb{stroke:var(--blue)}
+.dgt,.dgty,.dgtp,.dgtb,.dgx{stroke:none;font-family:var(--font-hand);font-size:12px}
+.dgt{fill:rgba(244,239,226,.78)}.dgty{fill:var(--yellow)}.dgtp{fill:var(--pink)}.dgtb{fill:var(--blue)}
+.dgx{fill:var(--blue);font-size:15px}
+.srow{cursor:pointer}
+.srow:hover .sn{color:var(--yellow)}
+.srow .sdg{display:none;flex-basis:100%;padding:8px 0 4px}
+.srow.open .sdg{display:block}
+.warn{animation:shake .4s ease}
+</style>
+</head>
+<body>
+<div class="board">
+  <!-- 涂鸦：火箭 / 苹果 / 原子 -->
+  <svg class="doodle d1" viewBox="0 0 100 100"><path d="M50 8 C62 22 66 44 58 66 L42 66 C34 44 38 22 50 8 Z M42 66 L34 84 L44 74 M58 66 L66 84 L56 74 M50 74 L50 88"/><circle cx="50" cy="34" r="6"/></svg>
+  <svg class="doodle d2" viewBox="0 0 120 100"><path d="M60 30 C40 18 22 30 24 50 C26 72 44 84 60 80 C76 84 94 72 96 50 C98 30 80 18 60 30 Z M60 30 C60 22 64 16 70 12 M8 6 L60 30" stroke-dasharray="0"/><path d="M14 2 L8 6 L12 12"/></svg>
+  <svg class="doodle d3" viewBox="0 0 80 80"><ellipse cx="40" cy="40" rx="34" ry="13"/><ellipse cx="40" cy="40" rx="34" ry="13" transform="rotate(60 40 40)"/><ellipse cx="40" cy="40" rx="34" ry="13" transform="rotate(-60 40 40)"/><circle cx="40" cy="40" r="4"/></svg>
+
+  <div class="topline">
+    <button class="btn ghost" onclick="resetAll()">🧹 重置进度</button>
+    <button class="btn ghost" id="sndBtn" onclick="toggleSnd()">🔔 音效开</button>
+  </div>
+
+  <!-- ============ 首页 ============ -->
+  <section class="screen on" id="scr-home">
+    <div class="hero">
+      <span class="kicker">人教版 2019 · 必修一 / 二 / 三</span>
+      <h1>粉笔物理 · <span class="hl">公式黑板大作战</span></h1>
+      <svg class="squiggle" viewBox="0 0 300 16"><path d="M4 10 Q 30 2 56 9 T 108 9 T 160 9 T 212 9 T 264 9 L 296 7"/></svg>
+      <p class="sub">必修一 / 二 / 三 · 第 1 ~ 13 章 · <b id="subCnt">67</b> 条核心公式</p>
+      <div class="badges">
+        <span class="badge title" id="bRank">🌱 物理萌新</span>
+        <span class="badge">🔥 连续 <b id="bStk">0</b> 天</span>
+        <span class="badge">⭐ 关卡星 <b id="bStars">0</b> / 39</span>
+        <span class="badge">掌握 <b id="bM">0 / 67</b></span>
+      </div>
+    </div>
+
+    <div class="panel-label">① 闯关地图 <small>一章一关 · 预习翻卡 → 实战 10 题 · 正确率 90% 拿三星</small></div>
+    <div class="map" id="map"></div>
+
+    <div class="panel-label">② 学考大考 <small>合格考模拟 · 推完地图来挑战 Boss</small></div>
+    <div class="xk" onclick="startMode('xk')">
+      <span class="ic">🎓</span>
+      <div>
+        <h3>学考冲刺模拟卷</h3>
+        <p>全 13 章混合抽 20 题（选择 + 填空），每题 5 分 · 100 分制 · 60 分合格 · 评定 A ~ E 等级</p>
+      </div>
+      <span class="xkbest" id="xkBest">尚未参加</span>
+    </div>
+
+    <div class="panel-label">③ 自由练习 <small>想练哪块练哪块</small></div>
+    <details class="fold">
+      <summary id="foldSum">🎚 练习范围：已选 13 章（点开调整）</summary>
+      <div class="chips" id="chips"></div>
+      <div class="chip-tools">
+        <button class="btn ghost" onclick="selAll(true)">全选</button>
+        <button class="btn ghost" onclick="selAll(false)">清空</button>
+        <button class="btn ghost" onclick="selBook(1)">只选必修一 (1~4)</button>
+        <button class="btn ghost" onclick="selBook(2)">只选必修二 (5~8)</button>
+        <button class="btn ghost" onclick="selBook(3)">只选必修三 (9~13)</button>
+      </div>
+    </details>
+    <div class="modes">
+      <div class="mode m0" onclick="startMode('daily')"><span class="tag">推荐</span><div class="ic">🌟</div><h3>每日特训</h3><p>自动抓你最生疏的公式 + 错题组 10 题</p></div>
+      <div class="mode m1" onclick="startMode('flash')"><span class="tag">记忆</span><div class="ic">🃏</div><h3>翻卡速记</h3><p>看名称回想公式，翻面对答案，标记「记住了」</p></div>
+      <div class="mode m2" onclick="startMode('match')"><span class="tag">配对</span><div class="ic">🧲</div><h3>公式连连看</h3><p>名称与公式配对消除，越快星越多</p></div>
+      <div class="mode m3" onclick="startMode('quiz')"><span class="tag">计时</span><div class="ic">⚡</div><h3>极速问答</h3><p>15 秒一题四选一，连击有加分</p></div>
+      <div class="mode m4" onclick="startMode('blank')"><span class="tag">填空</span><div class="ic">✏️</div><h3>补全公式</h3><p>公式挖了个洞，选出缺失的部分</p></div>
+      <div class="mode m5" onclick="startMode('sheet')"><span class="tag">复习</span><div class="ic">📖</div><h3>公式手册</h3><p>按章浏览全部公式，✓ 为已掌握</p></div>
+      <div class="mode m6" onclick="startMode('wrong')"><span class="tag">巩固</span><div class="ic">📕</div><h3>错题重刷</h3><p>只刷答错过的公式，答对自动移出（待消灭 <b id="wrongCnt">0</b> 题）</p></div>
+    </div>
+  </section>
+
+  <!-- ============ 游戏页 ============ -->
+  <section class="screen" id="scr-game">
+    <div class="gamebar">
+      <button class="btn ghost" onclick="goHome()">← 回黑板</button>
+      <h2 id="gTitle"></h2>
+      <div class="stats" id="gStats"></div>
+    </div>
+    <div id="gBody"></div>
+  </section>
+
+  <!-- ============ 结算页 ============ -->
+  <section class="screen" id="scr-result">
+    <div class="result-wrap">
+      <h2 id="rTitle"></h2>
+      <div class="stars" id="rStars"></div>
+      <div class="rscore"><b id="rScore"></b><span id="rScoreLabel"></span></div>
+      <div class="rlines" id="rLines"></div>
+      <div class="rbtns">
+        <button class="btn g" id="rExtra" style="display:none"></button>
+        <button class="btn y" id="rAgain">🔁 再来一局</button>
+        <button class="btn" onclick="goHome()">🏠 回黑板</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="tray"><i></i><i></i><i></i><i></i></div>
+</div>
+
+<script>
+/* ================= 数据：人教版2019 第1~10章 ================= */
+const CH = {
+  1:{nm:"运动的描述",bk:"必修一",s:"运动描述"}, 2:{nm:"匀变速直线运动的研究",bk:"必修一",s:"匀变速"},
+  3:{nm:"相互作用——力",bk:"必修一",s:"相互作用"}, 4:{nm:"运动和力的关系",bk:"必修一",s:"运动与力"},
+  5:{nm:"抛体运动",bk:"必修二",s:"抛体"}, 6:{nm:"圆周运动",bk:"必修二",s:"圆周"},
+  7:{nm:"万有引力与宇宙航行",bk:"必修二",s:"万有引力"}, 8:{nm:"机械能守恒定律",bk:"必修二",s:"机械能"},
+  9:{nm:"静电场及其应用",bk:"必修三",s:"静电场"}, 10:{nm:"静电场中的能量",bk:"必修三",s:"电场能量"},
+  11:{nm:"电路及其应用",bk:"必修三",s:"电路"}, 12:{nm:"电磁感应与电磁波初步",bk:"必修三",s:"电磁感应"},
+  13:{nm:"能源与可持续发展",bk:"必修三",s:"能源"}
+};
+/* c章节 n名称 f公式 b可挖空 t备注 */
+const DATA = [
+ {c:1,n:"平均速度",f:"v̄ = Δx/Δt",b:["Δx","Δt"],t:"位移与时间之比，是矢量"},
+ {c:1,n:"平均速率",f:"v = s/Δt",b:["s"],t:"路程 s 与时间之比，是标量"},
+ {c:1,n:"加速度（定义式）",f:"a = Δv/Δt",b:["Δv"],t:"速度变化量与所用时间之比"},
+
+ {c:2,n:"速度—时间关系",f:"v = v₀ + at",b:["v₀","at"],t:"匀变速直线运动基本公式"},
+ {c:2,n:"位移—时间关系",f:"x = v₀t + ½at²",b:["v₀t","½at²"],t:"匀变速直线运动基本公式"},
+ {c:2,n:"速度—位移关系",f:"v² − v₀² = 2ax",b:["2ax","v₀²"],t:"不涉及时间时优先使用"},
+ {c:2,n:"匀变速平均速度",f:"v̄ = (v₀ + v)/2",b:["(v₀ + v)"],t:"也等于中间时刻的瞬时速度"},
+ {c:2,n:"逐差公式",f:"Δx = aT²",b:["aT²"],t:"相邻相等时间间隔的位移差恒定，纸带问题常用"},
+ {c:2,n:"自由落体·速度",f:"v = gt",b:["gt"],t:"初速度为零，加速度为 g"},
+ {c:2,n:"自由落体·位移",f:"h = ½gt²",b:["½gt²"],t:"g ≈ 9.8 m/s²"},
+
+ {c:3,n:"重力",f:"G = mg",b:["mg"],t:"方向竖直向下"},
+ {c:3,n:"胡克定律",f:"F = kx",b:["kx"],t:"x 为形变量，k 为劲度系数（N/m）"},
+ {c:3,n:"滑动摩擦力",f:"f = μN",b:["μN"],t:"N 为正压力，μ 为动摩擦因数"},
+ {c:3,n:"合力的范围",f:"|F₁ − F₂| ≤ F ≤ F₁ + F₂",b:["|F₁ − F₂|","F₁ + F₂"],t:"平行四边形定则"},
+ {c:3,n:"力的正交分解",f:"Fx = Fcosθ，Fy = Fsinθ",b:["Fcosθ","Fsinθ"],t:"θ 为 F 与 x 轴夹角"},
+
+ {c:4,n:"牛顿第二定律",f:"F = ma",b:["ma"],t:"F 为合外力，单位 N"},
+ {c:4,n:"力的单位",f:"1 N = 1 kg·m/s²",b:["kg·m/s²"],t:"由 F = ma 定义"},
+ {c:4,n:"超重",f:"N = m(g + a)",b:["(g + a)"],t:"加速度方向向上（加速上升 / 减速下降）"},
+ {c:4,n:"失重",f:"N = m(g − a)",b:["(g − a)"],t:"加速度方向向下；a = g 时完全失重"},
+
+ {c:5,n:"平抛·水平方向",f:"x = v₀t",b:["v₀t"],t:"水平方向做匀速直线运动"},
+ {c:5,n:"平抛·竖直方向",f:"y = ½gt²",b:["½gt²"],t:"竖直方向做自由落体运动"},
+ {c:5,n:"平抛·飞行时间",f:"t = √(2h/g)",b:["√(2h/g)"],t:"只由下落高度 h 决定，与 v₀ 无关"},
+ {c:5,n:"平抛·落点速度",f:"v = √(v₀² + (gt)²)",b:["(gt)²","v₀²"],t:"水平、竖直分速度的合成"},
+ {c:5,n:"平抛·速度偏角",f:"tanθ = gt/v₀",b:["gt","v₀"],t:"θ 为速度与水平方向的夹角"},
+
+ {c:6,n:"线速度",f:"v = 2πr/T",b:["2πr"],t:"T 为周期"},
+ {c:6,n:"角速度",f:"ω = 2π/T",b:["2π"],t:"单位 rad/s"},
+ {c:6,n:"线速度与角速度",f:"v = ωr",b:["ωr"],t:"半径越大线速度越大（同 ω）"},
+ {c:6,n:"向心加速度",f:"a = v²/r = ω²r",b:["v²/r","ω²r"],t:"方向始终指向圆心"},
+ {c:6,n:"向心力",f:"F = mv²/r = mω²r",b:["mv²/r","mω²r"],t:"由合力（或分力）提供"},
+ {c:6,n:"角速度与转速",f:"ω = 2πn",b:["2πn"],t:"n 为每秒转数，T = 1/n"},
+
+ {c:7,n:"万有引力定律",f:"F = Gm₁m₂/r²",b:["Gm₁m₂","r²"],t:"G = 6.67×10⁻¹¹ N·m²/kg²"},
+ {c:7,n:"黄金代换",f:"GM = gR²",b:["gR²"],t:"地表重力近似等于万有引力"},
+ {c:7,n:"环绕速度",f:"v = √(GM/r)",b:["√(GM/r)"],t:"引力提供向心力，r 越大 v 越小"},
+ {c:7,n:"第一宇宙速度",f:"v₁ = √(gR) ≈ 7.9 km/s",b:["√(gR)","7.9"],t:"最大环绕速度，最小发射速度"},
+ {c:7,n:"开普勒第三定律",f:"a³/T² = k",b:["a³","T²"],t:"半长轴三次方与周期平方之比为常数"},
+
+ {c:8,n:"功",f:"W = Flcosα",b:["Flcosα"],t:"α 为力与位移的夹角"},
+ {c:8,n:"功率（定义式）",f:"P = W/t",b:["W"],t:"单位瓦特 W"},
+ {c:8,n:"功率与速度",f:"P = Fv",b:["Fv"],t:"F 与 v 同向时"},
+ {c:8,n:"动能",f:"Eₖ = ½mv²",b:["½mv²"],t:"标量，恒为正"},
+ {c:8,n:"动能定理",f:"W总 = ½mv₂² − ½mv₁²",b:["½mv₂²","½mv₁²"],t:"合外力做的功等于动能的变化"},
+ {c:8,n:"重力势能",f:"Eₚ = mgh",b:["mgh"],t:"相对参考平面，可正可负"},
+ {c:8,n:"重力做功与势能",f:"W重 = Eₚ₁ − Eₚ₂",b:["Eₚ₁"],t:"重力做功与路径无关"},
+ {c:8,n:"机械能守恒定律",f:"½mv₁² + mgh₁ = ½mv₂² + mgh₂",b:["mgh₁","mgh₂"],t:"只有重力或弹力做功时成立"},
+
+ {c:9,n:"库仑定律",f:"F = kq₁q₂/r²",b:["kq₁q₂","r²"],t:"k = 9.0×10⁹ N·m²/C²，真空中点电荷"},
+ {c:9,n:"元电荷",f:"Q = ne，e = 1.6×10⁻¹⁹ C",b:["1.6×10⁻¹⁹"],t:"任何电荷量都是 e 的整数倍"},
+ {c:9,n:"电场强度（定义式）",f:"E = F/q",b:["F","q"],t:"由电场本身决定，与试探电荷无关"},
+ {c:9,n:"点电荷的场强",f:"E = kQ/r²",b:["kQ","r²"],t:"Q 为场源电荷"},
+
+ {c:10,n:"电势",f:"φ = Eₚ/q",b:["Eₚ"],t:"标量，有正负，沿电场线方向降低"},
+ {c:10,n:"电势差",f:"U = W/q",b:["W","q"],t:"两点电势之差，与零点选取无关"},
+ {c:10,n:"静电力做功",f:"W = qU",b:["qU"],t:"与路径无关"},
+ {c:10,n:"匀强电场 U 与 E",f:"U = Ed",b:["Ed"],t:"d 为沿电场方向的距离"},
+ {c:10,n:"电容（定义式）",f:"C = Q/U",b:["Q","U"],t:"单位法拉 F，由电容器本身决定"},
+ {c:10,n:"平行板电容器",f:"C = εS/(4πkd)",b:["εS","4πkd"],t:"S 正对面积，d 板间距离"},
+
+ {c:11,n:"电流（定义式）",f:"I = q/t",b:["q"],t:"单位安培 A，1 A = 1 C/s"},
+ {c:11,n:"欧姆定律",f:"I = U/R",b:["U","R"],t:"适用于金属导体和电解液"},
+ {c:11,n:"电阻定律",f:"R = ρL/S",b:["ρL","S"],t:"ρ 为电阻率，由材料和温度决定"},
+ {c:11,n:"串联电阻",f:"R串 = R₁ + R₂",b:["R₁ + R₂"],t:"串联总电阻越串越大"},
+ {c:11,n:"并联电阻",f:"1/R并 = 1/R₁ + 1/R₂",b:["1/R₁","1/R₂"],t:"并联总电阻越并越小"},
+ {c:11,n:"电功",f:"W = UIt",b:["UIt"],t:"单位 J，生活中常用 kW·h（度）"},
+ {c:11,n:"电功率",f:"P = UI",b:["UI"],t:"P = W/t，单位瓦特 W"},
+ {c:11,n:"焦耳定律",f:"Q = I²Rt",b:["I²Rt"],t:"电流通过导体产生的热量"},
+
+ {c:12,n:"磁感应强度（定义式）",f:"B = F/IL",b:["F","IL"],t:"单位特斯拉 T，1 T = 1 N/(A·m)"},
+ {c:12,n:"安培力",f:"F = BIL",b:["BIL"],t:"导线与磁场垂直时"},
+ {c:12,n:"磁通量",f:"Φ = BS",b:["BS"],t:"B 与平面垂直时，单位韦伯 Wb"},
+ {c:12,n:"磁通量（一般式）",f:"Φ = BScosθ",b:["BScosθ"],t:"θ 为 B 与平面法线的夹角"},
+
+ {c:13,n:"能量转化效率",f:"η = E有/E总",b:["E有","E总"],t:"有用能量占总输入能量的比例"},
+ {c:13,n:"能量守恒定律",f:"ΔE减 = ΔE增",b:["ΔE增"],t:"能量不会凭空产生或消失，只会转移和转化"}
+];
+DATA.forEach((d,i)=>d.id="q"+i);
+
+/* ================= 物理模型示意图库（数形结合） ================= */
+const DG={
+vt:`<svg viewBox="0 0 220 120"><polygon points="32,103 32,82 178,30 178,103" fill="rgba(255,217,94,.12)" stroke="none"/><path class="dgs" d="M32 105 L32 14 M28 21 L32 14 L36 21 M32 105 L206 105 M199 101 L206 105 L199 109"/><path class="dgy" d="M32 82 L178 30"/><path class="dgb" d="M32 82 L178 82 M178 82 L178 30" stroke-dasharray="4 4"/><text class="dgt" x="16" y="20">v</text><text class="dgt" x="205" y="118">t</text><text class="dgt" x="12" y="86">v₀</text><text class="dgty" x="80" y="76">面积 = 位移</text></svg>`,
+path:`<svg viewBox="0 0 220 120"><path class="dgp" d="M35 92 C 70 18 140 118 185 42"/><path class="dgb" d="M35 92 L185 42 M176 41 L185 42 L180 50"/><circle class="dgs" cx="35" cy="92" r="4"/><circle class="dgs" cx="185" cy="42" r="4"/><text class="dgt" x="22" y="110">A</text><text class="dgt" x="192" y="34">B</text><text class="dgtp" x="84" y="24">路程 s（曲线）</text><text class="dgtb" x="90" y="88">位移 Δx</text></svg>`,
+freefall:`<svg viewBox="0 0 220 120"><path class="dgs" d="M60 16 L160 16"/><circle class="dgy" cx="110" cy="28" r="6"/><circle class="dgy" cx="110" cy="46" r="6"/><circle class="dgy" cx="110" cy="72" r="6"/><circle class="dgy" cx="110" cy="104" r="6"/><path class="dgb" d="M152 32 L152 96 M147 89 L152 96 L157 89"/><text class="dgtb" x="160" y="68">g</text><text class="dgt" x="30" y="68">v₀ = 0</text></svg>`,
+tape:`<svg viewBox="0 0 220 120"><rect class="dgs" x="18" y="46" width="184" height="28" rx="3"/><circle class="dgy" cx="34" cy="60" r="3"/><circle class="dgy" cx="58" cy="60" r="3"/><circle class="dgy" cx="90" cy="60" r="3"/><circle class="dgy" cx="130" cy="60" r="3"/><circle class="dgy" cx="178" cy="60" r="3"/><path class="dgb" d="M34 84 L58 84 M58 84 L90 84" stroke-dasharray="3 3"/><text class="dgtb" x="38" y="100">x₁</text><text class="dgtb" x="68" y="100">x₂</text><text class="dgtp" x="98" y="32">相邻位移差处处相等</text></svg>`,
+spring:`<svg viewBox="0 0 220 120"><path class="dgs" d="M28 26 L28 94 M28 34 l-8 8 M28 50 l-8 8 M28 66 l-8 8 M28 82 l-8 8"/><path class="dgs" d="M28 60 l12 0 l6 -11 l10 22 l10 -22 l10 22 l10 -22 l10 22 l6 -11 l12 0"/><rect class="dgb" x="114" y="45" width="34" height="30" rx="3"/><path class="dgy" d="M152 60 L192 60 M184 55 L192 60 L184 65"/><text class="dgty" x="170" y="48">F</text><path class="dgp" d="M104 90 L148 90" stroke-dasharray="3 3"/><text class="dgtp" x="112" y="108">形变量 x</text></svg>`,
+block:`<svg viewBox="0 0 220 120"><path class="dgs" d="M16 96 L204 96"/><rect class="dgs" x="86" y="60" width="48" height="36" rx="2"/><path class="dgb" d="M110 60 L110 22 M105 29 L110 22 L115 29"/><path class="dgy" d="M110 78 L110 114 M105 107 L110 114 L115 107"/><path class="dgs" d="M134 74 L178 74 M170 69 L178 74 L170 79"/><path class="dgp" d="M86 88 L46 88 M54 83 L46 88 L54 93"/><text class="dgtb" x="116" y="30">N</text><text class="dgty" x="118" y="112">mg</text><text class="dgt" x="184" y="70">F</text><text class="dgtp" x="46" y="78">f</text></svg>`,
+incline:`<svg viewBox="0 0 220 120"><path class="dgs" d="M24 100 L196 100 L196 30 L24 100"/><path class="dgs" d="M58 100 A 34 34 0 0 0 53 86"/><text class="dgt" x="64" y="94">θ</text><circle class="dgs" cx="104" cy="60" r="9"/><path class="dgy" d="M104 60 L104 108 M99 101 L104 108 L109 101"/><path class="dgp" d="M104 60 L56 80 M64 82 L56 80 L61 72"/><path class="dgb" d="M104 60 L119 97 M112 91 L119 97 L120 88"/><text class="dgty" x="90" y="118">mg</text><text class="dgtp" x="18" y="70">mgsinθ</text><text class="dgtb" x="126" y="94">mgcosθ</text></svg>`,
+para:`<svg viewBox="0 0 220 120"><path class="dgs" d="M40 96 L150 96 M142 91 L150 96 L142 101"/><path class="dgb" d="M40 96 L96 34 M94 43 L96 34 L88 40"/><path class="dgs" d="M150 96 L206 34 M96 34 L206 34" stroke-dasharray="4 4"/><path class="dgy" d="M40 96 L206 34 M196 36 L206 34 L200 44"/><text class="dgt" x="88" y="112">F₁</text><text class="dgtb" x="50" y="52">F₂</text><text class="dgty" x="146" y="58">F合</text></svg>`,
+elevator:`<svg viewBox="0 0 220 120"><rect class="dgs" x="64" y="14" width="70" height="88" rx="4"/><circle class="dgs" cx="99" cy="40" r="8"/><path class="dgs" d="M99 48 L99 72 M99 54 L87 64 M99 54 L111 64 M99 72 L89 92 M99 72 L109 92"/><path class="dgy" d="M162 86 L162 30 M157 37 L162 30 L167 37"/><text class="dgty" x="170" y="58">a</text><text class="dgt" x="46" y="116">a向上→超重 · a向下→失重</text></svg>`,
+projectile:`<svg viewBox="0 0 220 120"><path class="dgs" d="M18 30 L58 30 L58 108 M18 108 L206 108"/><path class="dgb" d="M58 30 L104 30 M96 25 L104 30 L96 35"/><path class="dgy" d="M58 30 Q 130 44 172 104" stroke-dasharray="5 4"/><path class="dgp" d="M143 74 L143 100 M138 93 L143 100 L148 93"/><path class="dgy" d="M143 74 L176 95 M167 93 L176 95 L171 86"/><text class="dgtb" x="76" y="22">v₀</text><text class="dgtp" x="122" y="94">gt</text><text class="dgty" x="182" y="90">v</text></svg>`,
+circular:`<svg viewBox="0 0 220 120"><circle class="dgs" cx="105" cy="62" r="42" stroke-dasharray="5 4"/><circle class="dgs" cx="105" cy="62" r="2.5"/><path class="dgs" d="M105 62 L147 62"/><circle class="dgy" cx="147" cy="62" r="7"/><path class="dgb" d="M147 55 L147 20 M142 27 L147 20 L152 27"/><path class="dgp" d="M140 62 L112 62 M119 57 L112 62 L119 67"/><path class="dgs" d="M84 42 A 30 30 0 0 1 126 42 M119 36 L126 42 L118 46"/><text class="dgt" x="118" y="56">r</text><text class="dgtb" x="152" y="30">v</text><text class="dgtp" x="112" y="80">a向</text><text class="dgt" x="98" y="34">ω</text></svg>`,
+gravity:`<svg viewBox="0 0 220 120"><ellipse class="dgs" cx="100" cy="62" rx="90" ry="42" stroke-dasharray="5 4"/><circle class="dgb" cx="100" cy="62" r="20"/><path class="dgb" d="M86 56 Q100 70 114 56"/><circle class="dgy" cx="190" cy="62" r="7"/><path class="dgp" d="M183 62 L140 62 M147 57 L140 62 L147 67"/><text class="dgtp" x="146" y="54">F引</text><text class="dgt" x="92" y="34">M</text><text class="dgty" x="196" y="50">m</text></svg>`,
+kepler:`<svg viewBox="0 0 220 120"><ellipse class="dgs" cx="110" cy="62" rx="88" ry="38" stroke-dasharray="5 4"/><circle class="dgy" cx="146" cy="62" r="10"/><circle class="dgb" cx="30" cy="48" r="5"/><path class="dgp" d="M110 62 L198 62"/><circle class="dgs" cx="110" cy="62" r="2"/><text class="dgty" x="134" y="88">太阳</text><text class="dgtp" x="140" y="56">半长轴 a</text><text class="dgtb" x="16" y="34">行星</text></svg>`,
+work:`<svg viewBox="0 0 220 120"><path class="dgs" d="M14 92 L206 92"/><rect class="dgs" x="46" y="66" width="42" height="26" rx="2"/><path class="dgy" d="M88 74 L146 42 M136 42 L146 42 L140 51"/><path class="dgs" d="M112 74 A 22 22 0 0 0 106 62"/><text class="dgt" x="118" y="64">α</text><path class="dgb" d="M46 108 L170 108 M162 103 L170 108 L162 113"/><text class="dgty" x="152" y="36">F</text><text class="dgtb" x="100" y="104" dy="-6">l</text></svg>`,
+energy:`<svg viewBox="0 0 220 120"><path class="dgs" d="M28 34 C 80 40 120 96 200 100"/><path class="dgs" d="M20 100 L210 100"/><circle class="dgy" cx="40" cy="26" r="8"/><circle class="dgy" cx="176" cy="92" r="8"/><path class="dgb" d="M40 38 L40 100" stroke-dasharray="4 3"/><path class="dgp" d="M186 92 L212 92 M205 87 L212 92 L205 97"/><text class="dgtb" x="26" y="72">h</text><text class="dgty" x="56" y="24">势能 Ep</text><text class="dgty" x="130" y="116">动能 Ek</text><text class="dgtp" x="204" y="82">v</text></svg>`,
+efield:`<svg viewBox="0 0 220 120"><circle class="dgy" cx="96" cy="60" r="12"/><path class="dgy" d="M90 60 L102 60 M96 54 L96 66"/><path class="dgs" d="M112 60 L140 60 M133 56 L140 60 L133 64 M80 60 L52 60 M59 56 L52 60 L59 64 M104 46 L118 22 M88 46 L74 22 M104 74 L118 98 M88 74 L74 98"/><circle class="dgb" cx="164" cy="60" r="6"/><path class="dgp" d="M172 60 L198 60 M191 55 L198 60 L191 65"/><text class="dgtb" x="156" y="46">+q</text><text class="dgtp" x="192" y="50">F</text><text class="dgty" x="60" y="114">点电荷 +Q</text></svg>`,
+ufield:`<svg viewBox="0 0 220 120"><path class="dgs" d="M40 24 L200 24 M40 98 L200 98"/><text class="dgt" x="48" y="16">+ + + + + + +</text><text class="dgt" x="48" y="114">− − − − − − −</text><path class="dgb" d="M70 28 L70 92 M65 85 L70 92 L75 85 M120 28 L120 92 M115 85 L120 92 L125 85 M170 28 L170 92 M165 85 L170 92 L175 85"/><path class="dgp" d="M22 28 L22 92 M17 35 L22 28 L27 35 M17 85 L22 92 L27 85"/><text class="dgtp" x="4" y="64">d</text><circle class="dgy" cx="95" cy="56" r="6"/><text class="dgty" x="82" y="44">+q</text><text class="dgtb" x="178" y="62">E</text></svg>`,
+capacitor:`<svg viewBox="0 0 220 120"><path class="dgs" d="M20 60 L88 60 M132 60 L200 60"/><path class="dgy" d="M88 22 L88 98"/><path class="dgb" d="M132 22 L132 98"/><text class="dgty" x="62" y="16">+Q</text><text class="dgtb" x="138" y="16">−Q</text><path class="dgs" d="M96 40 L124 40 M118 36 L124 40 L118 44 M96 60 L124 60 M118 56 L124 60 L118 64 M96 80 L124 80 M118 76 L124 80 L118 84"/><text class="dgt" x="102" y="110">U</text></svg>`,
+circuit:`<svg viewBox="0 0 220 120"><path class="dgs" d="M40 92 L40 34 L92 34 M128 34 L180 34 L180 92 L118 92 M102 92 L40 92"/><path class="dgy" d="M104 82 L104 102 M114 87 L114 97"/><path class="dgp" d="M92 34 l5 -8 l7 16 l7 -16 l7 16 l7 -8 l3 0"/><path class="dgb" d="M40 78 L40 56 M35 63 L40 56 L45 63"/><text class="dgtb" x="26" y="66">I</text><text class="dgtp" x="102" y="16">R</text><text class="dgty" x="94" y="116">电源</text></svg>`,
+resistors:`<svg viewBox="0 0 220 120"><path class="dgs" d="M14 34 L40 34"/><rect class="dgs" x="40" y="26" width="34" height="16"/><path class="dgs" d="M74 34 L92 34"/><rect class="dgs" x="92" y="26" width="34" height="16"/><path class="dgs" d="M126 34 L150 34"/><text class="dgt" x="46" y="20">R₁</text><text class="dgt" x="98" y="20">R₂</text><text class="dgty" x="158" y="38">串联</text><path class="dgs" d="M14 86 L44 86 M44 70 L44 102 M44 70 L60 70"/><rect class="dgs" x="60" y="62" width="34" height="16"/><path class="dgs" d="M94 70 L110 70 M44 102 L60 102"/><rect class="dgs" x="60" y="94" width="34" height="16"/><path class="dgs" d="M94 102 L110 102 M110 70 L110 102 M110 86 L140 86"/><text class="dgt" x="66" y="58">R₁</text><text class="dgt" x="98" y="90">R₂</text><text class="dgty" x="148" y="90">并联</text></svg>`,
+ampere:`<svg viewBox="0 0 220 120"><text class="dgx" x="30" y="34">×</text><text class="dgx" x="70" y="34">×</text><text class="dgx" x="110" y="34">×</text><text class="dgx" x="150" y="34">×</text><text class="dgx" x="30" y="104">×</text><text class="dgx" x="70" y="104">×</text><text class="dgx" x="110" y="104">×</text><text class="dgx" x="150" y="104">×</text><path class="dgs" d="M20 64 L200 64 M163 59 L170 64 L163 69"/><path class="dgy" d="M105 56 L105 20 M100 27 L105 20 L110 27"/><text class="dgt" x="178" y="58">I</text><text class="dgty" x="112" y="30">F</text><text class="dgtb" x="164" y="104">B 向里</text></svg>`,
+flux:`<svg viewBox="0 0 220 120"><ellipse class="dgs" cx="110" cy="70" rx="62" ry="20"/><path class="dgb" d="M80 104 L80 26 M75 33 L80 26 L85 33 M110 100 L110 22 M105 29 L110 22 L115 29 M140 104 L140 26 M135 33 L140 26 L145 33"/><text class="dgtb" x="148" y="30">B</text><text class="dgty" x="28" y="100">面积 S</text></svg>`,
+eta:`<svg viewBox="0 0 220 120"><rect class="dgs" x="84" y="42" width="52" height="38" rx="4"/><text class="dgt" x="96" y="66">装置</text><path class="dgs" d="M18 61 L80 61 M72 56 L80 61 L72 66"/><text class="dgt" x="16" y="50">输入 E总</text><path class="dgy" d="M140 61 L204 61 M196 56 L204 61 L196 66"/><text class="dgty" x="142" y="50">有用 E有</text><path class="dgp" d="M110 84 L110 108 M105 101 L110 108 L115 101" stroke-dasharray="4 3"/><text class="dgtp" x="120" y="104">损耗</text></svg>`
+};
+/* 公式 → 模型图映射：按章默认 + 按名例外 */
+const GBYC={1:"path",2:"vt",3:"block",4:"elevator",5:"projectile",6:"circular",7:"gravity",8:"energy",9:"efield",10:"ufield",11:"circuit",12:"ampere",13:"eta"};
+const GEXC={"加速度（定义式）":"vt","逐差公式":"tape","自由落体·速度":"freefall","自由落体·位移":"freefall",
+"胡克定律":"spring","合力的范围":"para","力的正交分解":"incline","牛顿第二定律":"block","力的单位":"block",
+"功":"work","功率（定义式）":"work","功率与速度":"work","开普勒第三定律":"kepler",
+"电容（定义式）":"capacitor","平行板电容器":"capacitor","电阻定律":"resistors","串联电阻":"resistors","并联电阻":"resistors",
+"磁通量":"flux","磁通量（一般式）":"flux"};
+DATA.forEach(d=>d.g=GEXC[d.n]||GBYC[d.c]);
+
+/* ================= 存档 ================= */
+let S;
+try{ S = JSON.parse(localStorage.getItem("phyChalkV1")||"{}"); }catch(e){ S={}; }
+S.m = S.m||{};                      // 掌握度 id -> 分
+S.sel = S.sel|| [1,2,3,4,5,6,7,8,9,10,11,12,13];
+S.snd = S.snd!==false;
+S.best = S.best||{};
+S.wb = S.wb||[];                    // 错题本 id 列表
+const save=()=>localStorage.setItem("phyChalkV1",JSON.stringify(S));
+const mastered = d => (S.m[d.id]||0) >= 2;
+function bump(d, ok){ S.m[d.id] = Math.max(0,(S.m[d.id]||0) + (ok?1:-1)); save(); }
+
+/* ================= 工具 ================= */
+const $ = s=>document.querySelector(s);
+const shuf = a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc = s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const fhtml = (f,cls="")=>`<span class="formula ${f.length>18?'long':''} ${cls}">${esc(f)}</span>`;
+const pool = ()=>DATA.filter(d=>S.sel.includes(d.c));
+
+/* 音效 */
+let AC=null;
+function tone(fr,dur,type,vol,delay=0){
+  if(!S.snd) return;
+  try{
+    AC = AC || new (window.AudioContext||window.webkitAudioContext)();
+    const o=AC.createOscillator(),g=AC.createGain();
+    o.type=type;o.frequency.value=fr;
+    g.gain.setValueAtTime(vol,AC.currentTime+delay);
+    g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+delay+dur);
+    o.connect(g);g.connect(AC.destination);
+    o.start(AC.currentTime+delay);o.stop(AC.currentTime+delay+dur);
+  }catch(e){}
+}
+const ding=()=>{tone(880,.15,"sine",.14);tone(1318,.28,"sine",.11,.09)};
+const buzz=()=>tone(150,.28,"sawtooth",.09);
+function toggleSnd(){S.snd=!S.snd;save();$("#sndBtn").textContent=S.snd?"🔔 音效开":"🔕 音效关"}
+function resetAll(){
+  if(confirm("确定要清空所有进度吗？\n关卡星、掌握度、错题本、学考成绩、连续天数将全部归零，公式数据不受影响。")){
+    localStorage.removeItem("phyChalkV1");location.reload();
+  }
+}
+
+/* 粉笔灰 */
+function burst(el,color="#f4efe2"){
+  const r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+  for(let i=0;i<12;i++){
+    const p=document.createElement("i");p.className="dust";
+    p.style.cssText=`left:${cx}px;top:${cy}px;background:${color};--dx:${(Math.random()-.5)*130}px;--dy:${(Math.random()-.5)*130}px`;
+    document.body.appendChild(p);setTimeout(()=>p.remove(),750);
+  }
+}
+
+/* ================= 首页 ================= */
+function renderChips(){
+  $("#chips").innerHTML = Object.keys(CH).map(c=>{
+    c=+c;
+    const list=DATA.filter(d=>d.c===c), got=list.filter(mastered).length;
+    return `<div class="chip ${S.sel.includes(c)?'sel':''}" onclick="toggleCh(${c})">
+      <span class="no">第${c}章 · ${CH[c].bk}</span>
+      <span class="ms">${got}/${list.length}</span>
+      <span class="nm">${CH[c].nm}</span></div>`;
+  }).join("");
+}
+function toggleCh(c){
+  S.sel = S.sel.includes(c) ? S.sel.filter(x=>x!==c) : [...S.sel,c];
+  save();renderChips();syncFoldSum();
+}
+function selAll(on){S.sel = on?Object.keys(CH).map(Number):[];save();renderChips();syncFoldSum()}
+function selBook(b){
+  const map={1:[1,2,3,4],2:[5,6,7,8],3:[9,10,11,12,13]};
+  S.sel=map[b];save();renderChips();syncFoldSum();
+}
+function syncFoldSum(){$("#foldSum").textContent=`🎚 练习范围：已选 ${S.sel.length} 章（点开调整）`}
+
+/* ================= 屏幕切换 ================= */
+let timers=[];
+function clearTimers(){timers.forEach(clearInterval);timers=[]}
+function show(id){
+  clearTimers();
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));
+  $(id).classList.add("on");
+}
+function goHome(){renderHome();show("#scr-home")}
+let curMode=null;
+function startMode(m){
+  if(["flash","match","quiz","blank"].includes(m) && pool().length===0){
+    const el=$("#chips");el.classList.remove("warn");void el.offsetWidth;el.classList.add("warn");
+    buzz();return;
+  }
+  curMode=m;show("#scr-game");
+  ({flash:startFlash,match:startMatch,quiz:startQuiz,blank:startBlank,sheet:startSheet,
+    xk:startXK,wrong:startWrong,daily:startDaily,level:()=>startLevel(lvC||1)})[m]();
+}
+function renderHome(){
+  renderChips();renderMap();
+  const got=DATA.filter(mastered).length;
+  $("#bM").textContent=got+" / "+DATA.length;
+  $("#bStars").textContent=totalStars();
+  $("#bRank").textContent=rankName();
+  $("#bStk").textContent=(S.stk&&S.stk.n)||0;
+  $("#subCnt").textContent=DATA.length;
+  $("#wrongCnt").textContent=S.wb.length;
+  $("#foldSum").textContent=`🎚 练习范围：已选 ${S.sel.length} 章（点开调整）`;
+  $("#xkBest").textContent=S.best.xk!=null?`最佳 ${S.best.xk} 分 · 等级 ${xkGrade(S.best.xk)}`:"尚未参加";
+}
+function renderMap(){
+  const rows=[[1,2,3,4],[5,6,7,8],[9,10,11,12,13]];
+  let nxt=null;for(let c=1;c<=13;c++)if(lvStars(c)<3){nxt=c;break}
+  $("#map").innerHTML=rows.map((r,ri)=>`<div class="mrow"><span class="mbook">${["必修一","必修二","必修三"][ri]}</span>`+
+    r.map(c=>{
+      const st=lvStars(c);
+      return `<div class="node ${st===3?'done':''} ${c===nxt?'next':''}" onclick="startLevel(${c})">
+        <span class="cir">${c}</span>
+        <span class="st">${[1,2,3].map(i=>`<span class="${i<=st?'got':''}">★</span>`).join("")}</span>
+        <span class="nm">${CH[c].s}</span></div>`;
+    }).join("")+
+    (ri===2?`<div class="node boss" onclick="startMode('xk')">
+        <span class="cir">🎓</span>
+        <span class="st">${S.best.xk!=null?"等级 "+xkGrade(S.best.xk):"BOSS"}</span>
+        <span class="nm">学考大考</span></div>`:"")+
+  `</div>`).join("");
+}
+function setBar(title,statsHtml){$("#gTitle").textContent=title;$("#gStats").innerHTML=statsHtml}
+
+/* ================= 结算 ================= */
+function showResult(o){
+  show("#scr-result");
+  $("#rTitle").textContent=o.title;
+  $("#rStars").innerHTML=[1,2,3].map(i=>`<span class="${i<=o.stars?'on':'off'}">★</span>`).join("");
+  $("#rScore").textContent=o.big;
+  $("#rScoreLabel").textContent=o.bigLabel;
+  $("#rLines").innerHTML=o.lines;
+  $("#rAgain").onclick=()=>startMode(curMode);
+  const ex=$("#rExtra");
+  if(o.extra){ex.style.display="";ex.textContent=o.extra.label;ex.onclick=o.extra.fn}
+  else ex.style.display="none";
+  if(o.stars>=2) ding();
+}
+
+/* ================= 模式一：翻卡速记 ================= */
+let fq,fTotal,fKnown,flashDone=null;
+function startFlash(){flashDone=null;beginFlash(shuf(pool()),"🃏 翻卡速记")}
+function beginFlash(deck,title){
+  fq=deck;fTotal=deck.length;fKnown=0;
+  setBar(title,`<span class="stat">进度 <b id="fp"></b></span>`);
+  renderFlash();
+}
+function renderFlash(){
+  if(!fq.length){
+    if(flashDone){const f=flashDone;flashDone=null;f();return}
+    touchStreak();
+    showResult({title:"翻卡完成！",stars:fKnown/fTotal>=.85?3:fKnown/fTotal>=.6?2:1,
+      big:fKnown+" / "+fTotal,bigLabel:"记住了",
+      lines:`本轮共复习 <b>${fTotal}</b> 张卡片<br>标记「记住了」的公式已计入掌握度`});
+    return;
+  }
+  const d=fq[0];
+  $("#fp").textContent=`${fTotal-fq.length+1} / ${fTotal}`;
+  $("#gBody").innerHTML=`
+  <div class="flash-wrap">
+    <div class="card3d" id="fcard" onclick="this.classList.toggle('flip')">
+      <div class="inner">
+        <div class="face front">
+          <span class="chp">第${d.c}章 · ${CH[d.c].nm}</span>
+          <span class="q">${esc(d.n)}</span>
+          <span class="hint">👆 点击卡片翻面看公式</span>
+        </div>
+        <div class="face back">
+          <span class="chp">${esc(d.n)}</span>
+          ${DG[d.g]?`<div class="dg">${DG[d.g]}</div>`:""}
+          ${fhtml(d.f)}
+          ${d.t?`<span class="note">${esc(d.t)}</span>`:""}
+        </div>
+      </div>
+    </div>
+    <div class="flash-btns">
+      <button class="btn p" onclick="flashNext(false)">🙈 再看看</button>
+      <button class="btn g" onclick="flashNext(true)">✅ 记住了</button>
+    </div>
+    <div class="flash-prog">「再看看」的卡片稍后会再出现</div>
+    <div class="kbd-hint">空格翻面 · 按 1 再看看 · 按 2 记住了</div>
+  </div>`;
+}
+function flashNext(known){
+  const d=fq.shift();
+  if(known){fKnown++;bump(d,true);ding();burst($("#fcard"),"#a9e6a1")}
+  else fq.splice(Math.min(2,fq.length),0,d);
+  renderFlash();
+}
+
+/* ================= 模式二：连连看 ================= */
+let mPick=null,mLeft=0,mSec=0,mPairs=0,mMiss=0;
+function startMatch(){
+  const pairs=shuf(pool()).slice(0,6);
+  mPairs=pairs.length;mLeft=mPairs;mPick=null;mSec=0;mMiss=0;
+  setBar("🧲 公式连连看",`<span class="stat">⏱ <b id="mt">0</b> 秒</span>`);
+  const tiles=shuf(pairs.flatMap(d=>[{id:d.id,k:"n",txt:d.n,d},{id:d.id,k:"f",txt:d.f,d}]));
+  $("#gBody").innerHTML=`<div class="match-grid">${tiles.map((t,i)=>
+    `<div class="tile" data-id="${t.id}" data-k="${t.k}" onclick="pickTile(this)">${
+      t.k==="f"?fhtml(t.txt):esc(t.txt)}</div>`).join("")}</div>`;
+  timers.push(setInterval(()=>{mSec++;const el=$("#mt");if(el)el.textContent=mSec},1000));
+}
+function pickTile(el){
+  if(el.classList.contains("good")||el===mPick) return;
+  if(!mPick){mPick=el;el.classList.add("pick");return}
+  const a=mPick;mPick=null;a.classList.remove("pick");
+  if(a.dataset.id===el.dataset.id && a.dataset.k!==el.dataset.k){
+    a.classList.add("good");el.classList.add("good");
+    ding();burst(el,"#a9e6a1");
+    bump(DATA.find(d=>d.id===el.dataset.id),true);
+    if(--mLeft===0){
+      clearTimers();
+      const par=mPairs*7;
+      const stars=mSec<=par&&mMiss<=1?3:mSec<=par*1.8&&mMiss<=3?2:1;
+      timers.push(setTimeout(()=>{touchStreak();showResult({title:"全部配对成功！",stars,big:mSec+" 秒",bigLabel:"用时",
+        lines:`共 <b>${mPairs}</b> 组公式 · 配错 <b>${mMiss}</b> 次<br>${stars===3?"手速与记忆俱佳！":"再快一点就能拿三星 ⭐"}`})},600));
+    }
+  }else{
+    mMiss++;buzz();
+    a.classList.add("bad");el.classList.add("bad");
+    setTimeout(()=>{a.classList.remove("bad");el.classList.remove("bad")},420);
+  }
+}
+
+/* ================= 问答引擎（极速 / 补全 / 学考 / 错题） ================= */
+let qList,qIdx,qScore,qCombo,qRight,qLock,qMode;
+const QA_TITLE={quiz:"⚡ 极速问答",blank:"✏️ 补全公式",xk:"🎓 学考冲刺",wrong:"📕 错题重刷",daily:"🌟 每日特训",level:"⛳ 闯关"};
+const ALL_BLANKS=[...new Set(DATA.flatMap(d=>d.b))];
+const xkGrade=s=>s>=90?"A":s>=80?"B":s>=70?"C":s>=60?"D":"E";
+const wrongAdd=d=>{if(!S.wb.includes(d.id)){S.wb.push(d.id);save()}};
+const wrongDel=d=>{const i=S.wb.indexOf(d.id);if(i>-1){S.wb.splice(i,1);save()}};
+const mixType=d=>d.b&&d.b.length&&Math.random()<.45?"blank":"quiz";
+
+function newRound(list,mode){qList=list;qIdx=0;qScore=0;qCombo=0;qRight=0;qLock=false;qMode=mode}
+function statHtml(){
+  return `<span class="stat">题目 <b>${Math.min(qIdx+1,qList.length)}</b>/${qList.length}</span>
+  <span class="stat">得分 <b>${qScore}</b>${qMode==="xk"?" / 100":""}</span>
+  ${qMode==="wrong"?`<span class="stat">待消灭 <b>${S.wb.length}</b></span>`:""}
+  ${qCombo>1?`<span class="stat combo">🔥 连击 ×${qCombo}</span>`:""}`;
+}
+function startQTimer(onTimeout){
+  let t=15000;const bar=$("#tbar"),box=$("#tbox");
+  const iv=setInterval(()=>{
+    t-=100;if(!bar){clearInterval(iv);return}
+    bar.style.width=Math.max(0,t/150)+"%";
+    if(t<=5000)box.classList.add("low");
+    if(t<=0){clearInterval(iv);onTimeout()}
+  },100);
+  timers.push(iv);
+}
+
+function startQuiz(){const p=pool();newRound(shuf(p).slice(0,Math.min(10,p.length)).map(d=>({d,type:"quiz"})),"quiz");renderQA()}
+function startBlank(){const p=pool().filter(d=>d.b&&d.b.length);newRound(shuf(p).slice(0,Math.min(8,p.length)).map(d=>({d,type:"blank"})),"blank");renderQA()}
+function startXK(){newRound(shuf(DATA).slice(0,20).map(d=>({d,type:mixType(d)})),"xk");renderQA()}
+function startWrong(){
+  const p=DATA.filter(d=>S.wb.includes(d.id));
+  if(!p.length){
+    showResult({title:"错题本空空如也 🎉",stars:3,big:"0",bigLabel:"道待刷错题",
+      lines:"问答 / 填空 / 学考里答错的公式会自动收进来<br>先去挑战一局吧！"});
+    return;
+  }
+  newRound(shuf(p).map(d=>({d,type:mixType(d)})),"wrong");renderQA();
+}
+
+function buildOptions(correct,n=4){
+  const same=shuf(DATA.filter(d=>d.c===correct.c&&d.id!==correct.id));
+  const rest=shuf(DATA.filter(d=>d.c!==correct.c));
+  const ds=[...same,...rest].filter(d=>d.f!==correct.f&&d.n!==correct.n).slice(0,n-1);
+  return shuf([correct,...ds]);
+}
+function renderQA(){
+  if(qIdx>=qList.length){finishQA();return}
+  const {d,type}=qList[qIdx];
+  setBar(QA_TITLE[qMode],statHtml());
+  let ask,body,optHtml;
+  if(type==="quiz"){
+    const dir=Math.random()<.5?"n2f":"f2n";  // 名称→公式 / 公式→名称
+    const os=buildOptions(d);
+    ask=dir==="n2f"?"下面哪个是它的公式？":"这个公式叫什么？";
+    body=dir==="n2f"
+      ? `<span style="color:var(--chalk-dim);font-size:.8rem">第${d.c}章 · ${CH[d.c].nm}</span><br>${esc(d.n)}`
+      : fhtml(d.f);
+    optHtml=os.map((o,i)=>`<div class="opt" data-ok="${o.id===d.id}" onclick="answerQA(this)"><i class="ol">${i+1}</i>${dir==="n2f"?fhtml(o.f):esc(o.n)}</div>`).join("");
+  }else{
+    const hole=d.b[Math.random()*d.b.length|0];
+    const idx=d.f.indexOf(hole);
+    const shown=esc(d.f.slice(0,idx))+`<span class="blankbox">？</span>`+esc(d.f.slice(idx+hole.length));
+    ask=`${esc(d.n)} · 第${d.c}章 · 缺了哪块？`;
+    body=`<span class="formula ${d.f.length>18?'long':''}">${shown}</span>`;
+    const os=shuf([hole,...shuf(ALL_BLANKS.filter(t=>t!==hole&&!d.f.includes(t))).slice(0,3)]);
+    optHtml=os.map((o,i)=>`<div class="opt" data-ok="${o===hole}" onclick="answerQA(this)"><i class="ol">${i+1}</i>${fhtml(o)}</div>`).join("");
+  }
+  $("#gBody").innerHTML=`
+  <div class="quiz-wrap">
+    <div class="timer" id="tbox"><i id="tbar"></i></div>
+    <div class="qcard"><div class="ask">${ask}</div>${DG[d.g]?`<div class="dg dgq">${DG[d.g]}</div>`:""}<div class="body">${body}</div></div>
+    <div class="opts">${optHtml}</div>
+    <div class="feedback" id="fb"></div>
+    <div class="kbd-hint">键盘 1 ~ 4 直接作答</div>
+  </div>`;
+  startQTimer(()=>answerQA(null));
+}
+function answerQA(el){
+  if(qLock)return;qLock=true;clearTimers();
+  const {d,type}=qList[qIdx];
+  const ok=el&&el.dataset.ok==="true";
+  document.querySelectorAll(".opt").forEach(o=>{
+    if(o.dataset.ok==="true")o.classList.add("right");
+    else o.classList.add(o===el?"wrong":"dim");
+  });
+  if(ok){
+    qCombo++;qRight++;
+    const pts=qMode==="xk"?5:100+(qCombo-1)*20;
+    qScore+=pts;
+    ding();burst(el,"#ffd95e");
+    const extra=type==="blank"?`完整公式：${esc(d.f)}`:(qCombo>1?`连击 ×${qCombo}！`:"");
+    $("#fb").innerHTML=`<span class="okt">✓ 正确 +${pts} 分　${extra}</span>`;
+    bump(d,true);wrongDel(d);
+  }else{
+    qCombo=0;buzz();
+    $("#fb").innerHTML=`<span class="ert">${el?"✗ 错了":"⏰ 超时"}，记住：${esc(d.n)} 👉 ${esc(d.f)}</span>`;
+    bump(d,false);wrongAdd(d);
+  }
+  setBar(QA_TITLE[qMode],statHtml());
+  timers.push(setTimeout(()=>{qIdx++;qLock=false;renderQA()},ok?1000:2100));
+}
+function finishQA(){
+  touchStreak();
+  const acc=qList.length?qRight/qList.length:0;
+  if(qMode==="level"){
+    const stars=acc>=.9?3:acc>=.7?2:acc>=.5?1:0;
+    const prev=lvStars(lvC);
+    if(stars>prev){S.lv=S.lv||{};S.lv[lvC]=stars;save()}
+    let nxt=null;
+    for(let i=1;i<=13;i++){const c=(lvC+i-1)%13+1;if(c!==lvC&&lvStars(c)<3){nxt=c;break}}
+    if(nxt===null&&lvStars(lvC)<3)nxt=lvC;
+    showResult({title:`第${lvC}章 · ${CH[lvC].nm}`,stars,big:Math.round(acc*100)+"%",bigLabel:"正确率",
+      lines:`答对 <b>${qRight}</b> / ${qList.length} 题${stars>prev?" · 🎉 星级提升！":""}<br>${stars===3?"本章三星满贯，继续推图 →":"三星线 90%，答错的公式已收进错题本"}`,
+      extra:nxt?{label:`➡️ 下一关：第${nxt}章 ${CH[nxt].s}`,fn:()=>startLevel(nxt)}:null});
+    return;
+  }
+  if(qMode==="xk"){
+    const gr=xkGrade(qScore),pass=qScore>=60;
+    const stars=qScore>=90?3:qScore>=70?2:qScore>=60?1:0;
+    const best=S.best.xk||0;
+    if(qScore>best){S.best.xk=qScore;save()}
+    showResult({title:"🎓 学考冲刺 结束",stars,big:qScore+" 分",
+      bigLabel:pass?"合格 ✓ · 等级 "+gr:"未合格 · 等级 "+gr,
+      lines:`答对 <b>${qRight}</b> / ${qList.length} 题 · 合格线 60 分<br>历史最佳 <b>${Math.max(qScore,best)}</b> 分${qScore>best?" · 🎉 新纪录！":""}<br>答错的公式已收进「📕 错题重刷」`,
+      extra:pass?null:{label:"📕 去刷错题",fn:()=>startMode("wrong")}});
+    return;
+  }
+  if(qMode==="wrong"){
+    showResult({title:"📕 错题重刷 结束",stars:S.wb.length===0?3:acc>=.7?2:1,
+      big:S.wb.length+"",bigLabel:"题还没消灭",
+      lines:`本轮答对 <b>${qRight}</b> / ${qList.length} 题<br>${S.wb.length===0?"错题全部清零，太棒了！🎉":"答对的已移出错题本，再战一轮！"}`});
+    return;
+  }
+  const stars=acc>=.9?3:acc>=.7?2:acc>=.5?1:0;
+  const best=S.best[qMode]||0;
+  if(qScore>best){S.best[qMode]=qScore;save()}
+  showResult({title:QA_TITLE[qMode]+" 结束",stars,big:qScore+"",bigLabel:"得分",
+    lines:`答对 <b>${qRight}</b> / ${qList.length} 题（${Math.round(acc*100)}%）<br>历史最佳 <b>${Math.max(qScore,best)}</b> 分${qScore>best?" · 🎉 新纪录！":""}`});
+}
+
+/* ================= 闯关 / 每日特训 / 成长体系 ================= */
+let lvC=null;
+const lvStars=c=>(S.lv&&S.lv[c])||0;
+const totalStars=()=>{let s=0;for(let c=1;c<=13;c++)s+=lvStars(c);return s};
+const RANKS=[[0,"🌱 物理萌新"],[6,"📐 公式学徒"],[14,"🔭 伽利略助手"],[22,"🍎 牛顿门生"],[30,"⚡ 麦克斯韦同桌"],[38,"🌌 爱因斯坦传人"]];
+const rankName=()=>{const s=totalStars();let r=RANKS[0][1];for(const[m,n]of RANKS)if(s>=m)r=n;return r};
+function touchStreak(){
+  const today=new Date().toISOString().slice(0,10);
+  S.stk=S.stk||{last:null,n:0};
+  if(S.stk.last===today)return;
+  const y=new Date(Date.now()-864e5).toISOString().slice(0,10);
+  S.stk.n=S.stk.last===y?S.stk.n+1:1;S.stk.last=today;save();
+}
+function startLevel(c){
+  lvC=c;curMode="level";show("#scr-game");
+  const list=DATA.filter(d=>d.c===c),st=lvStars(c);
+  setBar(`⛳ 第${c}章闯关`,`<span class="stat">${CH[c].bk}</span>`);
+  $("#gBody").innerHTML=`
+  <div class="quiz-wrap" style="text-align:center">
+    <div class="qcard">
+      <div class="ask">第${c}章 · ${CH[c].bk}</div>
+      <div class="body">${CH[c].nm}</div>
+      <div style="color:var(--chalk-dim);font-size:.9rem;margin-top:10px">
+        ${list.length} 条公式 · ${st?"当前 "+"★".repeat(st)+"☆".repeat(3-st):"尚未通关"} · 正确率 90% 拿三星
+      </div>
+    </div>
+    <div class="flash-btns">
+      <button class="btn" onclick="lvPreview()">📖 先预习翻卡</button>
+      <button class="btn y" onclick="lvBattle()">⚔️ 直接开战</button>
+    </div>
+  </div>`;
+}
+function lvPreview(){
+  flashDone=()=>lvBattle();
+  beginFlash(shuf(DATA.filter(d=>d.c===lvC)),`📖 第${lvC}章预习`);
+}
+function lvBattle(){
+  const p=DATA.filter(d=>d.c===lvC);
+  const target=Math.min(10,Math.max(6,p.length*2));
+  let list=[];while(list.length<target)list=list.concat(shuf(p));
+  list=list.slice(0,target);
+  for(let i=1;i<list.length;i++){          // 避免同一公式连续出现
+    if(list[i]===list[i-1]){
+      const j=list.findIndex((x,k)=>k>i&&x!==list[i-1]);
+      if(j>-1)[list[i],list[j]]=[list[j],list[i]];
+    }
+  }
+  QA_TITLE.level=`⛳ 第${lvC}章闯关`;
+  newRound(list.map(d=>({d,type:mixType(d)})),"level");
+  renderQA();
+}
+function startDaily(){
+  const wrongs=shuf(DATA.filter(d=>S.wb.includes(d.id)));
+  const weak=[...DATA].sort((a,b)=>(S.m[a.id]||0)-(S.m[b.id]||0));
+  const seen=new Set(),picked=[];
+  [...wrongs,...weak].forEach(d=>{if(picked.length<10&&!seen.has(d.id)){seen.add(d.id);picked.push(d)}});
+  newRound(shuf(picked).map(d=>({d,type:mixType(d)})),"daily");renderQA();
+}
+
+/* ================= 模式五：公式手册 ================= */
+function startSheet(){
+  const chs=S.sel.length?S.sel.slice().sort((a,b)=>a-b):Object.keys(CH).map(Number);
+  setBar("📖 公式手册",`<span class="stat">已掌握 <b>${DATA.filter(mastered).length}</b>/${DATA.length}</span>`);
+  $("#gBody").innerHTML=`<div class="sheet"><p style="color:var(--chalk-dim);font-size:.85rem;margin-bottom:2px">💡 点任意一行，展开对应的物理模型示意图</p>${chs.map(c=>{
+    const list=DATA.filter(d=>d.c===c);
+    return `<h4>第${c}章 ${CH[c].nm} <small style="color:var(--chalk-dim)">${CH[c].bk}</small></h4>`+
+      list.map(d=>`<div class="srow" onclick="this.classList.toggle('open')">
+        <span class="sn">${mastered(d)?'<span class="mk">✓</span> ':''}${esc(d.n)}</span>
+        ${fhtml(d.f)}
+        ${d.t?`<span class="st">${esc(d.t)}</span>`:""}
+        ${DG[d.g]?`<div class="sdg dg">${DG[d.g]}</div>`:""}
+      </div>`).join("");
+  }).join("")}</div>`;
+}
+
+/* ================= 键盘快捷键 ================= */
+document.addEventListener("keydown",e=>{
+  if(!$("#scr-game").classList.contains("on")||e.metaKey||e.ctrlKey||e.altKey)return;
+  const card=$("#fcard");
+  if(card){
+    if(e.key===" "||e.key==="Enter"){e.preventDefault();card.classList.toggle("flip");return}
+    if(e.key==="1")flashNext(false);
+    else if(e.key==="2")flashNext(true);
+    return;
+  }
+  const n=parseInt(e.key,10);
+  if(n>=1&&n<=4&&!qLock){
+    const opts=document.querySelectorAll(".opt");
+    if(opts[n-1])answerQA(opts[n-1]);
+  }
+});
+
+/* ================= 启动 ================= */
+$("#sndBtn").textContent=S.snd?"🔔 音效开":"🔕 音效关";
+renderHome();
+</script>
+</body>
+</html>
