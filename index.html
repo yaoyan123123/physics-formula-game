@@ -332,6 +332,7 @@ h1 .hl{color:var(--yellow)}
 .xk p{color:var(--chalk-dim);font-size:.86rem;line-height:1.5}
 .xk .xkbest{margin-left:auto;border:1.5px dashed var(--yellow);border-radius:12px;padding:6px 14px;color:var(--yellow);font-size:.9rem;white-space:nowrap}
 .mode.m6 h3{color:var(--err)}
+.mode.m7 h3{color:var(--blue)}
 .ol{
   display:inline-block;font-style:normal;font-size:.72rem;color:var(--chalk-dim);
   border:1.2px solid var(--chalk-dim);border-radius:6px;padding:0 6px;margin-right:8px;vertical-align:2px;
@@ -398,7 +399,7 @@ h1 .hl{color:var(--yellow)}
       <span class="ic">🎓</span>
       <div>
         <h3>学考冲刺模拟卷</h3>
-        <p>全 13 章混合抽 20 题（选择 + 填空），每题 5 分 · 100 分制 · 60 分合格 · 评定 A ~ E 等级</p>
+        <p>全 13 章混合 20 题（14 公式 + 6 概念判断），每题 5 分 · 100 分制 · 60 分合格 · 评定 A ~ E 等级</p>
       </div>
       <span class="xkbest" id="xkBest">尚未参加</span>
     </div>
@@ -423,6 +424,7 @@ h1 .hl{color:var(--yellow)}
       <div class="mode m4" onclick="startMode('blank')"><span class="tag">填空</span><div class="ic">✏️</div><h3>补全公式</h3><p>公式挖了个洞，选出缺失的部分</p></div>
       <div class="mode m5" onclick="startMode('sheet')"><span class="tag">复习</span><div class="ic">📖</div><h3>公式手册</h3><p>按章浏览全部公式，✓ 为已掌握</p></div>
       <div class="mode m6" onclick="startMode('wrong')"><span class="tag">巩固</span><div class="ic">📕</div><h3>错题重刷</h3><p>只刷答错过的公式，答对自动移出（待消灭 <b id="wrongCnt">0</b> 题）</p></div>
+      <div class="mode m7" onclick="startMode('tf')"><span class="tag">判断</span><div class="ic">⚖️</div><h3>概念·史实判断</h3><p>42 条学考高频概念与物理学史，每题带解析</p></div>
     </div>
   </section>
 
@@ -548,6 +550,54 @@ const DATA = [
  {c:13,n:"能量守恒定律",f:"ΔE减 = ΔE增",b:["ΔE增"],t:"能量不会凭空产生或消失，只会转移和转化",w:"永动机不可能制成"}
 ];
 DATA.forEach((d,i)=>d.id="q"+i);
+
+/* ================= 学考概念·物理学史判断题库 ================= */
+/* q陈述 a对错 x解析 */
+const TF=[
+ {c:1,q:"位移是矢量，路程是标量",a:true,x:"位移有大小和方向；路程只有大小"},
+ {c:1,q:"平均速度就是速度的平均值",a:false,x:"平均速度 = 位移÷时间，不是速度相加平均"},
+ {c:1,q:"研究地球绕太阳公转时，地球可以看作质点",a:true,x:"地球尺寸远小于轨道尺寸，可忽略形状大小"},
+ {c:1,q:"参考系必须选择静止不动的物体",a:false,x:"参考系可任意选，只是通常选地面方便"},
+ {c:1,q:"加速度减小时，速度一定减小",a:false,x:"只要 a 与 v 同向，速度仍在增大"},
+ {c:2,q:"自由落体运动是初速度为零的匀加速直线运动",a:true,x:"只受重力，a = g 恒定"},
+ {c:2,q:"v-t 图象中，图线与时间轴围成的面积表示位移",a:true,x:"这是 v-t 图象最重要的用法"},
+ {c:2,q:"伽利略用理想斜面实验说明力不是维持运动的原因",a:true,x:"物理学史高频考点：理想实验法"},
+ {c:3,q:"力是维持物体运动的原因",a:false,x:"这是亚里士多德的错误观点；力是改变运动状态的原因"},
+ {c:3,q:"重力的方向总是垂直于接触面",a:false,x:"重力方向是竖直向下，与接触面无关"},
+ {c:3,q:"滑动摩擦力方向总与物体运动方向相反",a:false,x:"与'相对运动'方向相反，可能与运动方向相同（如传送带带动）"},
+ {c:3,q:"两个力的合力可以比任何一个分力都小",a:true,x:"夹角接近 180° 时合力趋近两力之差"},
+ {c:4,q:"牛顿第一定律可以用实验直接验证",a:false,x:"不受力的物体不存在，它是理想化推理的结果"},
+ {c:4,q:"物体惯性的大小只与质量有关",a:true,x:"质量是惯性唯一量度，与速度无关"},
+ {c:4,q:"作用力与反作用力作用在同一个物体上",a:false,x:"分别作用在两个物体上，不能抵消"},
+ {c:4,q:"作用力与反作用力总是大小相等、方向相反",a:true,x:"牛顿第三定律，任何情况都成立"},
+ {c:4,q:"超重时物体所受的重力变大了",a:false,x:"重力不变，变的是支持力（视重）"},
+ {c:5,q:"平抛运动是匀变速曲线运动",a:true,x:"加速度恒为 g，轨迹是曲线"},
+ {c:6,q:"匀速圆周运动是匀变速运动",a:false,x:"'匀速'指速率不变，加速度方向时刻改变"},
+ {c:6,q:"向心力是一种特殊性质的力",a:false,x:"向心力是按效果命名的，由其他力提供"},
+ {c:7,q:"卡文迪什用扭秤实验测出了引力常量 G",a:true,x:"物理学史高频：被称为'称量地球质量的人'"},
+ {c:7,q:"开普勒发现了行星运动三大定律",a:true,x:"第谷观测数据 + 开普勒总结"},
+ {c:7,q:"第一宇宙速度是发射人造卫星的最小速度",a:true,x:"7.9 km/s：最小发射速度、最大环绕速度"},
+ {c:7,q:"地球同步卫星可以定点在北京正上方",a:false,x:"同步卫星只能位于赤道正上方"},
+ {c:8,q:"力对物体做功的两个要素是力和沿力方向的位移",a:true,x:"W = Flcosα 的物理含义"},
+ {c:8,q:"摩擦力一定做负功",a:false,x:"摩擦力可以做正功，如传送带带动货物"},
+ {c:8,q:"动能定理只适用于恒力做功的情况",a:false,x:"变力、曲线运动同样适用，这正是它的优势"},
+ {c:8,q:"只有重力或弹力做功时，机械能守恒",a:true,x:"机械能守恒的条件，判断题常考"},
+ {c:8,q:"功率大的机器做的功一定多",a:false,x:"做功多少还取决于时间：W = Pt"},
+ {c:9,q:"电场线是电场中真实存在的曲线",a:false,x:"电场线是为描述电场引入的假想曲线"},
+ {c:9,q:"电场强度的方向与正电荷在该点的受力方向相同",a:true,x:"E 的方向定义"},
+ {c:9,q:"摩擦起电的过程创造了电荷",a:false,x:"电荷只能转移，不能创造或消灭（电荷守恒）"},
+ {c:9,q:"库仑用扭秤实验研究了电荷间的作用力",a:true,x:"物理学史：库仑扭秤"},
+ {c:10,q:"沿电场线方向电势逐渐降低",a:true,x:"电场线指向电势降低最快的方向"},
+ {c:10,q:"电容器的电容与所带电荷量成正比",a:false,x:"C 由电容器本身决定，与 Q、U 无关"},
+ {c:11,q:"电流方向规定为正电荷定向移动的方向",a:true,x:"金属中实际是自由电子反向移动"},
+ {c:11,q:"导体的电阻由导体本身决定，与电压、电流无关",a:true,x:"R = U/I 只是量度式，不是决定式"},
+ {c:11,q:"家庭电路中各用电器是串联连接的",a:false,x:"并联：互不影响、电压相同"},
+ {c:12,q:"奥斯特发现了电流的磁效应",a:true,x:"物理学史：小磁针偏转实验"},
+ {c:12,q:"法拉第发现了电磁感应现象",a:true,x:"物理学史：磁生电，1831 年"},
+ {c:12,q:"磁感线从 N 极出发终止于 S 极，是不闭合的曲线",a:false,x:"磁感线是闭合曲线，磁体内部由 S 到 N"},
+ {c:13,q:"能量耗散说明能量守恒定律不成立",a:false,x:"总量守恒，只是能量品质降低、难以利用"}
+];
+TF.forEach((d,i)=>d.id="t"+i);
 
 /* ================= 物理模型示意图库（数形结合） ================= */
 const DG={
@@ -675,7 +725,7 @@ function startMode(m){
   }
   curMode=m;show("#scr-game");
   ({flash:startFlash,match:startMatch,quiz:startQuiz,blank:startBlank,sheet:startSheet,
-    xk:startXK,wrong:startWrong,daily:startDaily,level:()=>startLevel(lvC||1)})[m]();
+    xk:startXK,wrong:startWrong,daily:startDaily,level:()=>startLevel(lvC||1),tf:startTFMode})[m]();
 }
 function renderHome(){
   renderChips();renderMap();
@@ -811,7 +861,7 @@ function pickTile(el){
 
 /* ================= 问答引擎（极速 / 补全 / 学考 / 错题） ================= */
 let qList,qIdx,qScore,qCombo,qRight,qLock,qMode;
-const QA_TITLE={quiz:"⚡ 极速问答",blank:"✏️ 补全公式",xk:"🎓 学考冲刺",wrong:"📕 错题重刷",daily:"🌟 每日特训",level:"⛳ 闯关"};
+const QA_TITLE={quiz:"⚡ 极速问答",blank:"✏️ 补全公式",xk:"🎓 学考冲刺",wrong:"📕 错题重刷",daily:"🌟 每日特训",level:"⛳ 闯关",tf:"⚖️ 概念判断"};
 const ALL_BLANKS=[...new Set(DATA.flatMap(d=>d.b))];
 const xkGrade=s=>s>=90?"A":s>=80?"B":s>=70?"C":s>=60?"D":"E";
 const wrongAdd=d=>{if(!S.wb.includes(d.id)){S.wb.push(d.id);save()}};
@@ -838,7 +888,12 @@ function startQTimer(onTimeout){
 
 function startQuiz(){const p=pool();newRound(shuf(p).slice(0,Math.min(10,p.length)).map(d=>({d,type:"quiz"})),"quiz");renderQA()}
 function startBlank(){const p=pool().filter(d=>d.b&&d.b.length);newRound(shuf(p).slice(0,Math.min(8,p.length)).map(d=>({d,type:"blank"})),"blank");renderQA()}
-function startXK(){newRound(shuf(DATA).slice(0,20).map(d=>({d,type:mixType(d)})),"xk");renderQA()}
+function startXK(){
+  const fm=shuf(DATA).slice(0,14).map(d=>({d,type:mixType(d)}));
+  const tf=shuf(TF).slice(0,6).map(d=>({d,type:"tf"}));
+  newRound(shuf([...fm,...tf]),"xk");renderQA();
+}
+function startTFMode(){newRound(shuf(TF).slice(0,15).map(d=>({d,type:"tf"})),"tf");renderQA()}
 function startWrong(){
   const p=DATA.filter(d=>S.wb.includes(d.id));
   if(!p.length){
@@ -860,7 +915,12 @@ function renderQA(){
   const {d,type}=qList[qIdx];
   setBar(QA_TITLE[qMode],statHtml());
   let ask,body,optHtml;
-  if(type==="quiz"){
+  if(type==="tf"){
+    ask=`判断对错 · 第${d.c}章 ${CH[d.c].nm}`;
+    body=`<span style="font-size:1.35rem;line-height:1.6">${esc(d.q)}</span>`;
+    optHtml=`<div class="opt" data-ok="${d.a===true}" onclick="answerQA(this)"><i class="ol">1</i>✔️ 对</div>
+      <div class="opt" data-ok="${d.a===false}" onclick="answerQA(this)"><i class="ol">2</i>✘ 错</div>`;
+  }else if(type==="quiz"){
     const dir=Math.random()<.5?"n2f":"f2n";  // 名称→公式 / 公式→名称
     const os=buildOptions(d);
     ask=dir==="n2f"?"下面哪个是它的公式？":"这个公式叫什么？";
@@ -900,13 +960,15 @@ function answerQA(el){
     const pts=qMode==="xk"?5:100+(qCombo-1)*20;
     qScore+=pts;
     ding();burst(el,"#ffd95e");
-    const extra=type==="blank"?`完整公式：${esc(d.f)}`:(qCombo>1?`连击 ×${qCombo}！`:"");
+    const extra=type==="tf"?esc(d.x||""):type==="blank"?`完整公式：${esc(d.f)}`:(qCombo>1?`连击 ×${qCombo}！`:"");
     $("#fb").innerHTML=`<span class="okt">✓ 正确 +${pts} 分　${extra}</span>`;
-    bump(d,true);wrongDel(d);
+    if(type!=="tf"){bump(d,true);wrongDel(d)}
   }else{
     qCombo=0;buzz();
-    $("#fb").innerHTML=`<span class="ert">${el?"✗ 错了":"⏰ 超时"}，记住：${esc(d.n)} 👉 ${esc(d.f)}${d.w?`<br><span style="font-size:.88rem">⚠ ${esc(d.w)}</span>`:""}</span>`;
-    bump(d,false);wrongAdd(d);
+    $("#fb").innerHTML=type==="tf"
+      ?`<span class="ert">${el?"✗ 错了":"⏰ 超时"}，正确答案「${d.a?"对":"错"}」——${esc(d.x||"")}</span>`
+      :`<span class="ert">${el?"✗ 错了":"⏰ 超时"}，记住：${esc(d.n)} 👉 ${esc(d.f)}${d.w?`<br><span style="font-size:.88rem">⚠ ${esc(d.w)}</span>`:""}</span>`;
+    if(type!=="tf"){bump(d,false);wrongAdd(d)}
   }
   setBar(QA_TITLE[qMode],statHtml());
   timers.push(setTimeout(()=>{qIdx++;qLock=false;renderQA()},ok?1000:2100));
