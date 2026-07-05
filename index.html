@@ -12,6 +12,8 @@
 <meta property="og:url" content="https://wuliyan.com/">
 <meta property="og:image" content="https://wuliyan.com/og.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2324352d'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='%23ffd95e' font-family='Kaiti SC,serif'%3E物%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
 <link rel="stylesheet" href="https://fonts.loli.net/css2?family=ZCOOL+KuaiLe&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.loli.net/css2?family=ZCOOL+KuaiLe&display=swap"></noscript>
@@ -171,7 +173,7 @@ h1 .hl{color:var(--yellow)}
 
 /* --- 翻卡 --- */
 .flash-wrap{max-width:560px;margin:0 auto;text-align:center}
-.card3d{perspective:1200px;height:368px;cursor:pointer}
+.card3d{perspective:1200px;height:392px;cursor:pointer}
 .card3d .inner{
   position:relative;width:100%;height:100%;
   transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,.9,.4,1.05);
@@ -188,6 +190,7 @@ h1 .hl{color:var(--yellow)}
 .face .q{font-size:1.8rem;letter-spacing:.05em}
 .face .formula{font-size:2rem;color:var(--yellow)}
 .face .note{font-size:.9rem;color:var(--chalk-dim);max-width:85%;line-height:1.5}
+.face .warn2{font-size:.85rem;color:var(--pink);max-width:85%;line-height:1.4}
 .face .hint{position:absolute;bottom:12px;font-size:.78rem;color:var(--chalk-dim)}
 .flash-btns{display:flex;gap:16px;justify-content:center;margin-top:22px}
 .flash-prog{margin-top:14px;color:var(--chalk-dim);font-size:.9rem}
@@ -464,85 +467,85 @@ const CH = {
 };
 /* c章节 n名称 f公式 b可挖空 t备注 */
 const DATA = [
- {c:1,n:"平均速度",f:"v̄ = Δx/Δt",b:["Δx","Δt"],t:"位移与时间之比，是矢量"},
- {c:1,n:"平均速率",f:"v = s/Δt",b:["s"],t:"路程 s 与时间之比，是标量"},
- {c:1,n:"加速度（定义式）",f:"a = Δv/Δt",b:["Δv"],t:"速度变化量与所用时间之比"},
+ {c:1,n:"平均速度",f:"v̄ = Δx/Δt",b:["Δx","Δt"],t:"位移与时间之比，是矢量",w:"用位移算，别错用路程"},
+ {c:1,n:"平均速率",f:"v = s/Δt",b:["s"],t:"路程 s 与时间之比，是标量",w:"往返运动：位移可为 0，路程不为 0"},
+ {c:1,n:"加速度（定义式）",f:"a = Δv/Δt",b:["Δv"],t:"速度变化量与所用时间之比",w:"a 与 Δv 同向，与 v 方向无关"},
 
- {c:2,n:"速度—时间关系",f:"v = v₀ + at",b:["v₀","at"],t:"匀变速直线运动基本公式"},
- {c:2,n:"位移—时间关系",f:"x = v₀t + ½at²",b:["v₀t","½at²"],t:"匀变速直线运动基本公式"},
- {c:2,n:"速度—位移关系",f:"v² − v₀² = 2ax",b:["2ax","v₀²"],t:"不涉及时间时优先使用"},
- {c:2,n:"匀变速平均速度",f:"v̄ = (v₀ + v)/2",b:["(v₀ + v)"],t:"也等于中间时刻的瞬时速度"},
- {c:2,n:"逐差公式",f:"Δx = aT²",b:["aT²"],t:"相邻相等时间间隔的位移差恒定，纸带问题常用"},
- {c:2,n:"自由落体·速度",f:"v = gt",b:["gt"],t:"初速度为零，加速度为 g"},
- {c:2,n:"自由落体·位移",f:"h = ½gt²",b:["½gt²"],t:"g ≈ 9.8 m/s²"},
+ {c:2,n:"速度—时间关系",f:"v = v₀ + at",b:["v₀","at"],t:"匀变速直线运动基本公式",h:1,w:"减速运动 a 取负值代入"},
+ {c:2,n:"位移—时间关系",f:"x = v₀t + ½at²",b:["v₀t","½at²"],t:"匀变速直线运动基本公式",h:1,w:"x 是位移不是路程，注意正负"},
+ {c:2,n:"速度—位移关系",f:"v² − v₀² = 2ax",b:["2ax","v₀²"],t:"不涉及时间时优先使用",h:1,w:"题目不给时间 t 就用它"},
+ {c:2,n:"匀变速平均速度",f:"v̄ = (v₀ + v)/2",b:["(v₀ + v)"],t:"也等于中间时刻的瞬时速度",w:"只适用于匀变速！"},
+ {c:2,n:"逐差公式",f:"Δx = aT²",b:["aT²"],t:"相邻相等时间间隔的位移差恒定，纸带问题常用",w:"T 是相邻计时间隔，不是总时间"},
+ {c:2,n:"自由落体·速度",f:"v = gt",b:["gt"],t:"初速度为零，加速度为 g",w:"前提：只受重力且 v₀ = 0"},
+ {c:2,n:"自由落体·位移",f:"h = ½gt²",b:["½gt²"],t:"g ≈ 9.8 m/s²",w:"h 与 t² 成正比：时间翻倍位移×4"},
 
- {c:3,n:"重力",f:"G = mg",b:["mg"],t:"方向竖直向下"},
- {c:3,n:"胡克定律",f:"F = kx",b:["kx"],t:"x 为形变量，k 为劲度系数（N/m）"},
- {c:3,n:"滑动摩擦力",f:"f = μN",b:["μN"],t:"N 为正压力，μ 为动摩擦因数"},
- {c:3,n:"合力的范围",f:"|F₁ − F₂| ≤ F ≤ F₁ + F₂",b:["|F₁ − F₂|","F₁ + F₂"],t:"平行四边形定则"},
- {c:3,n:"力的正交分解",f:"Fx = Fcosθ，Fy = Fsinθ",b:["Fcosθ","Fsinθ"],t:"θ 为 F 与 x 轴夹角"},
+ {c:3,n:"重力",f:"G = mg",b:["mg"],t:"方向竖直向下",h:1,w:"竖直向下≠垂直向下（斜面上要分清）"},
+ {c:3,n:"胡克定律",f:"F = kx",b:["kx"],t:"x 为形变量，k 为劲度系数（N/m）",h:1,w:"x 是形变量，不是弹簧总长！"},
+ {c:3,n:"滑动摩擦力",f:"f = μN",b:["μN"],t:"N 为正压力，μ 为动摩擦因数",h:1,w:"N 不一定等于 mg（斜面/加压时）"},
+ {c:3,n:"合力的范围",f:"|F₁ − F₂| ≤ F ≤ F₁ + F₂",b:["|F₁ − F₂|","F₁ + F₂"],t:"平行四边形定则",w:"夹角越大合力越小"},
+ {c:3,n:"力的正交分解",f:"Fx = Fcosθ，Fy = Fsinθ",b:["Fcosθ","Fsinθ"],t:"θ 为 F 与 x 轴夹角",w:"靠角的边用 cos，对角的边用 sin"},
 
- {c:4,n:"牛顿第二定律",f:"F = ma",b:["ma"],t:"F 为合外力，单位 N"},
- {c:4,n:"力的单位",f:"1 N = 1 kg·m/s²",b:["kg·m/s²"],t:"由 F = ma 定义"},
- {c:4,n:"超重",f:"N = m(g + a)",b:["(g + a)"],t:"加速度方向向上（加速上升 / 减速下降）"},
- {c:4,n:"失重",f:"N = m(g − a)",b:["(g − a)"],t:"加速度方向向下；a = g 时完全失重"},
+ {c:4,n:"牛顿第二定律",f:"F = ma",b:["ma"],t:"F 为合外力，单位 N",h:1,w:"F 是合外力；a 与合力同向"},
+ {c:4,n:"力的单位",f:"1 N = 1 kg·m/s²",b:["kg·m/s²"],t:"由 F = ma 定义",w:"1N 使 1kg 产生 1m/s² 的加速度"},
+ {c:4,n:"超重",f:"N = m(g + a)",b:["(g + a)"],t:"加速度方向向上（加速上升 / 减速下降）",w:"只看 a 方向，与运动方向无关"},
+ {c:4,n:"失重",f:"N = m(g − a)",b:["(g − a)"],t:"加速度方向向下；a = g 时完全失重",w:"减速上升也是失重"},
 
- {c:5,n:"平抛·水平方向",f:"x = v₀t",b:["v₀t"],t:"水平方向做匀速直线运动"},
- {c:5,n:"平抛·竖直方向",f:"y = ½gt²",b:["½gt²"],t:"竖直方向做自由落体运动"},
- {c:5,n:"平抛·飞行时间",f:"t = √(2h/g)",b:["√(2h/g)"],t:"只由下落高度 h 决定，与 v₀ 无关"},
- {c:5,n:"平抛·落点速度",f:"v = √(v₀² + (gt)²)",b:["(gt)²","v₀²"],t:"水平、竖直分速度的合成"},
- {c:5,n:"平抛·速度偏角",f:"tanθ = gt/v₀",b:["gt","v₀"],t:"θ 为速度与水平方向的夹角"},
+ {c:5,n:"平抛·水平方向",f:"x = v₀t",b:["v₀t"],t:"水平方向做匀速直线运动",h:1,w:"水平方向不受力，速度恒为 v₀"},
+ {c:5,n:"平抛·竖直方向",f:"y = ½gt²",b:["½gt²"],t:"竖直方向做自由落体运动",h:1,w:"竖直方向与自由落体完全相同"},
+ {c:5,n:"平抛·飞行时间",f:"t = √(2h/g)",b:["√(2h/g)"],t:"只由下落高度 h 决定，与 v₀ 无关",h:1,w:"时间只看高度，v₀ 再大也不变！"},
+ {c:5,n:"平抛·落点速度",f:"v = √(v₀² + (gt)²)",b:["(gt)²","v₀²"],t:"水平、竖直分速度的合成",w:"勾股定理合成两个分速度"},
+ {c:5,n:"平抛·速度偏角",f:"tanθ = gt/v₀",b:["gt","v₀"],t:"θ 为速度与水平方向的夹角",w:"θ 随时间增大，落地前最大"},
 
- {c:6,n:"线速度",f:"v = 2πr/T",b:["2πr"],t:"T 为周期"},
- {c:6,n:"角速度",f:"ω = 2π/T",b:["2π"],t:"单位 rad/s"},
- {c:6,n:"线速度与角速度",f:"v = ωr",b:["ωr"],t:"半径越大线速度越大（同 ω）"},
- {c:6,n:"向心加速度",f:"a = v²/r = ω²r",b:["v²/r","ω²r"],t:"方向始终指向圆心"},
- {c:6,n:"向心力",f:"F = mv²/r = mω²r",b:["mv²/r","mω²r"],t:"由合力（或分力）提供"},
- {c:6,n:"角速度与转速",f:"ω = 2πn",b:["2πn"],t:"n 为每秒转数，T = 1/n"},
+ {c:6,n:"线速度",f:"v = 2πr/T",b:["2πr"],t:"T 为周期",w:"T 越小转得越快"},
+ {c:6,n:"角速度",f:"ω = 2π/T",b:["2π"],t:"单位 rad/s",w:"一圈 = 2π 弧度"},
+ {c:6,n:"线速度与角速度",f:"v = ωr",b:["ωr"],t:"半径越大线速度越大（同 ω）",h:1,w:"同轴转动 ω 相同；皮带传动 v 相同"},
+ {c:6,n:"向心加速度",f:"a = v²/r = ω²r",b:["v²/r","ω²r"],t:"方向始终指向圆心",h:1,w:"只改变速度方向，不改变大小"},
+ {c:6,n:"向心力",f:"F = mv²/r = mω²r",b:["mv²/r","mω²r"],t:"由合力（或分力）提供",h:1,w:"向心力是效果，不是一种新的力"},
+ {c:6,n:"角速度与转速",f:"ω = 2πn",b:["2πn"],t:"n 为每秒转数，T = 1/n",w:"n 若给转/分，先 ÷60"},
 
- {c:7,n:"万有引力定律",f:"F = Gm₁m₂/r²",b:["Gm₁m₂","r²"],t:"G = 6.67×10⁻¹¹ N·m²/kg²"},
- {c:7,n:"黄金代换",f:"GM = gR²",b:["gR²"],t:"地表重力近似等于万有引力"},
- {c:7,n:"环绕速度",f:"v = √(GM/r)",b:["√(GM/r)"],t:"引力提供向心力，r 越大 v 越小"},
- {c:7,n:"第一宇宙速度",f:"v₁ = √(gR) ≈ 7.9 km/s",b:["√(gR)","7.9"],t:"最大环绕速度，最小发射速度"},
- {c:7,n:"开普勒第三定律",f:"a³/T² = k",b:["a³","T²"],t:"半长轴三次方与周期平方之比为常数"},
+ {c:7,n:"万有引力定律",f:"F = Gm₁m₂/r²",b:["Gm₁m₂","r²"],t:"G = 6.67×10⁻¹¹ N·m²/kg²",h:1,w:"r 是球心间距，不是表面距离"},
+ {c:7,n:"黄金代换",f:"GM = gR²",b:["gR²"],t:"地表重力近似等于万有引力",w:"不知道地球质量 M 时用它替换"},
+ {c:7,n:"环绕速度",f:"v = √(GM/r)",b:["√(GM/r)"],t:"引力提供向心力，r 越大 v 越小",w:"轨道越高，速度越小、周期越长"},
+ {c:7,n:"第一宇宙速度",f:"v₁ = √(gR) ≈ 7.9 km/s",b:["√(gR)","7.9"],t:"最大环绕速度，最小发射速度",h:1,w:"两个'最'别记反：最大环绕、最小发射"},
+ {c:7,n:"开普勒第三定律",f:"a³/T² = k",b:["a³","T²"],t:"半长轴三次方与周期平方之比为常数",w:"绕同一中心天体 k 才相同"},
 
- {c:8,n:"功",f:"W = Flcosα",b:["Flcosα"],t:"α 为力与位移的夹角"},
- {c:8,n:"功率（定义式）",f:"P = W/t",b:["W"],t:"单位瓦特 W"},
- {c:8,n:"功率与速度",f:"P = Fv",b:["Fv"],t:"F 与 v 同向时"},
- {c:8,n:"动能",f:"Eₖ = ½mv²",b:["½mv²"],t:"标量，恒为正"},
- {c:8,n:"动能定理",f:"W总 = ½mv₂² − ½mv₁²",b:["½mv₂²","½mv₁²"],t:"合外力做的功等于动能的变化"},
- {c:8,n:"重力势能",f:"Eₚ = mgh",b:["mgh"],t:"相对参考平面，可正可负"},
- {c:8,n:"重力做功与势能",f:"W重 = Eₚ₁ − Eₚ₂",b:["Eₚ₁"],t:"重力做功与路径无关"},
- {c:8,n:"机械能守恒定律",f:"½mv₁² + mgh₁ = ½mv₂² + mgh₂",b:["mgh₁","mgh₂"],t:"只有重力或弹力做功时成立"},
+ {c:8,n:"功",f:"W = Flcosα",b:["Flcosα"],t:"α 为力与位移的夹角",h:1,w:"α>90° 做负功；α=90° 不做功"},
+ {c:8,n:"功率（定义式）",f:"P = W/t",b:["W"],t:"单位瓦特 W",w:"算平均功率用它"},
+ {c:8,n:"功率与速度",f:"P = Fv",b:["Fv"],t:"F 与 v 同向时",w:"v 取瞬时值→瞬时功率"},
+ {c:8,n:"动能",f:"Eₖ = ½mv²",b:["½mv²"],t:"标量，恒为正",h:1,w:"速度翻倍，动能×4"},
+ {c:8,n:"动能定理",f:"W总 = ½mv₂² − ½mv₁²",b:["½mv₂²","½mv₁²"],t:"合外力做的功等于动能的变化",h:1,w:"W总是所有力做功的代数和"},
+ {c:8,n:"重力势能",f:"Eₚ = mgh",b:["mgh"],t:"相对参考平面，可正可负",h:1,w:"h 相对参考面，Eₚ 可为负"},
+ {c:8,n:"重力做功与势能",f:"W重 = Eₚ₁ − Eₚ₂",b:["Eₚ₁"],t:"重力做功与路径无关",w:"只看始末高度差，与路径无关"},
+ {c:8,n:"机械能守恒定律",f:"½mv₁² + mgh₁ = ½mv₂² + mgh₂",b:["mgh₁","mgh₂"],t:"只有重力或弹力做功时成立",h:1,w:"有摩擦力做功就不守恒！"},
 
- {c:9,n:"库仑定律",f:"F = kq₁q₂/r²",b:["kq₁q₂","r²"],t:"k = 9.0×10⁹ N·m²/C²，真空中点电荷"},
- {c:9,n:"元电荷",f:"Q = ne，e = 1.6×10⁻¹⁹ C",b:["1.6×10⁻¹⁹"],t:"任何电荷量都是 e 的整数倍"},
- {c:9,n:"电场强度（定义式）",f:"E = F/q",b:["F","q"],t:"由电场本身决定，与试探电荷无关"},
- {c:9,n:"点电荷的场强",f:"E = kQ/r²",b:["kQ","r²"],t:"Q 为场源电荷"},
+ {c:9,n:"库仑定律",f:"F = kq₁q₂/r²",b:["kq₁q₂","r²"],t:"k = 9.0×10⁹ N·m²/C²，真空中点电荷",h:1,w:"平方反比：距离翻倍，力变 1/4"},
+ {c:9,n:"元电荷",f:"Q = ne，e = 1.6×10⁻¹⁹ C",b:["1.6×10⁻¹⁹"],t:"任何电荷量都是 e 的整数倍",w:"n 只能是整数"},
+ {c:9,n:"电场强度（定义式）",f:"E = F/q",b:["F","q"],t:"由电场本身决定，与试探电荷无关",h:1,w:"E 与 F、q 无关，撤掉试探电荷 E 仍在"},
+ {c:9,n:"点电荷的场强",f:"E = kQ/r²",b:["kQ","r²"],t:"Q 为场源电荷",w:"Q 是场源电荷，不是试探电荷"},
 
- {c:10,n:"电势",f:"φ = Eₚ/q",b:["Eₚ"],t:"标量，有正负，沿电场线方向降低"},
- {c:10,n:"电势差",f:"U = W/q",b:["W","q"],t:"两点电势之差，与零点选取无关"},
- {c:10,n:"静电力做功",f:"W = qU",b:["qU"],t:"与路径无关"},
- {c:10,n:"匀强电场 U 与 E",f:"U = Ed",b:["Ed"],t:"d 为沿电场方向的距离"},
- {c:10,n:"电容（定义式）",f:"C = Q/U",b:["Q","U"],t:"单位法拉 F，由电容器本身决定"},
- {c:10,n:"平行板电容器",f:"C = εS/(4πkd)",b:["εS","4πkd"],t:"S 正对面积，d 板间距离"},
+ {c:10,n:"电势",f:"φ = Eₚ/q",b:["Eₚ"],t:"标量，有正负，沿电场线方向降低",w:"沿电场线方向电势一定降低"},
+ {c:10,n:"电势差",f:"U = W/q",b:["W","q"],t:"两点电势之差，与零点选取无关",w:"U 与零点选取无关"},
+ {c:10,n:"静电力做功",f:"W = qU",b:["qU"],t:"与路径无关",h:1,w:"q、U 都带符号代入判正负功"},
+ {c:10,n:"匀强电场 U 与 E",f:"U = Ed",b:["Ed"],t:"d 为沿电场方向的距离",h:1,w:"d 是沿电场方向距离，不是两点连线长"},
+ {c:10,n:"电容（定义式）",f:"C = Q/U",b:["Q","U"],t:"单位法拉 F，由电容器本身决定",h:1,w:"C 由电容器本身决定，与 Q、U 无关"},
+ {c:10,n:"平行板电容器",f:"C = εS/(4πkd)",b:["εS","4πkd"],t:"S 正对面积，d 板间距离",w:"板间距 d 减小 → C 增大"},
 
- {c:11,n:"电流（定义式）",f:"I = q/t",b:["q"],t:"单位安培 A，1 A = 1 C/s"},
- {c:11,n:"欧姆定律",f:"I = U/R",b:["U","R"],t:"适用于金属导体和电解液"},
- {c:11,n:"电阻定律",f:"R = ρL/S",b:["ρL","S"],t:"ρ 为电阻率，由材料和温度决定"},
- {c:11,n:"串联电阻",f:"R串 = R₁ + R₂",b:["R₁ + R₂"],t:"串联总电阻越串越大"},
- {c:11,n:"并联电阻",f:"1/R并 = 1/R₁ + 1/R₂",b:["1/R₁","1/R₂"],t:"并联总电阻越并越小"},
- {c:11,n:"电功",f:"W = UIt",b:["UIt"],t:"单位 J，生活中常用 kW·h（度）"},
- {c:11,n:"电功率",f:"P = UI",b:["UI"],t:"P = W/t，单位瓦特 W"},
- {c:11,n:"焦耳定律",f:"Q = I²Rt",b:["I²Rt"],t:"电流通过导体产生的热量"},
+ {c:11,n:"电流（定义式）",f:"I = q/t",b:["q"],t:"单位安培 A，1 A = 1 C/s",w:"方向规定为正电荷定向移动方向"},
+ {c:11,n:"欧姆定律",f:"I = U/R",b:["U","R"],t:"适用于金属导体和电解液",h:1,w:"R 一定时 I 与 U 成正比"},
+ {c:11,n:"电阻定律",f:"R = ρL/S",b:["ρL","S"],t:"ρ 为电阻率，由材料和温度决定",w:"导线均匀拉长 n 倍，电阻变 n² 倍"},
+ {c:11,n:"串联电阻",f:"R串 = R₁ + R₂",b:["R₁ + R₂"],t:"串联总电阻越串越大",w:"串联电流处处相等"},
+ {c:11,n:"并联电阻",f:"1/R并 = 1/R₁ + 1/R₂",b:["1/R₁","1/R₂"],t:"并联总电阻越并越小",w:"并联电压处处相等"},
+ {c:11,n:"电功",f:"W = UIt",b:["UIt"],t:"单位 J，生活中常用 kW·h（度）",h:1,w:"1 度电 = 1 kW·h = 3.6×10⁶ J"},
+ {c:11,n:"电功率",f:"P = UI",b:["UI"],t:"P = W/t，单位瓦特 W",h:1,w:"额定功率 ≠ 实际功率"},
+ {c:11,n:"焦耳定律",f:"Q = I²Rt",b:["I²Rt"],t:"电流通过导体产生的热量",h:1,w:"纯电阻电路 W = Q；非纯电阻 W > Q"},
 
- {c:12,n:"磁感应强度（定义式）",f:"B = F/IL",b:["F","IL"],t:"单位特斯拉 T，1 T = 1 N/(A·m)"},
- {c:12,n:"安培力",f:"F = BIL",b:["BIL"],t:"导线与磁场垂直时"},
- {c:12,n:"磁通量",f:"Φ = BS",b:["BS"],t:"B 与平面垂直时，单位韦伯 Wb"},
- {c:12,n:"磁通量（一般式）",f:"Φ = BScosθ",b:["BScosθ"],t:"θ 为 B 与平面法线的夹角"},
+ {c:12,n:"磁感应强度（定义式）",f:"B = F/IL",b:["F","IL"],t:"单位特斯拉 T，1 T = 1 N/(A·m)",w:"B 由磁场决定，与 F、I 无关"},
+ {c:12,n:"安培力",f:"F = BIL",b:["BIL"],t:"导线与磁场垂直时",h:1,w:"导线与磁场平行时 F = 0"},
+ {c:12,n:"磁通量",f:"Φ = BS",b:["BS"],t:"B 与平面垂直时，单位韦伯 Wb",h:1,w:"B 平行于平面时 Φ = 0"},
+ {c:12,n:"磁通量（一般式）",f:"Φ = BScosθ",b:["BScosθ"],t:"θ 为 B 与平面法线的夹角",w:"θ 是与法线的夹角，不是与平面"},
 
- {c:13,n:"能量转化效率",f:"η = E有/E总",b:["E有","E总"],t:"有用能量占总输入能量的比例"},
- {c:13,n:"能量守恒定律",f:"ΔE减 = ΔE增",b:["ΔE增"],t:"能量不会凭空产生或消失，只会转移和转化"}
+ {c:13,n:"能量转化效率",f:"η = E有/E总",b:["E有","E总"],t:"有用能量占总输入能量的比例",h:1,w:"η 永远小于 100%"},
+ {c:13,n:"能量守恒定律",f:"ΔE减 = ΔE增",b:["ΔE增"],t:"能量不会凭空产生或消失，只会转移和转化",w:"永动机不可能制成"}
 ];
 DATA.forEach((d,i)=>d.id="q"+i);
 
@@ -744,7 +747,7 @@ function renderFlash(){
     <div class="card3d" id="fcard" onclick="this.classList.toggle('flip')">
       <div class="inner">
         <div class="face front">
-          <span class="chp">第${d.c}章 · ${CH[d.c].nm}</span>
+          <span class="chp">${d.h?"⭐ 学考高频 · ":""}第${d.c}章 · ${CH[d.c].nm}</span>
           <span class="q">${esc(d.n)}</span>
           <span class="hint">👆 点击卡片翻面看公式</span>
         </div>
@@ -753,6 +756,7 @@ function renderFlash(){
           ${DG[d.g]?`<div class="dg">${DG[d.g]}</div>`:""}
           ${fhtml(d.f)}
           ${d.t?`<span class="note">${esc(d.t)}</span>`:""}
+          ${d.w?`<span class="warn2">⚠ ${esc(d.w)}</span>`:""}
         </div>
       </div>
     </div>
@@ -901,7 +905,7 @@ function answerQA(el){
     bump(d,true);wrongDel(d);
   }else{
     qCombo=0;buzz();
-    $("#fb").innerHTML=`<span class="ert">${el?"✗ 错了":"⏰ 超时"}，记住：${esc(d.n)} 👉 ${esc(d.f)}</span>`;
+    $("#fb").innerHTML=`<span class="ert">${el?"✗ 错了":"⏰ 超时"}，记住：${esc(d.n)} 👉 ${esc(d.f)}${d.w?`<br><span style="font-size:.88rem">⚠ ${esc(d.w)}</span>`:""}</span>`;
     bump(d,false);wrongAdd(d);
   }
   setBar(QA_TITLE[qMode],statHtml());
@@ -999,7 +1003,7 @@ function lvBattle(){
 }
 function startDaily(){
   const wrongs=shuf(DATA.filter(d=>S.wb.includes(d.id)));
-  const weak=[...DATA].sort((a,b)=>(S.m[a.id]||0)-(S.m[b.id]||0));
+  const weak=[...DATA].sort((a,b)=>((S.m[a.id]||0)-(a.h?.5:0))-((S.m[b.id]||0)-(b.h?.5:0)));  // 同等生疏度下学考高频优先
   const seen=new Set(),picked=[];
   [...wrongs,...weak].forEach(d=>{if(picked.length<10&&!seen.has(d.id)){seen.add(d.id);picked.push(d)}});
   newRound(shuf(picked).map(d=>({d,type:mixType(d)})),"daily");renderQA();
@@ -1009,13 +1013,13 @@ function startDaily(){
 function startSheet(){
   const chs=S.sel.length?S.sel.slice().sort((a,b)=>a-b):Object.keys(CH).map(Number);
   setBar("📖 公式手册",`<span class="stat">已掌握 <b>${DATA.filter(mastered).length}</b>/${DATA.length}</span>`);
-  $("#gBody").innerHTML=`<div class="sheet"><p style="color:var(--chalk-dim);font-size:.85rem;margin-bottom:2px">💡 点任意一行，展开对应的物理模型示意图</p>${chs.map(c=>{
+  $("#gBody").innerHTML=`<div class="sheet"><p style="color:var(--chalk-dim);font-size:.85rem;margin-bottom:2px">💡 点任意一行展开物理模型示意图 · ⭐ = 学考高频 · <span style="color:var(--pink)">⚠ = 易错点</span></p>${chs.map(c=>{
     const list=DATA.filter(d=>d.c===c);
     return `<h4>第${c}章 ${CH[c].nm} <small style="color:var(--chalk-dim)">${CH[c].bk}</small></h4>`+
       list.map(d=>`<div class="srow" onclick="this.classList.toggle('open')">
-        <span class="sn">${mastered(d)?'<span class="mk">✓</span> ':''}${esc(d.n)}</span>
+        <span class="sn">${mastered(d)?'<span class="mk">✓</span> ':''}${d.h?"⭐":""}${esc(d.n)}</span>
         ${fhtml(d.f)}
-        ${d.t?`<span class="st">${esc(d.t)}</span>`:""}
+        ${d.t||d.w?`<span class="st">${esc(d.t||"")}${d.w?`　<span style="color:var(--pink)">⚠ ${esc(d.w)}</span>`:""}</span>`:""}
         ${DG[d.g]?`<div class="sdg dg">${DG[d.g]}</div>`:""}
       </div>`).join("");
   }).join("")}</div>`;
@@ -1041,6 +1045,10 @@ document.addEventListener("keydown",e=>{
 /* ================= 启动 ================= */
 $("#sndBtn").textContent=S.snd?"🔔 音效开":"🔕 音效关";
 renderHome();
+/* PWA：线上环境注册离线缓存（本地 file:// 双击打开时自动跳过） */
+if("serviceWorker" in navigator && location.protocol.startsWith("http")){
+  navigator.serviceWorker.register("sw.js").catch(()=>{});
+}
 </script>
 </body>
 </html>
