@@ -335,6 +335,7 @@ h1 .hl{color:var(--yellow)}
 .xk .xkbest{margin-left:auto;border:1.5px dashed var(--yellow);border-radius:12px;padding:6px 14px;color:var(--yellow);font-size:.9rem;white-space:nowrap}
 .mode.m6 h3{color:var(--err)}
 .mode.m7 h3{color:var(--blue)}
+.mode.m8 h3{color:var(--yellow)}
 .paper{
   display:flex;align-items:center;gap:18px;cursor:pointer;margin:4px 0;flex-wrap:wrap;
   border:2.5px solid var(--chalk);border-radius:var(--sketch);
@@ -469,6 +470,7 @@ h1 .hl{color:var(--yellow)}
       <div class="mode m5" onclick="startMode('sheet')"><span class="tag">复习</span><div class="ic">📖</div><h3>公式手册</h3><p>按章浏览全部公式，✓ 为已掌握</p></div>
       <div class="mode m6" onclick="startMode('wrong')"><span class="tag">巩固</span><div class="ic">📕</div><h3>错题重刷</h3><p>只刷答错过的公式，答对自动移出（待消灭 <b id="wrongCnt">0</b> 题）</p></div>
       <div class="mode m7" onclick="startMode('tf')"><span class="tag">判断</span><div class="ic">⚖️</div><h3>概念·史实判断</h3><p>42 条学考高频概念与物理学史，每题带解析</p></div>
+      <div class="mode m8" onclick="startMode('rank')"><span class="tag">榜单</span><div class="ic">🏆</div><h3>学考匿名榜</h3><p>随机物理学家昵称上榜，不收集任何个人信息</p></div>
     </div>
 
     <div class="panel-label">④ 期末考试答案 <small>最近几天的期末考试 · 高清全解 · 持续更新</small></div>
@@ -501,6 +503,7 @@ h1 .hl{color:var(--yellow)}
       <div class="rlines" id="rLines"></div>
       <div class="rbtns">
         <button class="btn g" id="rExtra" style="display:none"></button>
+        <button class="btn p" id="rExtra2" style="display:none"></button>
         <button class="btn y" id="rAgain">🔁 再来一局</button>
         <button class="btn" onclick="goHome()">🏠 回黑板</button>
       </div>
@@ -779,7 +782,7 @@ function startMode(m){
   }
   curMode=m;show("#scr-game");
   ({flash:startFlash,match:startMatch,quiz:startQuiz,blank:startBlank,sheet:startSheet,
-    xk:startXK,wrong:startWrong,daily:startDaily,level:()=>startLevel(lvC||1),tf:startTFMode})[m]();
+    xk:startXK,wrong:startWrong,daily:startDaily,level:()=>startLevel(lvC||1),tf:startTFMode,rank:startRank})[m]();
 }
 function renderHome(){
   renderChips();renderMap();
@@ -824,6 +827,9 @@ function showResult(o){
   const ex=$("#rExtra");
   if(o.extra){ex.style.display="";ex.textContent=o.extra.label;ex.onclick=o.extra.fn}
   else ex.style.display="none";
+  const ex2=$("#rExtra2");
+  if(o.extra2){ex2.style.display="";ex2.textContent=o.extra2.label;ex2.onclick=o.extra2.fn}
+  else ex2.style.display="none";
   if(o.stars>=2) ding();
 }
 
@@ -1047,10 +1053,12 @@ function finishQA(){
     const stars=qScore>=90?3:qScore>=70?2:qScore>=60?1:0;
     const best=S.best.xk||0;
     if(qScore>best){S.best.xk=qScore;save()}
+    lastXK=Math.max(qScore,best);
     showResult({title:"🎓 学考冲刺 结束",stars,big:qScore+" 分",
       bigLabel:pass?"合格 ✓ · 等级 "+gr:"未合格 · 等级 "+gr,
       lines:`答对 <b>${qRight}</b> / ${qList.length} 题 · 合格线 60 分<br>历史最佳 <b>${Math.max(qScore,best)}</b> 分${qScore>best?" · 🎉 新纪录！":""}<br>答错的公式已收进「📕 错题重刷」`,
-      extra:pass?null:{label:"📕 去刷错题",fn:()=>startMode("wrong")}});
+      extra:pass?{label:"🏆 匿名上榜",fn:submitRank}:{label:"📕 去刷错题",fn:()=>startMode("wrong")},
+      extra2:pass?null:{label:"🏆 匿名上榜",fn:submitRank}});
     return;
   }
   if(qMode==="wrong"){
@@ -1123,6 +1131,71 @@ function startDaily(){
   const seen=new Set(),picked=[];
   [...wrongs,...weak].forEach(d=>{if(picked.length<10&&!seen.has(d.id)){seen.add(d.id);picked.push(d)}});
   newRound(shuf(picked).map(d=>({d,type:mixType(d)})),"daily");renderQA();
+}
+
+/* ================= 学考匿名榜（隐私优先） =================
+   隐私设计：昵称由系统随机生成（不能自填，杜绝真名/手机号出现在榜上）；
+   成绩只在玩家主动点「上榜」时上传；服务端不返回任何 id。 */
+let lastXK=null;
+const NICK_A=["追光的","超导的","量子态","永动的","无摩擦的","匀速的","满分的","三星的","磁悬浮","零误差","光速的","共振的"];
+const NICK_B=["牛顿","伽利略","爱因斯坦","法拉第","库仑","开普勒","焦耳","安培","特斯拉","居里","麦克斯韦","奥斯特"];
+const genNick=()=>NICK_A[Math.random()*NICK_A.length|0]+NICK_B[Math.random()*NICK_B.length|0]+"·"+(Math.random()*90+10|0);
+function ensureIdentity(){
+  S.uid=S.uid||((crypto.randomUUID&&crypto.randomUUID())||"u"+Date.now().toString(36)+Math.random().toString(36).slice(2,10));
+  S.nick=S.nick||genNick();save();
+}
+async function submitRank(){
+  if(!location.protocol.startsWith("http")){alert("榜单需在 wuliyan.com 在线版使用");return}
+  ensureIdentity();
+  const sc=lastXK!=null?lastXK:S.best.xk;
+  if(sc==null){alert("先打一局学考冲刺再来上榜");return}
+  const btn=[...document.querySelectorAll("#rExtra,#rExtra2")].find(b=>b.textContent.includes("上榜")||b.textContent.includes("上传"));
+  if(btn)btn.textContent="⏳ 上传中…";
+  try{
+    const r=await fetch("api/rank",{method:"POST",headers:{"content-type":"application/json"},
+      body:JSON.stringify({id:S.uid,nick:S.nick,score:sc})});
+    const d=await r.json();
+    if(!d.ok)throw 0;
+    S.onBoard=1;save();ding();
+    if(btn){btn.textContent=`🏆 已上榜 · 第 ${d.rank} 名（${S.nick}）`;btn.onclick=()=>startMode("rank")}
+  }catch(e){if(btn)btn.textContent="❌ 上传失败，点我重试"}
+}
+async function startRank(){
+  setBar("🏆 学考匿名榜",`<span class="stat">前 50 名</span>`);
+  ensureIdentity();
+  $("#gBody").innerHTML=`<div class="sheet" style="max-width:620px">
+    <p style="color:var(--chalk-dim);font-size:.85rem;line-height:1.75">
+      🔒 <b style="color:var(--chalk)">隐私说明</b>：榜单只显示<b style="color:var(--yellow)">系统随机生成的物理学家昵称</b>和学考分数，
+      不收集姓名、手机号、账号等任何个人信息；成绩只在你打完学考卷、主动点「匿名上榜」时才上传，不上榜就完全不留痕。
+    </p>
+    <div style="margin:12px 0 18px;display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+      <span style="color:var(--chalk-dim)">我的榜上昵称：</span>
+      <b id="myNick" style="color:var(--yellow)">${esc(S.nick)}</b>
+      <button class="btn ghost" onclick="renick()">🎲 换一个</button>
+    </div>
+    <div id="rankList"><p style="color:var(--chalk-dim)">加载中…</p></div>
+  </div>`;
+  if(!location.protocol.startsWith("http")){$("#rankList").innerHTML=`<p style="color:var(--chalk-dim)">榜单需在 wuliyan.com 在线版查看</p>`;return}
+  try{
+    const d=await(await fetch("api/rank")).json();
+    if(!d.list.length){
+      $("#rankList").innerHTML=`<p style="color:var(--chalk-dim)">榜单虚位以待——去打一局「🎓 学考冲刺」，结算页点「🏆 匿名上榜」抢头名！</p>`;return;
+    }
+    $("#rankList").innerHTML=d.list.map((e,i)=>`<div class="srow" style="cursor:default">
+      <span style="min-width:46px;color:${i<3?"var(--yellow)":"var(--chalk-dim)"}">${i<3?["🥇","🥈","🥉"][i]:(i+1)+"."}</span>
+      <span style="${e.n===S.nick?"color:var(--yellow)":""}">${esc(e.n)}${e.n===S.nick?"（我）":""}</span>
+      <span style="margin-left:auto;color:var(--ok)">${e.s} 分 · ${xkGrade(e.s)}</span>
+    </div>`).join("");
+  }catch(e){$("#rankList").innerHTML=`<p style="color:var(--chalk-dim)">加载失败，稍后再试</p>`}
+}
+async function renick(){
+  S.nick=genNick();save();
+  const el=$("#myNick");if(el)el.textContent=S.nick;
+  // 已上过榜的话，静默用新昵称更新榜上记录
+  if(S.onBoard&&S.best.xk!=null&&location.protocol.startsWith("http")){
+    try{await fetch("api/rank",{method:"POST",headers:{"content-type":"application/json"},
+      body:JSON.stringify({id:S.uid,nick:S.nick,score:S.best.xk})});startRank();}catch(e){}
+  }
 }
 
 /* ================= 模式五：公式手册 ================= */
