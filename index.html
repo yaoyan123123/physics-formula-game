@@ -335,6 +335,18 @@ h1 .hl{color:var(--yellow)}
 .xk .xkbest{margin-left:auto;border:1.5px dashed var(--yellow);border-radius:12px;padding:6px 14px;color:var(--yellow);font-size:.9rem;white-space:nowrap}
 .mode.m6 h3{color:var(--err)}
 .mode.m7 h3{color:var(--blue)}
+.paper{
+  display:flex;align-items:center;gap:18px;cursor:pointer;margin:4px 0;flex-wrap:wrap;
+  border:2.5px solid var(--chalk);border-radius:var(--sketch);
+  padding:14px 20px;background:rgba(255,255,255,.025);transition:all .2s ease;
+  text-decoration:none;color:var(--chalk);
+}
+.paper:hover{transform:translateY(-3px);box-shadow:0 8px 18px rgba(0,0,0,.35);background:rgba(255,255,255,.05)}
+.paper .ic{font-size:2rem}
+.paper h3{font-size:1.15rem;color:var(--ok);margin-bottom:2px}
+.paper p{color:var(--chalk-dim);font-size:.85rem}
+.paper .go{margin-left:auto;border:1.5px dashed var(--chalk-dim);border-radius:12px;padding:5px 14px;color:var(--chalk-dim);font-size:.9rem;white-space:nowrap}
+.paper:hover .go{color:var(--ok);border-color:var(--ok)}
 .ol{
   display:inline-block;font-style:normal;font-size:.72rem;color:var(--chalk-dim);
   border:1.2px solid var(--chalk-dim);border-radius:6px;padding:0 6px;margin-right:8px;vertical-align:2px;
@@ -428,6 +440,16 @@ h1 .hl{color:var(--yellow)}
       <div class="mode m6" onclick="startMode('wrong')"><span class="tag">巩固</span><div class="ic">📕</div><h3>错题重刷</h3><p>只刷答错过的公式，答对自动移出（待消灭 <b id="wrongCnt">0</b> 题）</p></div>
       <div class="mode m7" onclick="startMode('tf')"><span class="tag">判断</span><div class="ic">⚖️</div><h3>概念·史实判断</h3><p>42 条学考高频概念与物理学史，每题带解析</p></div>
     </div>
+
+    <div class="panel-label">④ 真题详解 <small>期末真题 · 逐题全解 · 可下载打印</small></div>
+    <a class="paper" href="papers/2026-gaoyi-qimo-xiangjie.pdf" target="_blank" rel="noopener">
+      <span class="ic">📄</span>
+      <div>
+        <h3>2026 年上学期 · 高一物理期末调研考试</h3>
+        <p>全解彩版 PDF（2026.7.9）· 逐题详细解析 · 手机直接看，也可下载打印</p>
+      </div>
+      <span class="go">打开 →</span>
+    </a>
   </section>
 
   <!-- ============ 游戏页 ============ -->
