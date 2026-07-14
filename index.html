@@ -360,6 +360,30 @@ h1 .hl{color:var(--yellow)}
 .dust{position:fixed;width:5px;height:5px;border-radius:50%;pointer-events:none;z-index:99;animation:dust .7s ease-out forwards}
 @keyframes dust{to{transform:translate(var(--dx),var(--dy)) scale(.2);opacity:0}}
 
+/* 顶部闪光跳转横幅 */
+.flashbar{
+  display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;
+  margin:2px auto 16px;max-width:680px;padding:11px 20px;
+  border:2.5px solid var(--yellow);border-radius:var(--sketch);
+  color:var(--yellow);text-decoration:none;font-size:1.08rem;letter-spacing:.04em;
+  background:linear-gradient(110deg,rgba(255,217,94,.07) 40%,rgba(255,217,94,.3) 50%,rgba(255,217,94,.07) 60%);
+  background-size:250% 100%;position:relative;z-index:2;
+  animation:shine 2.4s linear infinite,glowpulse 1.5s ease-in-out infinite;
+}
+.flashbar:hover{transform:translateY(-2px)}
+.flashbar .new{
+  font-size:.72rem;background:var(--pink);color:#3a2030;border-radius:10px;
+  padding:2px 10px;letter-spacing:.12em;animation:bounce2 1s ease-in-out infinite;
+}
+.flashbar .arrow{animation:slidearrow 1s ease-in-out infinite}
+@keyframes shine{to{background-position:-250% 0}}
+@keyframes glowpulse{
+  0%,100%{box-shadow:0 0 8px rgba(255,217,94,.4);border-color:var(--yellow);color:var(--yellow)}
+  50%{box-shadow:0 0 26px rgba(255,158,178,.65);border-color:var(--pink);color:var(--pink)}
+}
+@keyframes bounce2{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes slidearrow{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+
 .topline{display:flex;justify-content:flex-end;gap:10px;margin-bottom:4px}
 
 /* ============ 物理模型示意图（数形结合） ============ */
@@ -384,6 +408,12 @@ h1 .hl{color:var(--yellow)}
   <svg class="doodle d1" viewBox="0 0 100 100"><path d="M50 8 C62 22 66 44 58 66 L42 66 C34 44 38 22 50 8 Z M42 66 L34 84 L44 74 M58 66 L66 84 L56 74 M50 74 L50 88"/><circle cx="50" cy="34" r="6"/></svg>
   <svg class="doodle d2" viewBox="0 0 120 100"><path d="M60 30 C40 18 22 30 24 50 C26 72 44 84 60 80 C76 84 94 72 96 50 C98 30 80 18 60 30 Z M60 30 C60 22 64 16 70 12 M8 6 L60 30" stroke-dasharray="0"/><path d="M14 2 L8 6 L12 12"/></svg>
   <svg class="doodle d3" viewBox="0 0 80 80"><ellipse cx="40" cy="40" rx="34" ry="13"/><ellipse cx="40" cy="40" rx="34" ry="13" transform="rotate(60 40 40)"/><ellipse cx="40" cy="40" rx="34" ry="13" transform="rotate(-60 40 40)"/><circle cx="40" cy="40" r="4"/></svg>
+
+  <a class="flashbar" href="daan.html">
+    <span class="new">NEW</span>
+    🎉 期末考试答案已出！2026 高一物理全解 · 高清彩版
+    <span class="arrow">👉 点我直达</span>
+  </a>
 
   <div class="topline">
     <button class="btn ghost" onclick="resetAll()">🧹 重置进度</button>
