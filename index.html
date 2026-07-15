@@ -1161,7 +1161,7 @@ async function submitScore(board){
   ensureIdentity();
   const sc=board==="stars"?totalStars():lastScores[board];
   if(sc==null){alert("先玩一局再来上榜");return}
-  const btn=[...document.querySelectorAll("#rExtra,#rExtra2,#starsUp")].find(b=>b&&(b.textContent.includes("上榜")||b.textContent.includes("上传")||b.textContent.includes("重试")));
+  const btn=[...document.querySelectorAll("#rExtra,#rExtra2,#starsUp")].find(b=>b&&/🏆|⏳|上传|重试/.test(b.textContent));
   if(btn)btn.textContent="⏳ 上传中…";
   try{
     const r=await fetch("api/rank",{method:"POST",headers:{"content-type":"application/json"},
