@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-label="物理的一天主角小物">
+  <rect width="180" height="180" rx="38" fill="#f7edda"/>
+  <ellipse cx="91" cy="158" rx="56" ry="12" fill="#19324a" opacity=".16"/><path d="M48 57q4-27 35-29h31q24 2 28 29l8 73q2 23-23 25H57q-24-3-21-25z" fill="#527b96" stroke="#19324a" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M60 62q31-23 67 0" fill="none" stroke="#f6c85f" stroke-width="12" stroke-linecap="round"/><rect x="49" y="82" width="91" height="57" rx="20" fill="#fff3d4" stroke="#19324a" stroke-width="7"/>
+  <circle cx="76" cy="105" r="6" fill="#19324a"/><circle cx="113" cy="105" r="6" fill="#19324a"/><path d="M81 122q14 10 28 0" fill="none" stroke="#19324a" stroke-width="6" stroke-linecap="round"/>
+  <path d="M38 98 20 113M146 98l17 14M66 155l-8 15M119 155l8 15" fill="none" stroke="#19324a" stroke-width="8" stroke-linecap="round"/><path d="m31 65 15 8m98-7 15-8" stroke="#f28b50" stroke-width="7" stroke-linecap="round"/>
+</svg>

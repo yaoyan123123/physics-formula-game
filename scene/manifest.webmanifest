@@ -1,0 +1,20 @@
+{
+  "name": "物理的一天",
+  "short_name": "物理的一天",
+  "description": "在六个生活场景里预测、观察并解释物理现象。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f7edda",
+  "theme_color": "#f7edda",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
