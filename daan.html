@@ -50,6 +50,25 @@ h2{font-size:1.25rem;color:var(--ok);letter-spacing:.03em}
 }
 .foot{text-align:center;color:var(--chalk-dim);font-size:.85rem;margin-top:30px;line-height:1.8}
 .foot a{color:var(--yellow);text-decoration:none}
+/* 全科九门网格 */
+.subjects{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px}
+@media(min-width:560px){.subjects{grid-template-columns:1fr 1fr}}
+@media(min-width:860px){.subjects{grid-template-columns:1fr 1fr 1fr}}
+.subj{
+  border:2.5px solid rgba(244,239,226,.75);border-radius:var(--sketch);
+  padding:16px 18px 14px;background:rgba(255,255,255,.025);transition:all .18s ease;
+}
+.subj:hover{transform:translateY(-3px);box-shadow:0 8px 18px rgba(0,0,0,.35)}
+.subj h3{font-size:1.15rem;color:var(--yellow);margin-bottom:10px}
+.subj .row{display:flex;gap:10px;flex-wrap:wrap}
+.subj .fbtn{
+  flex:1;min-width:96px;text-align:center;text-decoration:none;
+  color:var(--chalk);border:1.8px dashed var(--chalk-dim);border-radius:12px;
+  padding:8px 10px;font-size:.92rem;transition:all .15s;white-space:nowrap;
+}
+.subj .fbtn:hover{color:var(--ok);border-color:var(--ok)}
+.subj .mini{display:block;margin-top:8px;font-size:.76rem;color:var(--chalk-dim)}
+.subj .mini a{color:var(--chalk-dim)}
 </style>
 </head>
 <body>
@@ -62,7 +81,49 @@ h2{font-size:1.25rem;color:var(--ok);letter-spacing:.03em}
 
   <div class="exam">
     <div class="exam-head">
-      <h2>2026 年上学期 · 高一物理期末调研考试（全解）</h2>
+      <h2>📚 高一期末 · 全科九门 试卷 + 答案（原版文件）</h2>
+      <span class="date">2026 上学期期末调研</span>
+    </div>
+    <p style="color:var(--chalk-dim);font-size:.85rem;margin:4px 0 6px">
+      全部为原版文件直传 · 点开即看 · 均可下载打印 · 试卷扫描件建议横屏或双指放大
+    </p>
+    <div class="subjects">
+      <div class="subj"><h3>📖 语文</h3><div class="row">
+        <a class="fbtn" href="papers/yuwen-shijuan.pdf" target="_blank">📝 试卷</a>
+        <a class="fbtn" href="papers/yuwen-daan.docx">✅ 答案（Word 原版）</a></div>
+        <span class="mini">手机不便开 Word？<a href="papers/yuwen-daan.pdf" target="_blank">网页预览版</a>（转档，以原版为准）</span></div>
+      <div class="subj"><h3>📐 数学</h3><div class="row">
+        <a class="fbtn" href="papers/shuxue-shijuan.pdf" target="_blank">📝 试卷</a>
+        <a class="fbtn" href="papers/shuxue-daan.pdf" target="_blank">✅ 答案</a></div></div>
+      <div class="subj"><h3>🔤 英语</h3><div class="row">
+        <a class="fbtn" href="papers/yingyu-shijuan.pdf" target="_blank">📝 试卷</a>
+        <a class="fbtn" href="papers/yingyu-daan.pdf" target="_blank">✅ 答案+听力原文</a></div></div>
+      <div class="subj"><h3>⚡ 物理</h3><div class="row">
+        <a class="fbtn" href="papers/wuli-shijuan.pdf" target="_blank">📝 试卷</a>
+        <a class="fbtn" href="papers/wuli-daan.pdf" target="_blank">✅ 答案</a></div>
+        <span class="mini">⭐ 推荐看下方「全解彩版」逐题详解</span></div>
+      <div class="subj"><h3>🧪 化学</h3><div class="row">
+        <a class="fbtn" href="papers/huaxue-shijuan.pdf" target="_blank">📝 试卷</a>
+        <a class="fbtn" href="papers/huaxue-daan.pdf" target="_blank">✅ 答案</a></div></div>
+      <div class="subj"><h3>🧬 生物</h3><div class="row">
+        <a class="fbtn" href="papers/shengwu-shijuan.pdf" target="_blank">📝 试卷</a>
+        <a class="fbtn" href="papers/shengwu-daan.pdf" target="_blank">✅ 答案+评分标准</a></div></div>
+      <div class="subj"><h3>⚖️ 政治</h3><div class="row">
+        <a class="fbtn" href="papers/zhengzhi-shijuan.pdf" target="_blank">📝 试卷</a>
+        <a class="fbtn" href="papers/zhengzhi-daan.pdf" target="_blank">✅ 答案</a></div></div>
+      <div class="subj"><h3>📜 历史</h3><div class="row">
+        <a class="fbtn" href="papers/lishi-shijuan.pdf" target="_blank">📝 试卷</a>
+        <a class="fbtn" href="papers/lishi-daan.docx">✅ 答案（Word 原版）</a></div>
+        <span class="mini">手机不便开 Word？<a href="papers/lishi-daan.pdf" target="_blank">网页预览版</a>（转档，以原版为准）</span></div>
+      <div class="subj"><h3>🌍 地理</h3><div class="row">
+        <a class="fbtn" href="papers/dili-shijuan.pdf" target="_blank">📝 试卷</a>
+        <a class="fbtn" href="papers/dili-daan.pdf" target="_blank">✅ 答案</a></div></div>
+    </div>
+  </div>
+
+  <div class="exam">
+    <div class="exam-head">
+      <h2>⭐ 物理 · 全解彩版（逐题详解）</h2>
       <span class="date">2026.7.9</span>
     </div>
     <div class="tools">
