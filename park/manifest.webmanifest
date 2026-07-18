@@ -1,0 +1,18 @@
+{
+  "name": "物理乐园 3D",
+  "short_name": "物理乐园",
+  "description": "用物理修好六座设施，重新点亮整座游乐园。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#19324a",
+  "theme_color": "#19324a",
+  "lang": "zh-CN",
+  "icons": [{
+    "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='40' fill='%23f7edda'/%3E%3Ccircle cx='96' cy='96' r='62' fill='none' stroke='%2319324a' stroke-width='10'/%3E%3Cpath d='M96 34v124M34 96h124M52 52l88 88M140 52l-88 88' stroke='%23f28b50' stroke-width='8'/%3E%3Ccircle cx='96' cy='96' r='13' fill='%2319324a'/%3E%3C/svg%3E",
+    "sizes": "192x192",
+    "type": "image/svg+xml",
+    "purpose": "any maskable"
+  }]
+}
