@@ -50,6 +50,8 @@ h3 { font-size:22px; }
 .eyebrow { margin-bottom:9px; color:var(--orange-dark); font-weight:950; font-size:13px; letter-spacing:.12em; text-transform:uppercase; }
 .lead { max-width:520px; color:var(--muted); font-size:17px; line-height:1.75; }.lead.small { font-size:15px; }
 .micro,.hint { margin:14px 0 0; color:var(--muted); font-size:12px; line-height:1.6; }.center { text-align:center; }
+.park-link { display:flex; align-items:center; gap:10px; width:min(100%,420px); min-height:48px; margin:18px 0 2px; padding:10px 16px; border:3px solid var(--line); border-radius:16px; background:var(--sun); color:var(--ink-on-warm); text-decoration:none; font-weight:950; box-shadow:0 4px 0 var(--line); }
+.park-link:hover { filter:saturate(1.08) brightness(1.03); }.park-link:active { transform:translateY(2px); box-shadow:0 2px 0 var(--line); }
 .primary,.secondary { min-height:48px; padding:11px 22px; border:3px solid var(--line); border-radius:16px; font-weight:950; cursor:pointer; }
 .primary { background:var(--orange); color:var(--ink-on-warm); box-shadow:0 5px 0 var(--line); }.primary:hover { filter:saturate(1.12) brightness(1.03); }.primary:active { transform:translateY(3px); box-shadow:0 2px 0 var(--line); }
 .secondary { background:var(--paper-2); }.big { min-width:210px; min-height:58px; font-size:19px; }.wide { width:100%; }
@@ -281,7 +283,7 @@ window.ASSETS = {"compass":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"
   const render = () => { simToken++; document.documentElement.dataset.screen = screen; app.innerHTML = screen === "TITLE" ? title() : screen === "MAP" ? map() : screen === "SCENE" ? scenePage() : screen === "DIALOG" ? dialog() : screen === "TOOL" ? tool() : screen === "QUEST" ? questPage() : screen === "SIM" ? simPage() : result(); };
 
   function title() {
-    return shell(`<section class="title-card paper-card"><div class="sun-doodle">☀</div><div class="hero-art">${asset("hero")}</div><p class="eyebrow">一场发生在生活里的实验课</p><h1>物理的一天</h1><p class="lead">跟小物一起进电梯、推箱子、拉弹簧。先大胆预测，再亲眼观察，最后把公式讲明白。</p><button class="primary big" data-act="start">开始今天</button><p class="micro">零压力闯关 · 答错不扣分 · 离线可玩</p><p class="micro"><a href="../" style="color:inherit">← 还想背公式?回《黑板大作战》</a></p></section>`, false);
+    return shell(`<section class="title-card paper-card"><div class="sun-doodle">☀</div><div class="hero-art">${asset("hero")}</div><p class="eyebrow">一场发生在生活里的实验课</p><h1>物理的一天</h1><p class="lead">跟小物一起进电梯、推箱子、拉弹簧。先大胆预测，再亲眼观察，最后把公式讲明白。</p><button class="primary big" data-act="start">开始今天</button><a class="park-link" href="../park/">🎡 新园区开放:去《物理乐园》修设施</a><p class="micro">零压力闯关 · 答错不扣分 · 离线可玩</p><p class="micro"><a href="../" style="color:inherit">← 还想背公式?回《黑板大作战》</a></p></section>`, false);
   }
 
   function map() {
