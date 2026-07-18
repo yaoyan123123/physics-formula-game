@@ -64,11 +64,48 @@ h2{font-size:1.25rem;color:var(--ok);letter-spacing:.03em}
 .subj .fbtn{
   flex:1;min-width:96px;text-align:center;text-decoration:none;
   color:var(--chalk);border:1.8px dashed var(--chalk-dim);border-radius:12px;
-  padding:8px 10px;font-size:.92rem;transition:all .15s;white-space:nowrap;
+  padding:8px 10px;font:inherit;font-size:.92rem;transition:all .15s;white-space:nowrap;
+  background:rgba(255,255,255,.025);cursor:pointer;
 }
 .subj .fbtn:hover{color:var(--ok);border-color:var(--ok)}
 .subj .mini{display:block;margin-top:8px;font-size:.76rem;color:var(--chalk-dim)}
-.subj .mini a{color:var(--chalk-dim)}
+.subj .mini a{color:var(--chalk-dim);text-underline-offset:3px}
+.viewer{
+  position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;
+  background:rgba(10,17,14,.97);color:var(--chalk);font-family:var(--font-hand);
+}
+.viewer[hidden]{display:none}
+.viewer-bar{
+  display:flex;align-items:center;gap:10px;padding:10px max(12px,env(safe-area-inset-right)) 10px max(12px,env(safe-area-inset-left));
+  background:#1d2d25;border-bottom:1px solid rgba(244,239,226,.2);
+}
+.viewer-title{min-width:0;flex:1;font-size:1rem;color:var(--yellow);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.viewer-count{color:var(--chalk-dim);font-size:.86rem;white-space:nowrap}
+.viewer-close,.viewer-nav{
+  border:1.5px solid rgba(244,239,226,.45);border-radius:10px;background:rgba(255,255,255,.06);
+  color:var(--chalk);font:inherit;cursor:pointer;
+}
+.viewer-close{padding:7px 12px}
+.viewer-stage{
+  flex:1;min-height:0;display:flex;align-items:center;justify-content:center;
+  overflow:auto;padding:12px;
+}
+.viewer-stage img{
+  display:block;max-width:100%;height:auto;max-height:calc(100vh - 132px);object-fit:contain;
+  background:#fff;border-radius:5px;box-shadow:0 8px 30px rgba(0,0,0,.55);
+}
+.viewer-controls{
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;
+  padding:10px max(12px,env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));
+  background:#1d2d25;border-top:1px solid rgba(244,239,226,.2);
+}
+.viewer-nav{padding:9px 14px;min-width:92px}
+.viewer-nav:last-child{justify-self:end}
+.viewer-nav:disabled{opacity:.32;cursor:default}
+.viewer-download{color:var(--yellow);font-size:.86rem;text-decoration:none;white-space:nowrap}
+@media(max-width:420px){
+  .viewer-count{font-size:.78rem}.viewer-download{font-size:.78rem}.viewer-nav{min-width:78px;padding:9px 8px}
+}
 </style>
 </head>
 <body>
@@ -79,49 +116,7 @@ h2{font-size:1.25rem;color:var(--ok);letter-spacing:.03em}
   <h1>📄 期末考试<b>答案</b></h1>
   <p class="sub">最近考试的试卷答案与逐题解析 · 高清彩版 · 图片可双指放大细看</p>
 
-  <div class="exam">
-    <div class="exam-head">
-      <h2>📚 高一期末 · 全科九门 试卷 + 答案（原版文件）</h2>
-      <span class="date">2026 上学期期末调研</span>
-    </div>
-    <p style="color:var(--chalk-dim);font-size:.85rem;margin:4px 0 6px">
-      全部为原版文件直传 · 点开即看 · 均可下载打印 · 试卷扫描件建议横屏或双指放大
-    </p>
-    <div class="subjects">
-      <div class="subj"><h3>📖 语文</h3><div class="row">
-        <a class="fbtn" href="papers/yuwen-shijuan.pdf" target="_blank">📝 试卷</a>
-        <a class="fbtn" href="papers/yuwen-daan.docx">✅ 答案（Word 原版）</a></div>
-        <span class="mini">手机不便开 Word？<a href="papers/yuwen-daan.pdf" target="_blank">网页预览版</a>（转档，以原版为准）</span></div>
-      <div class="subj"><h3>📐 数学</h3><div class="row">
-        <a class="fbtn" href="papers/shuxue-shijuan.pdf" target="_blank">📝 试卷</a>
-        <a class="fbtn" href="papers/shuxue-daan.pdf" target="_blank">✅ 答案</a></div></div>
-      <div class="subj"><h3>🔤 英语</h3><div class="row">
-        <a class="fbtn" href="papers/yingyu-shijuan.pdf" target="_blank">📝 试卷</a>
-        <a class="fbtn" href="papers/yingyu-daan.pdf" target="_blank">✅ 答案+听力原文</a></div></div>
-      <div class="subj"><h3>⚡ 物理</h3><div class="row">
-        <a class="fbtn" href="papers/wuli-shijuan.pdf" target="_blank">📝 试卷</a>
-        <a class="fbtn" href="papers/wuli-daan.pdf" target="_blank">✅ 答案</a></div>
-        <span class="mini">⭐ 推荐看下方「全解彩版」逐题详解</span></div>
-      <div class="subj"><h3>🧪 化学</h3><div class="row">
-        <a class="fbtn" href="papers/huaxue-shijuan.pdf" target="_blank">📝 试卷</a>
-        <a class="fbtn" href="papers/huaxue-daan.pdf" target="_blank">✅ 答案</a></div></div>
-      <div class="subj"><h3>🧬 生物</h3><div class="row">
-        <a class="fbtn" href="papers/shengwu-shijuan.pdf" target="_blank">📝 试卷</a>
-        <a class="fbtn" href="papers/shengwu-daan.pdf" target="_blank">✅ 答案+评分标准</a></div></div>
-      <div class="subj"><h3>⚖️ 政治</h3><div class="row">
-        <a class="fbtn" href="papers/zhengzhi-shijuan.pdf" target="_blank">📝 试卷</a>
-        <a class="fbtn" href="papers/zhengzhi-daan.pdf" target="_blank">✅ 答案</a></div></div>
-      <div class="subj"><h3>📜 历史</h3><div class="row">
-        <a class="fbtn" href="papers/lishi-shijuan.pdf" target="_blank">📝 试卷</a>
-        <a class="fbtn" href="papers/lishi-daan.docx">✅ 答案（Word 原版）</a></div>
-        <span class="mini">手机不便开 Word？<a href="papers/lishi-daan.pdf" target="_blank">网页预览版</a>（转档，以原版为准）</span></div>
-      <div class="subj"><h3>🌍 地理</h3><div class="row">
-        <a class="fbtn" href="papers/dili-shijuan.pdf" target="_blank">📝 试卷</a>
-        <a class="fbtn" href="papers/dili-daan.pdf" target="_blank">✅ 答案</a></div></div>
-    </div>
-  </div>
-
-  <div class="exam">
+  <div class="exam" id="physics-color">
     <div class="exam-head">
       <h2>⭐ 物理 · 全解彩版（逐题详解）</h2>
       <span class="date">2026.7.9</span>
@@ -140,10 +135,167 @@ h2{font-size:1.25rem;color:var(--ok);letter-spacing:.03em}
     </div>
   </div>
 
+  <div class="exam" id="all-subjects">
+    <div class="exam-head">
+      <h2>📚 高一期末 · 全科九门 试卷 + 答案</h2>
+      <span class="date">2026 上学期期末调研</span>
+    </div>
+    <p style="color:var(--chalk-dim);font-size:.85rem;margin:4px 0 6px">
+      点「预览」直接在页内翻看 · 原版文件仍可下载打印 · 手机可左右滑页
+    </p>
+    <div class="subjects">
+      <div class="subj"><h3>📖 语文</h3><div class="row">
+        <button class="fbtn" type="button" data-preview="yuwen-sj" data-title="语文试卷" data-download="papers/yuwen-shijuan.pdf">📝 预览试卷</button>
+        <button class="fbtn" type="button" data-preview="yuwen-da" data-title="语文答案" data-download="papers/yuwen-daan.docx">✅ 预览答案</button></div>
+        <span class="mini">原版下载：<a href="papers/yuwen-shijuan.pdf" target="_blank" rel="noopener">试卷 PDF</a> · <a href="papers/yuwen-daan.docx">答案 Word</a>（预览由转档生成，以 Word 原版为准）</span></div>
+      <div class="subj"><h3>📐 数学</h3><div class="row">
+        <button class="fbtn" type="button" data-preview="shuxue-sj" data-title="数学试卷" data-download="papers/shuxue-shijuan.pdf">📝 预览试卷</button>
+        <button class="fbtn" type="button" data-preview="shuxue-da" data-title="数学答案" data-download="papers/shuxue-daan.pdf">✅ 预览答案</button></div>
+        <span class="mini">原版下载：<a href="papers/shuxue-shijuan.pdf" target="_blank" rel="noopener">试卷</a> · <a href="papers/shuxue-daan.pdf" target="_blank" rel="noopener">答案</a></span></div>
+      <div class="subj"><h3>🔤 英语</h3><div class="row">
+        <button class="fbtn" type="button" data-preview="yingyu-sj" data-title="英语试卷" data-download="papers/yingyu-shijuan.pdf">📝 预览试卷</button>
+        <button class="fbtn" type="button" data-preview="yingyu-da" data-title="英语答案+听力原文" data-download="papers/yingyu-daan.pdf">✅ 预览答案</button></div>
+        <span class="mini">原版下载：<a href="papers/yingyu-shijuan.pdf" target="_blank" rel="noopener">试卷</a> · <a href="papers/yingyu-daan.pdf" target="_blank" rel="noopener">答案+听力原文</a></span></div>
+      <div class="subj"><h3>⚡ 物理</h3><div class="row">
+        <button class="fbtn" type="button" data-preview="wuli-sj" data-title="物理试卷" data-download="papers/wuli-shijuan.pdf">📝 预览试卷</button>
+        <button class="fbtn" type="button" data-preview="wuli-da" data-title="物理官方答案" data-download="papers/wuli-daan.pdf">✅ 预览答案</button></div>
+        <span class="mini">原版下载：<a href="papers/wuli-shijuan.pdf" target="_blank" rel="noopener">试卷</a> · <a href="papers/wuli-daan.pdf" target="_blank" rel="noopener">答案</a> · ⭐ 上方另有全解彩版</span></div>
+      <div class="subj"><h3>🧪 化学</h3><div class="row">
+        <button class="fbtn" type="button" data-preview="huaxue-sj" data-title="化学试卷" data-download="papers/huaxue-shijuan.pdf">📝 预览试卷</button>
+        <button class="fbtn" type="button" data-preview="huaxue-da" data-title="化学答案" data-download="papers/huaxue-daan.pdf">✅ 预览答案</button></div>
+        <span class="mini">原版下载：<a href="papers/huaxue-shijuan.pdf" target="_blank" rel="noopener">试卷</a> · <a href="papers/huaxue-daan.pdf" target="_blank" rel="noopener">答案</a></span></div>
+      <div class="subj"><h3>🧬 生物</h3><div class="row">
+        <button class="fbtn" type="button" data-preview="shengwu-sj" data-title="生物试卷" data-download="papers/shengwu-shijuan.pdf">📝 预览试卷</button>
+        <button class="fbtn" type="button" data-preview="shengwu-da" data-title="生物答案+评分标准" data-download="papers/shengwu-daan.pdf">✅ 预览答案</button></div>
+        <span class="mini">原版下载：<a href="papers/shengwu-shijuan.pdf" target="_blank" rel="noopener">试卷</a> · <a href="papers/shengwu-daan.pdf" target="_blank" rel="noopener">答案+评分标准</a></span></div>
+      <div class="subj"><h3>⚖️ 政治</h3><div class="row">
+        <button class="fbtn" type="button" data-preview="zhengzhi-sj" data-title="政治试卷" data-download="papers/zhengzhi-shijuan.pdf">📝 预览试卷</button>
+        <button class="fbtn" type="button" data-preview="zhengzhi-da" data-title="政治答案" data-download="papers/zhengzhi-daan.pdf">✅ 预览答案</button></div>
+        <span class="mini">原版下载：<a href="papers/zhengzhi-shijuan.pdf" target="_blank" rel="noopener">试卷</a> · <a href="papers/zhengzhi-daan.pdf" target="_blank" rel="noopener">答案</a></span></div>
+      <div class="subj"><h3>📜 历史</h3><div class="row">
+        <button class="fbtn" type="button" data-preview="lishi-sj" data-title="历史试卷" data-download="papers/lishi-shijuan.pdf">📝 预览试卷</button>
+        <button class="fbtn" type="button" data-preview="lishi-da" data-title="历史答案" data-download="papers/lishi-daan.docx">✅ 预览答案</button></div>
+        <span class="mini">原版下载：<a href="papers/lishi-shijuan.pdf" target="_blank" rel="noopener">试卷 PDF</a> · <a href="papers/lishi-daan.docx">答案 Word</a>（预览由转档生成，以 Word 原版为准）</span></div>
+      <div class="subj"><h3>🌍 地理</h3><div class="row">
+        <button class="fbtn" type="button" data-preview="dili-sj" data-title="地理试卷" data-download="papers/dili-shijuan.pdf">📝 预览试卷</button>
+        <button class="fbtn" type="button" data-preview="dili-da" data-title="地理答案" data-download="papers/dili-daan.pdf">✅ 预览答案</button></div>
+        <span class="mini">原版下载：<a href="papers/dili-shijuan.pdf" target="_blank" rel="noopener">试卷</a> · <a href="papers/dili-daan.pdf" target="_blank" rel="noopener">答案</a></span></div>
+    </div>
+  </div>
+
   <p class="foot">
     对照答案发现哪个公式不熟？<a href="./">回「粉笔物理」练它 →</a><br>
     wuliyan.com · 免费 · 持续更新
   </p>
 </div>
+
+<section id="previewViewer" class="viewer" role="dialog" aria-modal="true" aria-labelledby="previewTitle" hidden>
+  <div class="viewer-bar">
+    <h2 class="viewer-title" id="previewTitle">资料预览</h2>
+    <span class="viewer-count" id="previewCount">第 1 / 1 页</span>
+    <button class="viewer-close" id="previewClose" type="button" aria-label="关闭预览">关闭 ×</button>
+  </div>
+  <div class="viewer-stage" id="previewStage">
+    <img id="previewImage" src="" alt="">
+  </div>
+  <div class="viewer-controls">
+    <button class="viewer-nav" id="previewPrev" type="button">← 上一页</button>
+    <a class="viewer-download" id="previewDownload" href="#" target="_blank" rel="noopener">下载原版</a>
+    <button class="viewer-nav" id="previewNext" type="button">下一页 →</button>
+  </div>
+</section>
+
+<script>
+const PREVIEWS = Object.freeze({
+  'yuwen-sj': 8, 'yuwen-da': 2,
+  'shuxue-sj': 4, 'shuxue-da': 4,
+  'yingyu-sj': 10, 'yingyu-da': 3,
+  'wuli-sj': 6, 'wuli-da': 2,
+  'huaxue-sj': 8, 'huaxue-da': 1,
+  'shengwu-sj': 6, 'shengwu-da': 1,
+  'zhengzhi-sj': 6, 'zhengzhi-da': 1,
+  'lishi-sj': 4, 'lishi-da': 2,
+  'dili-sj': 6, 'dili-da': 1
+});
+
+const viewer = document.getElementById('previewViewer');
+const previewTitle = document.getElementById('previewTitle');
+const previewCount = document.getElementById('previewCount');
+const previewImage = document.getElementById('previewImage');
+const previewDownload = document.getElementById('previewDownload');
+const previewPrev = document.getElementById('previewPrev');
+const previewNext = document.getElementById('previewNext');
+const previewClose = document.getElementById('previewClose');
+let previewKey = '';
+let previewPage = 1;
+let previewPages = 1;
+let previousFocus = null;
+let touchStartX = null;
+
+function renderPreviewPage() {
+  previewImage.src = `daan/${previewKey}-p${previewPage}.jpg`;
+  previewImage.alt = `${previewTitle.textContent} 第 ${previewPage} 页`;
+  previewCount.textContent = `第 ${previewPage} / ${previewPages} 页`;
+  previewPrev.disabled = previewPage <= 1;
+  previewNext.disabled = previewPage >= previewPages;
+  document.getElementById('previewStage').scrollTop = 0;
+}
+
+function openPreview(button) {
+  const key = button.dataset.preview;
+  if (!PREVIEWS[key]) return;
+  previousFocus = button;
+  previewKey = key;
+  previewPage = 1;
+  previewPages = PREVIEWS[key];
+  previewTitle.textContent = button.dataset.title || '资料预览';
+  previewDownload.href = button.dataset.download;
+  viewer.hidden = false;
+  document.body.style.overflow = 'hidden';
+  renderPreviewPage();
+  previewClose.focus();
+}
+
+function closePreview() {
+  viewer.hidden = true;
+  previewImage.src = '';
+  document.body.style.overflow = '';
+  if (previousFocus) previousFocus.focus();
+}
+
+function changePreviewPage(step) {
+  const nextPage = Math.max(1, Math.min(previewPages, previewPage + step));
+  if (nextPage === previewPage) return;
+  previewPage = nextPage;
+  renderPreviewPage();
+}
+
+document.querySelectorAll('[data-preview]').forEach((button) => {
+  button.addEventListener('click', () => openPreview(button));
+});
+previewClose.addEventListener('click', closePreview);
+previewPrev.addEventListener('click', () => changePreviewPage(-1));
+previewNext.addEventListener('click', () => changePreviewPage(1));
+viewer.addEventListener('click', (event) => {
+  if (event.target === viewer) closePreview();
+});
+document.addEventListener('keydown', (event) => {
+  if (viewer.hidden) return;
+  if (event.key === 'Escape') closePreview();
+  if (event.key === 'ArrowLeft') changePreviewPage(-1);
+  if (event.key === 'ArrowRight') changePreviewPage(1);
+});
+viewer.addEventListener('touchstart', (event) => {
+  touchStartX = event.changedTouches[0]?.clientX ?? null;
+}, { passive: true });
+viewer.addEventListener('touchend', (event) => {
+  if (touchStartX === null) return;
+  const touchEndX = event.changedTouches[0]?.clientX ?? touchStartX;
+  const distance = touchEndX - touchStartX;
+  touchStartX = null;
+  if (Math.abs(distance) < 55) return;
+  changePreviewPage(distance > 0 ? -1 : 1);
+}, { passive: true });
+</script>
 </body>
 </html>
