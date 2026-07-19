@@ -1,0 +1,11 @@
+.git
+.worktrees
+docs
+tests
+node_modules
+*.orig
+*.bak
+deploy-game.sh
+poster.png
+poster-daan.png
+qr.png
