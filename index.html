@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>粉笔物理 · 公式黑板大作战｜人教版2019 必修一~三 · 学考版</title>
-<meta name="description" content="高中物理公式记忆游戏：人教版2019必修一二三全13章67条核心公式，闯关地图+翻卡+连连看+极速问答+补全公式+学考模拟，数形结合边玩边背。">
+<title>粉笔物理 · 公式黑板大作战｜湖南高中物理合格考</title>
+<meta name="description" content="湖南高中物理合格考公式记忆游戏：人教版2019必修一、二、三全13章，闯关地图、翻卡、连连看、极速问答和18题公式冲刺。">
 <meta name="theme-color" content="#24352d">
 <meta property="og:type" content="website">
 <meta property="og:title" content="粉笔物理 · 公式黑板大作战">
-<meta property="og:description" content="人教版高中物理 67 条公式边玩边背：闯关地图、学考模拟、错题重刷，黑板粉笔风记忆游戏。">
+<meta property="og:description" content="湖南高中物理合格考必修公式边玩边背：闯关地图、18题公式冲刺、错题重刷，黑板粉笔风记忆游戏。">
 <meta property="og:url" content="https://wuliyan.com/">
 <meta property="og:image" content="https://wuliyan.com/og.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2324352d'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='%23ffd95e' font-family='Kaiti SC,serif'%3E物%3C/text%3E%3C/svg%3E">
@@ -193,6 +193,10 @@ h1 .hl{color:var(--yellow)}
 .face .formula{font-size:2rem;color:var(--yellow)}
 .face .note{font-size:.9rem;color:var(--chalk-dim);max-width:85%;line-height:1.5}
 .face .warn2{font-size:.85rem;color:var(--pink);max-width:85%;line-height:1.4}
+.condition{display:block;margin-top:10px;color:var(--yellow);font-size:.84rem;line-height:1.55}
+.condition::before{content:"适用条件：";font-weight:700}
+.exam-note{margin-top:12px}
+.exam-note p{color:var(--chalk-dim);font-size:.86rem;line-height:1.7;padding:4px 2px 2px}
 .face .hint{position:absolute;bottom:12px;font-size:.78rem;color:var(--chalk-dim)}
 .flash-btns{display:flex;gap:16px;justify-content:center;margin-top:22px}
 .flash-prog{margin-top:14px;color:var(--chalk-dim);font-size:.9rem}
@@ -424,30 +428,34 @@ h1 .hl{color:var(--yellow)}
   <!-- ============ 首页 ============ -->
   <section class="screen on" id="scr-home">
     <div class="hero">
-      <span class="kicker">人教版 2019 · 必修一 / 二 / 三</span>
+      <span class="kicker">湖南高中物理合格考 · 人教版 2019 必修一 / 二 / 三</span>
       <h1>粉笔物理 · <span class="hl">公式黑板大作战</span></h1>
       <svg class="squiggle" viewBox="0 0 300 16"><path d="M4 10 Q 30 2 56 9 T 108 9 T 160 9 T 212 9 T 264 9 L 296 7"/></svg>
-      <p class="sub">必修一 / 二 / 三 · 第 1 ~ 13 章 · <b id="subCnt">67</b> 条核心公式</p>
+      <p class="sub">必修一 / 二 / 三 · 第 1 ~ 13 章 · <b id="subCnt"></b> 条公式与核心关系</p>
       <div class="badges">
         <span class="badge title" id="bRank">🌱 物理萌新</span>
         <span class="badge">🔥 连续 <b id="bStk">0</b> 天</span>
         <span class="badge">⭐ 关卡星 <b id="bStars">0</b> / 39</span>
-        <span class="badge">掌握 <b id="bM">0 / 67</b></span>
+        <span class="badge">掌握 <b id="bM"></b></span>
       </div>
     </div>
 
     <div class="panel-label">① 闯关地图 <small>一章一关 · 预习翻卡 → 实战 10 题 · 正确率 90% 拿三星</small></div>
     <div class="map" id="map"></div>
 
-    <div class="panel-label">② 学考大考 <small>合格考模拟 · 推完地图来挑战 Boss</small></div>
+    <div class="panel-label">② 湖南学考专项 <small>18 道单选题公式冲刺 · 非完整试卷</small></div>
     <div class="xk" onclick="startMode('xk')">
       <span class="ic">🎓</span>
       <div>
-        <h3>学考冲刺模拟卷</h3>
-        <p>全 13 章混合 20 题（14 公式 + 6 概念判断），每题 5 分 · 100 分制 · 60 分合格 · 评定 A ~ E 等级</p>
+        <h3>湖南学考·18 题公式冲刺</h3>
+        <p>公式辨认、适用条件、基础计算与常见情境；覆盖必修一、必修二、必修三。</p>
       </div>
       <span class="xkbest" id="xkBest">尚未参加</span>
     </div>
+    <details class="fold exam-note">
+      <summary>ℹ️ 湖南物理合格考完整试卷是什么结构？</summary>
+      <p>物理考试 60 分钟，满分 100 分：18 道单项选择题共 54 分、3 道实验题共 12 分、3 道计算题共 34 分。本训练只对应单选题基础部分，不是完整试卷，也不预测官方合格结果。</p>
+    </details>
 
     <div class="panel-label">③ 自由练习 <small>想练哪块练哪块</small></div>
     <details class="fold">
@@ -469,8 +477,8 @@ h1 .hl{color:var(--yellow)}
       <div class="mode m4" onclick="startMode('blank')"><span class="tag">填空</span><div class="ic">✏️</div><h3>补全公式</h3><p>公式挖了个洞，选出缺失的部分</p></div>
       <div class="mode m5" onclick="startMode('sheet')"><span class="tag">复习</span><div class="ic">📖</div><h3>公式手册</h3><p>按章浏览全部公式，✓ 为已掌握</p></div>
       <div class="mode m6" onclick="startMode('wrong')"><span class="tag">巩固</span><div class="ic">📕</div><h3>错题重刷</h3><p>只刷答错过的公式，答对自动移出（待消灭 <b id="wrongCnt">0</b> 题）</p></div>
-      <div class="mode m7" onclick="startMode('tf')"><span class="tag">判断</span><div class="ic">⚖️</div><h3>概念·史实判断</h3><p>42 条学考高频概念与物理学史，每题带解析</p></div>
-      <div class="mode m8" onclick="startMode('rank')"><span class="tag">榜单</span><div class="ic">🏆</div><h3>匿名竞技榜</h3><p>学考 / 问答 / 手速 / 判断 / 星数五榜，随机昵称，不收集个人信息</p></div>
+      <div class="mode m7" onclick="startMode('tf')"><span class="tag">判断</span><div class="ic">⚖️</div><h3>概念·史实判断</h3><p>42 条必修概念与物理学史，每题带解析</p></div>
+      <div class="mode m8" onclick="startMode('rank')"><span class="tag">榜单</span><div class="ic">🏆</div><h3>匿名竞技榜</h3><p>湖南学考训练 / 问答 / 手速 / 判断 / 星数五榜，随机昵称，不收集个人信息</p></div>
     </div>
 
     <div class="panel-label">④ 期末考试答案 <small>最近几天的期末考试 · 高清全解 · 持续更新</small></div>
@@ -532,97 +540,101 @@ h1 .hl{color:var(--yellow)}
 </div>
 
 <script>
-/* ================= 数据：人教版2019 第1~10章 ================= */
+/* ================= 数据：人教版2019 第1~13章 ================= */
 const CH = {
   1:{nm:"运动的描述",bk:"必修一",s:"运动描述"}, 2:{nm:"匀变速直线运动的研究",bk:"必修一",s:"匀变速"},
   3:{nm:"相互作用——力",bk:"必修一",s:"相互作用"}, 4:{nm:"运动和力的关系",bk:"必修一",s:"运动与力"},
   5:{nm:"抛体运动",bk:"必修二",s:"抛体"}, 6:{nm:"圆周运动",bk:"必修二",s:"圆周"},
   7:{nm:"万有引力与宇宙航行",bk:"必修二",s:"万有引力"}, 8:{nm:"机械能守恒定律",bk:"必修二",s:"机械能"},
   9:{nm:"静电场及其应用",bk:"必修三",s:"静电场"}, 10:{nm:"静电场中的能量",bk:"必修三",s:"电场能量"},
-  11:{nm:"电路及其应用",bk:"必修三",s:"电路"}, 12:{nm:"电磁感应与电磁波初步",bk:"必修三",s:"电磁感应"},
-  13:{nm:"能源与可持续发展",bk:"必修三",s:"能源"}
+  11:{nm:"电路及其应用",bk:"必修三",s:"电路"}, 12:{nm:"电能 能量守恒定律",bk:"必修三",s:"电能"},
+  13:{nm:"电磁感应与电磁波初步",bk:"必修三",s:"电磁初步"}
 };
-/* c章节 n名称 f公式 b可挖空 t备注 */
+/* c章节 n名称 f公式 b可挖空 k适用条件 t说明 w易错点 */
 const DATA = [
- {c:1,n:"平均速度",f:"v̄ = Δx/Δt",b:["Δx","Δt"],t:"位移与时间之比，是矢量",w:"用位移算，别错用路程"},
- {c:1,n:"平均速率",f:"v = s/Δt",b:["s"],t:"路程 s 与时间之比，是标量",w:"往返运动：位移可为 0，路程不为 0"},
- {c:1,n:"加速度（定义式）",f:"a = Δv/Δt",b:["Δv"],t:"速度变化量与所用时间之比",w:"a 与 Δv 同向，与 v 方向无关"},
+ {c:1,n:"平均速度",f:"v̄ = Δx/Δt",b:["Δx","Δt"],k:"选定参考系，Δt ≠ 0",t:"位移与时间间隔之比，是矢量",w:"用位移计算，不要错用路程"},
+ {c:1,n:"平均速率",f:"v̄ = s/Δt",b:["s","Δt"],k:"用总路程除以总时间",t:"路程 s 与时间间隔之比，是标量",w:"往返运动中位移可为 0，路程通常不为 0"},
+ {c:1,n:"加速度（定义式）",f:"a = Δv/Δt",b:["Δv","Δt"],k:"平均加速度取有限时间间隔；瞬时加速度取极短时间间隔",t:"速度变化量与所用时间之比",w:"a 与 Δv 同向，不一定与 v 同向"},
 
- {c:2,n:"速度—时间关系",f:"v = v₀ + at",b:["v₀","at"],t:"匀变速直线运动基本公式",h:1,w:"减速运动 a 取负值代入"},
- {c:2,n:"位移—时间关系",f:"x = v₀t + ½at²",b:["v₀t","½at²"],t:"匀变速直线运动基本公式",h:1,w:"x 是位移不是路程，注意正负"},
- {c:2,n:"速度—位移关系",f:"v² − v₀² = 2ax",b:["2ax","v₀²"],t:"不涉及时间时优先使用",h:1,w:"题目不给时间 t 就用它"},
- {c:2,n:"匀变速平均速度",f:"v̄ = (v₀ + v)/2",b:["(v₀ + v)"],t:"也等于中间时刻的瞬时速度",w:"只适用于匀变速！"},
- {c:2,n:"逐差公式",f:"Δx = aT²",b:["aT²"],t:"相邻相等时间间隔的位移差恒定，纸带问题常用",w:"T 是相邻计时间隔，不是总时间"},
- {c:2,n:"自由落体·速度",f:"v = gt",b:["gt"],t:"初速度为零，加速度为 g",w:"前提：只受重力且 v₀ = 0"},
- {c:2,n:"自由落体·位移",f:"h = ½gt²",b:["½gt²"],t:"g ≈ 9.8 m/s²",w:"h 与 t² 成正比：时间翻倍位移×4"},
+ {c:2,n:"速度—时间关系",f:"v = v₀ + at",b:["v₀","at"],k:"匀变速直线运动",t:"先规定正方向，再把 v₀、a 代入",h:1,w:"减速运动的 a 与初速度方向相反"},
+ {c:2,n:"位移—时间关系",f:"x = v₀t + ½at²",b:["v₀t","½at²"],k:"匀变速直线运动，先规定正方向",t:"x 是相对初位置的位移",h:1,w:"位移有正负，不等同于路程"},
+ {c:2,n:"速度—位移关系",f:"v² − v₀² = 2ax",b:["2ax","v₀²"],k:"匀变速直线运动，先规定正方向",t:"不含时间，适合已知位移的情境",h:1,w:"a、x 的正负都由所选正方向决定"},
+ {c:2,n:"匀变速平均速度",f:"v̄ = (v₀ + v)/2",b:["(v₀ + v)"],k:"匀变速直线运动",t:"也等于中间时刻的瞬时速度",w:"非匀变速运动不能直接套用"},
+ {c:2,n:"逐差公式",f:"Δx = aT²",b:["aT²"],k:"匀变速直线运动，相邻相等时间间隔",t:"纸带中相邻相等时间内位移差恒定",w:"T 是相邻计时间隔，不是总时间"},
+ {c:2,n:"自由落体·速度",f:"v = gt",b:["gt"],k:"近地、初速度为零、忽略空气阻力、g 近似恒定",t:"速度方向竖直向下",w:"有明显空气阻力时不能直接套用"},
+ {c:2,n:"自由落体·位移",f:"h = ½gt²",b:["½gt²"],k:"近地、初速度为零、忽略空气阻力、g 近似恒定",t:"h 为下落高度，常取 g≈9.8 m/s² 或 10 m/s²",w:"h 与 t² 成正比，不是与 t 成正比"},
 
- {c:3,n:"重力",f:"G = mg",b:["mg"],t:"方向竖直向下",h:1,w:"竖直向下≠垂直向下（斜面上要分清）"},
- {c:3,n:"胡克定律",f:"F = kx",b:["kx"],t:"x 为形变量，k 为劲度系数（N/m）",h:1,w:"x 是形变量，不是弹簧总长！"},
- {c:3,n:"滑动摩擦力",f:"f = μN",b:["μN"],t:"N 为正压力，μ 为动摩擦因数",h:1,w:"N 不一定等于 mg（斜面/加压时）"},
- {c:3,n:"合力的范围",f:"|F₁ − F₂| ≤ F ≤ F₁ + F₂",b:["|F₁ − F₂|","F₁ + F₂"],t:"平行四边形定则",w:"夹角越大合力越小"},
- {c:3,n:"力的正交分解",f:"Fx = Fcosθ，Fy = Fsinθ",b:["Fcosθ","Fsinθ"],t:"θ 为 F 与 x 轴夹角",w:"靠角的边用 cos，对角的边用 sin"},
+ {c:3,n:"重力",f:"G = mg",b:["mg"],k:"近地面、g 近似恒定",t:"方向竖直向下",h:1,w:"竖直向下不等于垂直接触面向下"},
+ {c:3,n:"胡克定律",f:"F = kx",b:["kx"],k:"弹性限度内；公式给弹力大小",t:"x 为形变量，k 为劲度系数，单位 N/m",h:1,w:"x 是伸长量或压缩量，不是弹簧总长"},
+ {c:3,n:"滑动摩擦力",f:"f = μN",b:["μN"],k:"接触面间发生相对滑动",t:"N 为正压力，μ 为动摩擦因数",h:1,w:"N 不一定等于 mg"},
+ {c:3,n:"合力的范围",f:"|F₁ − F₂| ≤ F ≤ F₁ + F₂",b:["|F₁ − F₂|","F₁ + F₂"],k:"两个共点力",t:"由平行四边形定则得到",w:"两力夹角增大时，合力大小减小"},
+ {c:3,n:"力的正交分解",f:"Fₓ = Fcosθ，Fᵧ = Fsinθ",b:["Fcosθ","Fsinθ"],k:"θ 为力与所选 x 轴的夹角",t:"把一个力分解到相互垂直的两个方向",w:"先看清 θ 对应哪条坐标轴"},
 
- {c:4,n:"牛顿第二定律",f:"F = ma",b:["ma"],t:"F 为合外力，单位 N",h:1,w:"F 是合外力；a 与合力同向"},
- {c:4,n:"力的单位",f:"1 N = 1 kg·m/s²",b:["kg·m/s²"],t:"由 F = ma 定义",w:"1N 使 1kg 产生 1m/s² 的加速度"},
- {c:4,n:"超重",f:"N = m(g + a)",b:["(g + a)"],t:"加速度方向向上（加速上升 / 减速下降）",w:"只看 a 方向，与运动方向无关"},
- {c:4,n:"失重",f:"N = m(g − a)",b:["(g − a)"],t:"加速度方向向下；a = g 时完全失重",w:"减速上升也是失重"},
+ {c:4,n:"牛顿第二定律",f:"F合 = ma",b:["ma"],k:"惯性参考系，F合为物体所受合外力",t:"加速度方向与合外力方向相同",h:1,w:"不要把某一个力误当成合外力"},
+ {c:4,n:"力的单位",f:"1 N = 1 kg·m/s²",b:["kg·m/s²"],k:"国际单位制",t:"由牛顿第二定律定义",w:"计算前统一使用 kg、m、s"},
+ {c:4,n:"超重",f:"N = m(g + a)",b:["(g + a)"],k:"竖直支持或悬挂测力模型，加速度竖直向上",t:"支持力或拉力大于重力，真实重力不变",w:"只看加速度方向，不看速度方向"},
+ {c:4,n:"失重",f:"N = m(g − a)",b:["(g − a)"],k:"竖直支持或悬挂测力模型，加速度竖直向下且接触未失效",t:"a=g 时完全失重，真实重力仍不变",w:"向上运动也可能失重"},
 
- {c:5,n:"平抛·水平方向",f:"x = v₀t",b:["v₀t"],t:"水平方向做匀速直线运动",h:1,w:"水平方向不受力，速度恒为 v₀"},
- {c:5,n:"平抛·竖直方向",f:"y = ½gt²",b:["½gt²"],t:"竖直方向做自由落体运动",h:1,w:"竖直方向与自由落体完全相同"},
- {c:5,n:"平抛·飞行时间",f:"t = √(2h/g)",b:["√(2h/g)"],t:"只由下落高度 h 决定，与 v₀ 无关",h:1,w:"时间只看高度，v₀ 再大也不变！"},
- {c:5,n:"平抛·落点速度",f:"v = √(v₀² + (gt)²)",b:["(gt)²","v₀²"],t:"水平、竖直分速度的合成",w:"勾股定理合成两个分速度"},
- {c:5,n:"平抛·速度偏角",f:"tanθ = gt/v₀",b:["gt","v₀"],t:"θ 为速度与水平方向的夹角",w:"θ 随时间增大，落地前最大"},
+ {c:5,n:"平抛·水平方向",f:"x = v₀t",b:["v₀t"],k:"初速度水平，忽略空气阻力，g 近似恒定",t:"水平方向做匀速直线运动",h:1,w:"水平方向速度保持 v₀"},
+ {c:5,n:"平抛·竖直方向",f:"y = ½gt²",b:["½gt²"],k:"初速度水平，忽略空气阻力，g 近似恒定",t:"竖直方向做自由落体运动",h:1,w:"竖直分速度初值为 0"},
+ {c:5,n:"平抛·飞行时间",f:"t = √(2h/g)",b:["√(2h/g)"],k:"从高 h 处水平抛出，落点与参考面高度差为 h",t:"飞行时间由下落高度决定",h:1,w:"在该模型中，改变 v₀ 不改变飞行时间"},
+ {c:5,n:"平抛·落点速度",f:"v = √(v₀² + (gt)²)",b:["(gt)²","v₀²"],k:"初速度水平，忽略空气阻力，g 近似恒定",t:"由水平、竖直分速度合成",w:"速度大小用勾股关系，方向还需看分量"},
+ {c:5,n:"平抛·速度偏角",f:"tanθ = gt/v₀",b:["gt","v₀"],k:"θ 为速度与水平方向夹角",t:"由竖直分速度与水平分速度之比得到",w:"不要把速度偏角与位移偏角混淆"},
 
- {c:6,n:"线速度",f:"v = 2πr/T",b:["2πr"],t:"T 为周期",w:"T 越小转得越快"},
- {c:6,n:"角速度",f:"ω = 2π/T",b:["2π"],t:"单位 rad/s",w:"一圈 = 2π 弧度"},
- {c:6,n:"线速度与角速度",f:"v = ωr",b:["ωr"],t:"半径越大线速度越大（同 ω）",h:1,w:"同轴转动 ω 相同；皮带传动 v 相同"},
- {c:6,n:"向心加速度",f:"a = v²/r = ω²r",b:["v²/r","ω²r"],t:"方向始终指向圆心",h:1,w:"只改变速度方向，不改变大小"},
- {c:6,n:"向心力",f:"F = mv²/r = mω²r",b:["mv²/r","mω²r"],t:"由合力（或分力）提供",h:1,w:"向心力是效果，不是一种新的力"},
- {c:6,n:"角速度与转速",f:"ω = 2πn",b:["2πn"],t:"n 为每秒转数，T = 1/n",w:"n 若给转/分，先 ÷60"},
+ {c:6,n:"线速度",f:"v = 2πr/T",b:["2πr"],k:"沿半径为 r 的圆周运动",t:"T 为运动一周的周期",w:"T 越小，同一半径下线速度越大"},
+ {c:6,n:"角速度",f:"ω = 2π/T",b:["2π"],k:"转动周期为 T",t:"单位 rad/s，一周为 2π rad",w:"角速度不是转过的角度"},
+ {c:6,n:"线速度与角速度",f:"v = ωr",b:["ωr"],k:"同一转动物体上距转轴 r 的点",t:"同轴转动时各点角速度相同",h:1,w:"皮带不打滑时相接处线速度大小相同"},
+ {c:6,n:"向心加速度",f:"aₙ = v²/r = ω²r",b:["v²/r","ω²r"],k:"圆周运动",t:"方向始终指向圆心",h:1,w:"匀速圆周运动仍有加速度"},
+ {c:6,n:"向心力",f:"Fₙ = mv²/r = mω²r",b:["mv²/r","mω²r"],k:"指向圆心的合力或合力的径向分量",t:"向心力是按作用效果命名的",h:1,w:"不要额外画出一个并不存在的向心力"},
+ {c:6,n:"角速度与转速",f:"ω = 2πn",b:["2πn"],k:"n 使用转每秒（Hz）",t:"n 为每秒转数，T=1/n",w:"若给转/分，先除以 60"},
 
- {c:7,n:"万有引力定律",f:"F = Gm₁m₂/r²",b:["Gm₁m₂","r²"],t:"G = 6.67×10⁻¹¹ N·m²/kg²",h:1,w:"r 是球心间距，不是表面距离"},
- {c:7,n:"黄金代换",f:"GM = gR²",b:["gR²"],t:"地表重力近似等于万有引力",w:"不知道地球质量 M 时用它替换"},
- {c:7,n:"环绕速度",f:"v = √(GM/r)",b:["√(GM/r)"],t:"引力提供向心力，r 越大 v 越小",w:"轨道越高，速度越小、周期越长"},
- {c:7,n:"第一宇宙速度",f:"v₁ = √(gR) ≈ 7.9 km/s",b:["√(gR)","7.9"],t:"最大环绕速度，最小发射速度",h:1,w:"两个'最'别记反：最大环绕、最小发射"},
- {c:7,n:"开普勒第三定律",f:"a³/T² = k",b:["a³","T²"],t:"半长轴三次方与周期平方之比为常数",w:"绕同一中心天体 k 才相同"},
+ {c:7,n:"万有引力定律",f:"F = Gm₁m₂/r²",b:["Gm₁m₂","r²"],k:"质点；均匀球体外部可等效为质量集中在球心",t:"G=6.67×10⁻¹¹ N·m²/kg²",h:1,w:"r 是两质点间距或两球心间距"},
+ {c:7,n:"黄金代换",f:"GM = gR²",b:["gR²"],k:"天体表面附近，忽略自转影响",t:"由表面重力近似等于万有引力得到",w:"g、R 必须对应同一个中心天体"},
+ {c:7,n:"环绕速度",f:"v = √(GM/r)",b:["√(GM/r)"],k:"质量为 M 的中心天体外做圆轨道运动",t:"引力提供向心力，r 越大 v 越小",w:"只适用于圆轨道速度"},
+ {c:7,n:"第一宇宙速度",f:"v₁ = √(gR) ≈ 7.9 km/s",b:["√(gR)","7.9"],k:"近地圆轨道理想模型，忽略空气阻力和地球自转",t:"地球近地圆轨道的最大环绕速度",h:1,w:"“最小发射速度”也是理想模型下的教材表述"},
+ {c:7,n:"开普勒第三定律",f:"a³/T² = k",b:["a³","T²"],k:"绕同一中心天体运动",t:"a 为椭圆轨道半长轴，圆轨道中等于轨道半径",w:"不同中心天体对应的 k 通常不同"},
 
- {c:8,n:"功",f:"W = Flcosα",b:["Flcosα"],t:"α 为力与位移的夹角",h:1,w:"α>90° 做负功；α=90° 不做功"},
- {c:8,n:"功率（定义式）",f:"P = W/t",b:["W"],t:"单位瓦特 W",w:"算平均功率用它"},
- {c:8,n:"功率与速度",f:"P = Fv",b:["Fv"],t:"F 与 v 同向时",w:"v 取瞬时值→瞬时功率"},
- {c:8,n:"动能",f:"Eₖ = ½mv²",b:["½mv²"],t:"标量，恒为正",h:1,w:"速度翻倍，动能×4"},
- {c:8,n:"动能定理",f:"W总 = ½mv₂² − ½mv₁²",b:["½mv₂²","½mv₁²"],t:"合外力做的功等于动能的变化",h:1,w:"W总是所有力做功的代数和"},
- {c:8,n:"重力势能",f:"Eₚ = mgh",b:["mgh"],t:"相对参考平面，可正可负",h:1,w:"h 相对参考面，Eₚ 可为负"},
- {c:8,n:"重力做功与势能",f:"W重 = Eₚ₁ − Eₚ₂",b:["Eₚ₁"],t:"重力做功与路径无关",w:"只看始末高度差，与路径无关"},
- {c:8,n:"机械能守恒定律",f:"½mv₁² + mgh₁ = ½mv₂² + mgh₂",b:["mgh₁","mgh₂"],t:"只有重力或弹力做功时成立",h:1,w:"有摩擦力做功就不守恒！"},
+ {c:8,n:"功",f:"W = Flcosα",b:["Flcosα"],k:"恒力，l 为物体位移",t:"α 为力与位移的夹角",h:1,w:"α>90° 时做负功，α=90° 时不做功"},
+ {c:8,n:"功率（定义式）",f:"P = W/t",b:["W","t"],k:"平均功率取一段时间内的功",t:"单位瓦特 W，表示做功快慢",w:"功率大不等于做功一定多"},
+ {c:8,n:"功率与速度",f:"P = Fvcosα",b:["Fvcosα"],k:"瞬时功率，α 为力与速度夹角",t:"力与速度同向时化为 P=Fv",w:"不同向时不能直接省略 cosα"},
+ {c:8,n:"动能",f:"Eₖ = ½mv²",b:["½mv²"],k:"相对于选定参考系",t:"动能是非负标量，可以为 0",h:1,w:"速度翻倍，动能变为 4 倍"},
+ {c:8,n:"动能定理",f:"W总 = ½mv₂² − ½mv₁²",b:["½mv₂²","½mv₁²"],k:"同一惯性参考系，W总为各力做功的代数和",t:"合力做功等于动能变化",h:1,w:"负功对应动能减少，不代表末动能为负"},
+ {c:8,n:"重力势能",f:"Eₚ = mgh",b:["mgh"],k:"近地面、g 近似恒定，并选定零势能面",t:"势能属于物体和地球组成的系统",h:1,w:"h 相对零势能面，可正、可零、可负"},
+ {c:8,n:"重力做功与势能",f:"W重 = Eₚ₁ − Eₚ₂",b:["Eₚ₁","Eₚ₂"],k:"近地面重力场，始末位置确定",t:"重力做功与路径无关",w:"重力做正功时，重力势能减少"},
+ {c:8,n:"机械能守恒定律",f:"Eₖ₁ + Eₚ₁ = Eₖ₂ + Eₚ₂",b:["Eₖ₁ + Eₚ₁","Eₖ₂ + Eₚ₂"],k:"先选定研究系统；系统内只有重力或弹力做功的常见模型",t:"动能和势能相互转化，总机械能不变",h:1,w:"出现摩擦力不等于必然不守恒，要看系统和做功"},
 
- {c:9,n:"库仑定律",f:"F = kq₁q₂/r²",b:["kq₁q₂","r²"],t:"k = 9.0×10⁹ N·m²/C²，真空中点电荷",h:1,w:"平方反比：距离翻倍，力变 1/4"},
- {c:9,n:"元电荷",f:"Q = ne，e = 1.6×10⁻¹⁹ C",b:["1.6×10⁻¹⁹"],t:"任何电荷量都是 e 的整数倍",w:"n 只能是整数"},
- {c:9,n:"电场强度（定义式）",f:"E = F/q",b:["F","q"],t:"由电场本身决定，与试探电荷无关",h:1,w:"E 与 F、q 无关，撤掉试探电荷 E 仍在"},
- {c:9,n:"点电荷的场强",f:"E = kQ/r²",b:["kQ","r²"],t:"Q 为场源电荷",w:"Q 是场源电荷，不是试探电荷"},
+ {c:9,n:"库仑定律",f:"F = k|q₁q₂|/r²",b:["k|q₁q₂|","r²"],k:"真空中的两个静止点电荷；公式给大小",t:"方向沿两点电荷连线，由电荷正负判断",h:1,w:"距离翻倍时，力变为原来的 1/4"},
+ {c:9,n:"元电荷",f:"Q = ne，e = 1.6×10⁻¹⁹ C",b:["1.6×10⁻¹⁹"],k:"电荷量量子化，n 为整数",t:"e 是元电荷的电荷量绝对值",w:"n 不能取任意小数"},
+ {c:9,n:"电场强度（定义式）",f:"E = F/q₀",b:["F","q₀"],k:"q₀ 为正试探电荷的电荷量",t:"方向按正试探电荷在该点的受力方向",h:1,w:"电场强度由电场本身决定，不由试探电荷决定"},
+ {c:9,n:"点电荷的场强",f:"E = k|Q|/r²",b:["k|Q|","r²"],k:"真空中的点电荷；公式给大小",t:"Q 为场源电荷，方向由 Q 的正负判断",w:"不要把场源电荷 Q 与试探电荷混淆"},
 
- {c:10,n:"电势",f:"φ = Eₚ/q",b:["Eₚ"],t:"标量，有正负，沿电场线方向降低",w:"沿电场线方向电势一定降低"},
- {c:10,n:"电势差",f:"U = W/q",b:["W","q"],t:"两点电势之差，与零点选取无关",w:"U 与零点选取无关"},
- {c:10,n:"静电力做功",f:"W = qU",b:["qU"],t:"与路径无关",h:1,w:"q、U 都带符号代入判正负功"},
- {c:10,n:"匀强电场 U 与 E",f:"U = Ed",b:["Ed"],t:"d 为沿电场方向的距离",h:1,w:"d 是沿电场方向距离，不是两点连线长"},
- {c:10,n:"电容（定义式）",f:"C = Q/U",b:["Q","U"],t:"单位法拉 F，由电容器本身决定",h:1,w:"C 由电容器本身决定，与 Q、U 无关"},
- {c:10,n:"平行板电容器",f:"C = εS/(4πkd)",b:["εS","4πkd"],t:"S 正对面积，d 板间距离",w:"板间距 d 减小 → C 增大"},
+ {c:10,n:"电势",f:"φ = Eₚ/q",b:["Eₚ","q"],k:"先选定零电势参考位置",t:"标量，有正负，沿电场线方向降低",w:"电势由电场和位置决定，不由试探电荷决定"},
+ {c:10,n:"电势差",f:"U_AB = φ_A − φ_B = W_AB/q",b:["φ_A − φ_B","W_AB/q"],k:"明确 A、B 端点和静电力从 A 到 B 做功的符号",t:"两点电势之差与零电势位置选择无关",w:"U_AB = −U_BA"},
+ {c:10,n:"静电力做功",f:"W_AB = qU_AB = −ΔEₚ",b:["qU_AB","−ΔEₚ"],k:"端点与 U_AB 的下标、方向保持一致",t:"静电力做功与路径无关",h:1,w:"q、U_AB 都按代数量代入"},
+ {c:10,n:"匀强电场 U 与 E",f:"U_AB = Ed",b:["Ed"],k:"匀强电场，d 为 A、B 沿电场方向的有向距离",t:"若只求大小，d 取两点连线在电场方向的投影长度",h:1,w:"d 不一定等于两点间直线距离"},
+ {c:10,n:"电容（定义式）",f:"C = Q/U",b:["Q","U"],k:"Q 为任一极板电荷量的绝对值，U 为两板电势差",t:"单位法拉 F，由电容器结构和介质决定",h:1,w:"C 不随某次 Q、U 的改变而改变"},
+ {c:10,n:"平行板电容器",f:"C = ε₀εᵣS/d",b:["ε₀εᵣS","d"],k:"SI 口径，忽略边缘效应",t:"S 为正对面积，d 为板间距离",w:"其他条件不变时，d 减小会使 C 增大"},
 
- {c:11,n:"电流（定义式）",f:"I = q/t",b:["q"],t:"单位安培 A，1 A = 1 C/s",w:"方向规定为正电荷定向移动方向"},
- {c:11,n:"欧姆定律",f:"I = U/R",b:["U","R"],t:"适用于金属导体和电解液",h:1,w:"R 一定时 I 与 U 成正比"},
- {c:11,n:"电阻定律",f:"R = ρL/S",b:["ρL","S"],t:"ρ 为电阻率，由材料和温度决定",w:"导线均匀拉长 n 倍，电阻变 n² 倍"},
- {c:11,n:"串联电阻",f:"R串 = R₁ + R₂",b:["R₁ + R₂"],t:"串联总电阻越串越大",w:"串联电流处处相等"},
- {c:11,n:"并联电阻",f:"1/R并 = 1/R₁ + 1/R₂",b:["1/R₁","1/R₂"],t:"并联总电阻越并越小",w:"并联电压处处相等"},
- {c:11,n:"电功",f:"W = UIt",b:["UIt"],t:"单位 J，生活中常用 kW·h（度）",h:1,w:"1 度电 = 1 kW·h = 3.6×10⁶ J"},
- {c:11,n:"电功率",f:"P = UI",b:["UI"],t:"P = W/t，单位瓦特 W",h:1,w:"额定功率 ≠ 实际功率"},
- {c:11,n:"焦耳定律",f:"Q = I²Rt",b:["I²Rt"],t:"电流通过导体产生的热量",h:1,w:"纯电阻电路 W = Q；非纯电阻 W > Q"},
+ {c:11,n:"电流（定义式）",f:"I = Δq/Δt",b:["Δq","Δt"],k:"时间间隔内通过导体横截面的电荷量；恒定电流时可直接使用",t:"单位安培 A，1 A=1 C/s",w:"电流方向规定为正电荷定向移动方向"},
+ {c:11,n:"欧姆定律",f:"I = U/R",b:["U","R"],k:"导体温度等物理条件不变且为欧姆导体",t:"同一导体在条件不变时，I 与 U 成正比",h:1,w:"不能对所有导体和所有工作状态无条件使用"},
+ {c:11,n:"电阻定律",f:"R = ρL/S",b:["ρL","S"],k:"均匀导体，温度等条件确定",t:"ρ 为电阻率，由材料和温度等因素决定",w:"拉伸 n 倍得 n² 倍还要求体积和电阻率不变"},
+ {c:11,n:"串联电阻",f:"R串 = R₁ + R₂",b:["R₁ + R₂"],k:"电阻首尾依次相连且中间节点无分支",t:"串联电路各处电流相等",w:"总电阻大于任一串联电阻"},
+ {c:11,n:"并联电阻",f:"1/R并 = 1/R₁ + 1/R₂",b:["1/R₁","1/R₂"],k:"各电阻两端分别接在同一对节点",t:"并联支路两端电压相等",w:"总电阻小于任一支路电阻"},
+ {c:11,n:"电动势",f:"𝓔 = W非/q",b:["W非","q"],k:"电源内部非静电力搬运电荷",t:"单位伏特 V，反映电源把其他形式能转化为电能的本领",w:"电动势是电源属性，不等于任意工作状态下的路端电压"},
+ {c:11,n:"闭合电路欧姆定律",f:"I = 𝓔/(R + r)",b:["𝓔","R + r"],k:"电源电动势、内阻和外电路总电阻模型",t:"R 为外电路总电阻，r 为电源内阻",h:1,w:"分母包含外电阻 R 和内阻 r"},
+ {c:11,n:"路端电压",f:"U = 𝓔 − Ir",b:["𝓔","Ir"],k:"电源对外供电",t:"电流增大时，内电压 Ir 增大，路端电压减小",h:1,w:"电源没有电流时 U=𝓔；供电时通常 U<𝓔"},
 
- {c:12,n:"磁感应强度（定义式）",f:"B = F/IL",b:["F","IL"],t:"单位特斯拉 T，1 T = 1 N/(A·m)",w:"B 由磁场决定，与 F、I 无关"},
- {c:12,n:"安培力",f:"F = BIL",b:["BIL"],t:"导线与磁场垂直时",h:1,w:"导线与磁场平行时 F = 0"},
- {c:12,n:"磁通量",f:"Φ = BS",b:["BS"],t:"B 与平面垂直时，单位韦伯 Wb",h:1,w:"B 平行于平面时 Φ = 0"},
- {c:12,n:"磁通量（一般式）",f:"Φ = BScosθ",b:["BScosθ"],t:"θ 为 B 与平面法线的夹角",w:"θ 是与法线的夹角，不是与平面"},
+ {c:12,n:"电功",f:"W = UIt",b:["UIt"],k:"恒定电压和电流",t:"单位 J，生活中常用 kW·h",h:1,w:"1 kW·h=3.6×10⁶ J"},
+ {c:12,n:"电功率",f:"P = UI",b:["UI"],k:"电路任一元件的电功率；I²R、U²/R 只对纯电阻适用",t:"P=W/t，单位瓦特 W",h:1,w:"额定功率不一定等于实际功率"},
+ {c:12,n:"焦耳定律",f:"Q = I²Rt",b:["I²Rt"],k:"电流通过电阻产生热量",t:"纯电阻中可写 Q=W=UIt",h:1,w:"非纯电阻用电器的电功通常大于产生的热量"},
+ {c:12,n:"能量转化效率",f:"η = E有/E总 × 100%",b:["E有","E总"],k:"有用输出能量与总输入能量口径一致",t:"定义上不超过 100%，实际装置通常小于 100%",h:1,w:"理想模型中效率可以等于 100%"},
+ {c:12,n:"能量守恒定律",f:"E总 = 常量",b:["常量"],k:"选定的封闭系统",t:"能量不会凭空产生或消失，只会转移或转化",w:"能量耗散不违反能量守恒"},
 
- {c:13,n:"能量转化效率",f:"η = E有/E总",b:["E有","E总"],t:"有用能量占总输入能量的比例",h:1,w:"η 永远小于 100%"},
- {c:13,n:"能量守恒定律",f:"ΔE减 = ΔE增",b:["ΔE增"],t:"能量不会凭空产生或消失，只会转移和转化",w:"永动机不可能制成"}
+ {c:13,n:"磁感应强度（定义式）",f:"B = F/(IL)",b:["F","IL"],k:"匀强磁场中直导线与磁场垂直",t:"单位特斯拉 T，1 T=1 N/(A·m)",w:"B 由磁场决定，不由所放导线决定"},
+ {c:13,n:"安培力",f:"F = BILsinθ",b:["BILsinθ"],k:"匀强磁场中的直导线",t:"θ 为电流方向与磁场方向夹角",h:1,w:"垂直时最大，平行时为 0"},
+ {c:13,n:"磁通量",f:"Φ = BS",b:["BS"],k:"匀强磁场且磁场垂直线圈平面",t:"单位韦伯 Wb",h:1,w:"磁场平行线圈平面时磁通量为 0"},
+ {c:13,n:"磁通量（一般式）",f:"Φ = BScosθ",b:["BScosθ"],k:"匀强磁场，θ 为磁场与平面法线夹角",t:"有效面积为 Scosθ",w:"θ 是磁场与法线的夹角，不是与平面的夹角"},
+ {c:13,n:"电磁波",f:"c = λf ≈ 3.0×10⁸ m/s",b:["λf","3.0×10⁸"],k:"真空中的电磁波",t:"c 为真空光速，λ 为波长，f 为频率",w:"电磁波在介质中的传播速度通常小于 c"}
 ];
 DATA.forEach((d,i)=>d.id="q"+i);
 
@@ -634,9 +646,9 @@ const TF=[
  {c:1,q:"研究地球绕太阳公转时，地球可以看作质点",a:true,x:"地球尺寸远小于轨道尺寸，可忽略形状大小"},
  {c:1,q:"参考系必须选择静止不动的物体",a:false,x:"参考系可任意选，只是通常选地面方便"},
  {c:1,q:"加速度减小时，速度一定减小",a:false,x:"只要 a 与 v 同向，速度仍在增大"},
- {c:2,q:"自由落体运动是初速度为零的匀加速直线运动",a:true,x:"只受重力，a = g 恒定"},
+ {c:2,q:"近地面忽略空气阻力时，自由落体运动是初速度为零的匀加速直线运动",a:true,x:"在该理想模型中，物体只受重力，a = g 近似恒定"},
  {c:2,q:"v-t 图象中，图线与时间轴围成的面积表示位移",a:true,x:"这是 v-t 图象最重要的用法"},
- {c:2,q:"伽利略用理想斜面实验说明力不是维持运动的原因",a:true,x:"物理学史高频考点：理想实验法"},
+ {c:2,q:"伽利略用理想斜面实验说明力不是维持运动的原因",a:true,x:"物理学史要点：理想实验法"},
  {c:3,q:"力是维持物体运动的原因",a:false,x:"这是亚里士多德的错误观点；力是改变运动状态的原因"},
  {c:3,q:"重力的方向总是垂直于接触面",a:false,x:"重力方向是竖直向下，与接触面无关"},
  {c:3,q:"滑动摩擦力方向总与物体运动方向相反",a:false,x:"与'相对运动'方向相反，可能与运动方向相同（如传送带带动）"},
@@ -649,14 +661,14 @@ const TF=[
  {c:5,q:"平抛运动是匀变速曲线运动",a:true,x:"加速度恒为 g，轨迹是曲线"},
  {c:6,q:"匀速圆周运动是匀变速运动",a:false,x:"'匀速'指速率不变，加速度方向时刻改变"},
  {c:6,q:"向心力是一种特殊性质的力",a:false,x:"向心力是按效果命名的，由其他力提供"},
- {c:7,q:"卡文迪什用扭秤实验测出了引力常量 G",a:true,x:"物理学史高频：被称为'称量地球质量的人'"},
+ {c:7,q:"卡文迪什用扭秤实验测出了引力常量 G",a:true,x:"物理学史要点：被称为'称量地球质量的人'"},
  {c:7,q:"开普勒发现了行星运动三大定律",a:true,x:"第谷观测数据 + 开普勒总结"},
- {c:7,q:"第一宇宙速度是发射人造卫星的最小速度",a:true,x:"7.9 km/s：最小发射速度、最大环绕速度"},
+ {c:7,q:"第一宇宙速度是在理想近地圆轨道模型中的最大环绕速度",a:true,x:"忽略空气阻力和地球自转时，近地圆轨道速度约为 7.9 km/s；轨道越高，圆轨道速度越小"},
  {c:7,q:"地球同步卫星可以定点在北京正上方",a:false,x:"同步卫星只能位于赤道正上方"},
  {c:8,q:"力对物体做功的两个要素是力和沿力方向的位移",a:true,x:"W = Flcosα 的物理含义"},
  {c:8,q:"摩擦力一定做负功",a:false,x:"摩擦力可以做正功，如传送带带动货物"},
  {c:8,q:"动能定理只适用于恒力做功的情况",a:false,x:"变力、曲线运动同样适用，这正是它的优势"},
- {c:8,q:"只有重力或弹力做功时，机械能守恒",a:true,x:"机械能守恒的条件，判断题常考"},
+ {c:8,q:"研究系统内只有重力或弹力做功时，系统机械能守恒",a:true,x:"先选定研究系统，再判断是否只有重力或弹力做功"},
  {c:8,q:"功率大的机器做的功一定多",a:false,x:"做功多少还取决于时间：W = Pt"},
  {c:9,q:"电场线是电场中真实存在的曲线",a:false,x:"电场线是为描述电场引入的假想曲线"},
  {c:9,q:"电场强度的方向与正电荷在该点的受力方向相同",a:true,x:"E 的方向定义"},
@@ -665,14 +677,46 @@ const TF=[
  {c:10,q:"沿电场线方向电势逐渐降低",a:true,x:"电场线指向电势降低最快的方向"},
  {c:10,q:"电容器的电容与所带电荷量成正比",a:false,x:"C 由电容器本身决定，与 Q、U 无关"},
  {c:11,q:"电流方向规定为正电荷定向移动的方向",a:true,x:"金属中实际是自由电子反向移动"},
- {c:11,q:"导体的电阻由导体本身决定，与电压、电流无关",a:true,x:"R = U/I 只是量度式，不是决定式"},
- {c:11,q:"家庭电路中各用电器是串联连接的",a:false,x:"并联：互不影响、电压相同"},
- {c:12,q:"奥斯特发现了电流的磁效应",a:true,x:"物理学史：小磁针偏转实验"},
- {c:12,q:"法拉第发现了电磁感应现象",a:true,x:"物理学史：磁生电，1831 年"},
- {c:12,q:"磁感线从 N 极出发终止于 S 极，是不闭合的曲线",a:false,x:"磁感线是闭合曲线，磁体内部由 S 到 N"},
- {c:13,q:"能量耗散说明能量守恒定律不成立",a:false,x:"总量守恒，只是能量品质降低、难以利用"}
+ {c:11,q:"均匀导体的电阻由材料、长度、横截面积和温度等条件共同决定",a:true,x:"R = ρL/S；R = U/I 是量度关系，不能说电阻由某次 U、I 决定"},
+ {c:11,q:"闭合电路中，外电阻增大时电流一定增大",a:false,x:"I = 𝓔/(R+r)，电动势和内阻不变时，外电阻增大，电流减小"},
+ {c:13,q:"奥斯特发现了电流的磁效应",a:true,x:"通电导线附近的小磁针发生偏转，说明电流周围存在磁场"},
+ {c:13,q:"法拉第发现了电磁感应现象",a:true,x:"闭合回路的磁通量发生变化时可以产生感应电流"},
+ {c:13,q:"磁感线从 N 极出发终止于 S 极，是不闭合的曲线",a:false,x:"磁感线是闭合曲线，磁体外部由 N 到 S，内部由 S 到 N"},
+ {c:12,q:"能量耗散说明能量守恒定律不成立",a:false,x:"能量总量仍守恒，只是可利用的能量品质降低"}
 ];
 TF.forEach((d,i)=>d.id="t"+i);
+
+/* ================= 湖南学考·单选专项题库 ================= */
+const XK_Q = [
+  {id:"cond-01",c:3,kind:"condition",q:"胡克定律 F = kx 可以直接使用的条件是",o:["任何弹簧在任何形变下","弹簧处于弹性限度内","弹簧长度等于原长","弹簧只能水平放置"],a:1,x:"胡克定律适用于弹性限度内，x 是形变量。",ref:"胡克定律",timeMs:20000},
+  {id:"cond-02",c:4,kind:"condition",q:"竖直电梯中人处于超重状态，直接反映的是",o:["人的重力增大","人的质量增大","支持力大于重力","电梯一定向上运动"],a:2,x:"超重时视重增大，支持力大于重力；真实重力不变，运动方向不确定。",ref:"超重",timeMs:20000},
+  {id:"cond-03",c:5,kind:"condition",q:"使用平抛运动基本公式时，通常采用的理想条件是",o:["只忽略物体重力","忽略空气阻力且重力加速度近似恒定","物体必须从地面抛出","物体质量必须为 1 kg"],a:1,x:"平抛模型保留重力、忽略空气阻力，并把 g 视为恒量。",ref:"平抛·水平方向",timeMs:20000},
+  {id:"cond-04",c:8,kind:"condition",q:"判断机械能是否守恒，首先应当",o:["只看速度是否改变","只看是否出现摩擦力","选定研究系统并分析做功情况","只看高度是否改变"],a:2,x:"机械能守恒是关于选定系统的结论，必须先明确系统边界。",ref:"机械能守恒定律",timeMs:20000},
+  {id:"cond-05",c:9,kind:"condition",q:"库仑定律 F = k|q₁q₂|/r² 的直接适用对象是",o:["任意带电物体","真空中的静止点电荷","通电直导线","匀强电场中的任意电荷"],a:1,x:"高中阶段该式直接用于真空中的两个静止点电荷。",ref:"库仑定律",timeMs:20000},
+  {id:"cond-06",c:11,kind:"condition",q:"欧姆定律 I = U/R 适用于",o:["所有元件的所有状态","温度等条件不变的欧姆导体","只有电源内部","任何变化的电磁场"],a:1,x:"欧姆定律有物理条件，不能对所有导体作无条件推广。",ref:"欧姆定律",timeMs:20000},
+  {id:"cond-07",c:13,kind:"condition",q:"通电直导线受到的安培力为 BIL 的条件是电流方向与磁场方向",o:["平行","垂直","夹角为 45°","方向任意"],a:1,x:"一般式为 F = BILsinθ，垂直时 sinθ = 1。",ref:"安培力",timeMs:20000},
+  {id:"cond-08",c:7,kind:"condition",q:"第一宇宙速度约 7.9 km/s 的常用结论基于",o:["近地圆轨道理想模型","任意椭圆轨道","卫星远离地球后的任意位置","考虑空气阻力的低空飞行"],a:0,x:"该结论基于近地圆轨道，并忽略空气阻力和地球自转等影响。",ref:"第一宇宙速度",timeMs:20000},
+
+  {id:"calc-01",c:1,kind:"calc",q:"速度从 5 m/s 增加到 15 m/s，用时 2 s，平均加速度为",o:["2 m/s²","5 m/s²","10 m/s²","20 m/s²"],a:1,x:"a = Δv/Δt = (15−5)/2 = 5 m/s²。",ref:"加速度（定义式）",timeMs:30000},
+  {id:"calc-02",c:2,kind:"calc",q:"物体做匀加速直线运动，v₀=2 m/s，a=3 m/s²，4 s 末速度为",o:["8 m/s","12 m/s","14 m/s","20 m/s"],a:2,x:"v = v₀ + at = 2 + 3×4 = 14 m/s。",ref:"速度—时间关系",timeMs:30000},
+  {id:"calc-03",c:3,kind:"calc",q:"弹簧在弹性限度内，k=200 N/m，形变量为 0.05 m，弹力大小为",o:["4 N","10 N","40 N","100 N"],a:1,x:"F = kx = 200×0.05 = 10 N。",ref:"胡克定律",timeMs:30000},
+  {id:"calc-04",c:4,kind:"calc",q:"质量为 2 kg 的物体所受合外力产生 3 m/s² 的加速度，合外力为",o:["1.5 N","5 N","6 N","9 N"],a:2,x:"F合 = ma = 2×3 = 6 N。",ref:"牛顿第二定律",timeMs:30000},
+  {id:"calc-05",c:5,kind:"calc",q:"取 g=10 m/s²，平抛物体从 5 m 高处落地，飞行时间为",o:["0.5 s","1 s","2 s","5 s"],a:1,x:"t = √(2h/g) = √(10/10) = 1 s。",ref:"平抛·飞行时间",timeMs:30000},
+  {id:"calc-06",c:6,kind:"calc",q:"物体做匀速圆周运动，r=0.5 m，T=2 s，线速度大小为",o:["0.25π m/s","0.5π m/s","π m/s","2π m/s"],a:1,x:"v = 2πr/T = 2π×0.5/2 = 0.5π m/s。",ref:"线速度",timeMs:30000},
+  {id:"calc-07",c:8,kind:"calc",q:"质量为 2 kg 的物体以 3 m/s 运动，动能为",o:["3 J","6 J","9 J","18 J"],a:2,x:"Eₖ = ½mv² = ½×2×3² = 9 J。",ref:"动能",timeMs:30000},
+  {id:"calc-08",c:8,kind:"calc",q:"10 N 的恒力与位移同向，物体移动 2 m，该力做功为",o:["5 J","10 J","20 J","40 J"],a:2,x:"W = Flcos0° = 10×2 = 20 J。",ref:"功",timeMs:30000},
+  {id:"calc-09",c:11,kind:"calc",q:"某欧姆导体两端电压为 6 V，电阻为 3 Ω，电流为",o:["0.5 A","2 A","3 A","18 A"],a:1,x:"I = U/R = 6/3 = 2 A。",ref:"欧姆定律",timeMs:30000},
+  {id:"calc-10",c:11,kind:"calc",q:"电源电动势 6 V，内阻 1 Ω，外电阻 2 Ω，闭合电路电流为",o:["1 A","2 A","3 A","6 A"],a:1,x:"I = 𝓔/(R+r) = 6/(2+1) = 2 A。",ref:"闭合电路欧姆定律",timeMs:30000},
+  {id:"calc-11",c:12,kind:"calc",q:"用电器两端电压 6 V，通过电流 2 A，电功率为",o:["3 W","8 W","12 W","24 W"],a:2,x:"P = UI = 6×2 = 12 W。",ref:"电功率",timeMs:30000},
+  {id:"calc-12",c:10,kind:"calc",q:"电容器带电荷量 20 μC，两板电势差 10 V，电容为",o:["0.5 μF","2 μF","20 μF","200 μF"],a:1,x:"C = Q/U = 20 μC/10 V = 2 μF。",ref:"电容（定义式）",timeMs:30000},
+
+  {id:"ctx-01",c:2,kind:"context",q:"速度—时间图像与时间轴围成的有向面积表示",o:["加速度","位移","路程一定值","合外力"],a:1,x:"v-t 图像的有向面积表示位移。",ref:"速度—时间关系",timeMs:25000},
+  {id:"ctx-02",c:2,kind:"context",q:"用逐差法处理纸带数据时，相邻相等时间间隔位移差 Δx 满足",o:["Δx = aT","Δx = aT²","Δx = 2aT","Δx = vT²"],a:1,x:"匀变速直线运动中，相邻相等时间间隔位移差为 aT²。",ref:"逐差公式",timeMs:25000},
+  {id:"ctx-03",c:6,kind:"context",q:"匀速圆周运动中，物体的向心加速度方向",o:["沿切线方向","背离圆心","始终指向圆心","始终竖直向下"],a:2,x:"向心加速度始终沿半径指向圆心。",ref:"向心加速度",timeMs:25000},
+  {id:"ctx-04",c:8,kind:"context",q:"忽略空气阻力，小球斜向抛出后在空中运动，选择小球和地球为系统，其机械能",o:["始终增加","始终减小","保持不变","先增加后减小"],a:2,x:"系统内只有重力做功，动能和重力势能相互转化，机械能守恒。",ref:"机械能守恒定律",timeMs:25000},
+  {id:"ctx-05",c:10,kind:"context",q:"平行板电容器保持介质和正对面积不变，减小板间距离，电容将",o:["增大","减小","不变","先增大后减小"],a:0,x:"C = ε₀εᵣS/d，d 减小时 C 增大。",ref:"平行板电容器",timeMs:25000},
+  {id:"ctx-06",c:13,kind:"context",q:"闭合线圈中产生感应电流的基本条件是",o:["线圈一定静止","线圈一定匀速运动","穿过线圈的磁通量发生变化","线圈中磁通量保持不变"],a:2,x:"闭合回路中的磁通量发生变化时，回路中产生感应电流。",ref:"磁通量（一般式）",timeMs:25000}
+];
 
 /* ================= 物理模型示意图库（数形结合） ================= */
 const DG={
@@ -701,7 +745,7 @@ flux:`<svg viewBox="0 0 220 120"><ellipse class="dgs" cx="110" cy="70" rx="62" r
 eta:`<svg viewBox="0 0 220 120"><rect class="dgs" x="84" y="42" width="52" height="38" rx="4"/><text class="dgt" x="96" y="66">装置</text><path class="dgs" d="M18 61 L80 61 M72 56 L80 61 L72 66"/><text class="dgt" x="16" y="50">输入 E总</text><path class="dgy" d="M140 61 L204 61 M196 56 L204 61 L196 66"/><text class="dgty" x="142" y="50">有用 E有</text><path class="dgp" d="M110 84 L110 108 M105 101 L110 108 L115 101" stroke-dasharray="4 3"/><text class="dgtp" x="120" y="104">损耗</text></svg>`
 };
 /* 公式 → 模型图映射：按章默认 + 按名例外 */
-const GBYC={1:"path",2:"vt",3:"block",4:"elevator",5:"projectile",6:"circular",7:"gravity",8:"energy",9:"efield",10:"ufield",11:"circuit",12:"ampere",13:"eta"};
+const GBYC={1:"path",2:"vt",3:"block",4:"elevator",5:"projectile",6:"circular",7:"gravity",8:"energy",9:"efield",10:"ufield",11:"circuit",12:"eta",13:"ampere"};
 const GEXC={"加速度（定义式）":"vt","逐差公式":"tape","自由落体·速度":"freefall","自由落体·位移":"freefall",
 "胡克定律":"spring","合力的范围":"para","力的正交分解":"incline","牛顿第二定律":"block","力的单位":"block",
 "功":"work","功率（定义式）":"work","功率与速度":"work","开普勒第三定律":"kepler",
@@ -724,6 +768,25 @@ function bump(d, ok){ S.m[d.id] = Math.max(0,(S.m[d.id]||0) + (ok?1:-1)); save()
 /* ================= 工具 ================= */
 const $ = s=>document.querySelector(s);
 const shuf = a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+function bookOf(chapter){return chapter<=4?1:chapter<=8?2:3}
+function buildXKRound(){
+  const formulas=[1,2,3].flatMap(book=>shuf(DATA.filter(d=>bookOf(d.c)===book)).slice(0,2)
+    .map(d=>({key:`formula-${d.id}`,d,type:"quiz",kind:"formula",timeMs:15000})));
+  const calcs=[1,2,3].flatMap(book=>shuf(XK_Q.filter(q=>q.kind==="calc"&&bookOf(q.c)===book)).slice(0,2)
+    .map(d=>({key:d.id,d,type:"mcq",kind:d.kind,timeMs:d.timeMs})));
+  const oneConditionEach=[1,2,3].flatMap(book=>shuf(XK_Q.filter(q=>q.kind==="condition"&&bookOf(q.c)===book)).slice(0,1));
+  const used=new Set(oneConditionEach.map(q=>q.id));
+  const extraCondition=shuf(XK_Q.filter(q=>q.kind==="condition"&&!used.has(q.id))).slice(0,1);
+  const conditions=[...oneConditionEach,...extraCondition].map(d=>({key:d.id,d,type:"mcq",kind:d.kind,timeMs:d.timeMs}));
+  const contexts=shuf(XK_Q.filter(q=>q.kind==="context")).slice(0,2)
+    .map(d=>({key:d.id,d,type:"mcq",kind:d.kind,timeMs:d.timeMs}));
+  return shuf([...formulas,...conditions,...calcs,...contexts]);
+}
+function trainingLevel(right,total=18){
+  if(right>=16)return{label:"较为稳固",stars:3};
+  if(right>=13)return{label:"基本掌握",stars:2};
+  return{label:"继续巩固",stars:right>=9?1:0};
+}
 const esc = s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 const fhtml = (f,cls="")=>`<span class="formula ${f.length>18?'long':''} ${cls}">${esc(f)}</span>`;
 const pool = ()=>DATA.filter(d=>S.sel.includes(d.c));
@@ -812,7 +875,7 @@ function renderHome(){
   $("#subCnt").textContent=DATA.length;
   $("#wrongCnt").textContent=S.wb.length;
   $("#foldSum").textContent=`🎚 练习范围：已选 ${S.sel.length} 章（点开调整）`;
-  $("#xkBest").textContent=S.best.xk!=null?`最佳 ${S.best.xk} 分 · 等级 ${xkGrade(S.best.xk)}`:"尚未参加";
+  $("#xkBest").textContent=S.best.xk!=null?`最佳 ${S.best.xk}% 正确率`:"尚未参加";
 }
 function renderMap(){
   const rows=[[1,2,3,4],[5,6,7,8],[9,10,11,12,13]];
@@ -827,8 +890,8 @@ function renderMap(){
     }).join("")+
     (ri===2?`<div class="node boss" onclick="startMode('xk')">
         <span class="cir">🎓</span>
-        <span class="st">${S.best.xk!=null?"等级 "+xkGrade(S.best.xk):"BOSS"}</span>
-        <span class="nm">学考大考</span></div>`:"")+
+        <span class="st">${S.best.xk!=null?`最佳 ${S.best.xk}%`:"BOSS"}</span>
+        <span class="nm">湖南学考</span></div>`:"")+
   `</div>`).join("");
 }
 function setBar(title,statsHtml){$("#gTitle").textContent=title;$("#gStats").innerHTML=statsHtml}
@@ -875,7 +938,7 @@ function renderFlash(){
     <div class="card3d" id="fcard" onclick="this.classList.toggle('flip')">
       <div class="inner">
         <div class="face front">
-          <span class="chp">${d.h?"⭐ 学考高频 · ":""}第${d.c}章 · ${CH[d.c].nm}</span>
+          <span class="chp">${d.h?"⭐ 重点记忆 · ":""}第${d.c}章 · ${CH[d.c].nm}</span>
           <span class="q">${esc(d.n)}</span>
           <span class="hint">👆 点击卡片翻面看公式</span>
         </div>
@@ -883,6 +946,7 @@ function renderFlash(){
           <span class="chp">${esc(d.n)}</span>
           ${DG[d.g]?`<div class="dg">${DG[d.g]}</div>`:""}
           ${fhtml(d.f)}
+          ${d.k?`<span class="condition">${esc(d.k)}</span>`:""}
           ${d.t?`<span class="note">${esc(d.t)}</span>`:""}
           ${d.w?`<span class="warn2">⚠ ${esc(d.w)}</span>`:""}
         </div>
@@ -943,24 +1007,24 @@ function pickTile(el){
 let qList,qIdx,qScore,qCombo,qRight,qLock,qMode;
 const QA_TITLE={quiz:"⚡ 极速问答",blank:"✏️ 补全公式",xk:"🎓 学考冲刺",wrong:"📕 错题重刷",daily:"🌟 每日特训",level:"⛳ 闯关",tf:"⚖️ 概念判断"};
 const ALL_BLANKS=[...new Set(DATA.flatMap(d=>d.b))];
-const xkGrade=s=>s>=90?"A":s>=80?"B":s>=70?"C":s>=60?"D":"E";
 const wrongAdd=d=>{if(!S.wb.includes(d.id)){S.wb.push(d.id);save()}};
 const wrongDel=d=>{const i=S.wb.indexOf(d.id);if(i>-1){S.wb.splice(i,1);save()}};
 const mixType=d=>d.b&&d.b.length&&Math.random()<.45?"blank":"quiz";
+function refFormula(d){return d.ref?DATA.find(item=>item.n===d.ref):d.f?d:null}
 
 function newRound(list,mode){qList=list;qIdx=0;qScore=0;qCombo=0;qRight=0;qLock=false;qMode=mode}
 function statHtml(){
   return `<span class="stat">题目 <b>${Math.min(qIdx+1,qList.length)}</b>/${qList.length}</span>
-  <span class="stat">得分 <b>${qScore}</b>${qMode==="xk"?" / 100":""}</span>
+  ${qMode==="xk"?`<span class="stat">答对 <b>${qRight}</b></span>`:`<span class="stat">得分 <b>${qScore}</b></span>`}
   ${qMode==="wrong"?`<span class="stat">待消灭 <b>${S.wb.length}</b></span>`:""}
   ${qCombo>1?`<span class="stat combo">🔥 连击 ×${qCombo}</span>`:""}`;
 }
-function startQTimer(onTimeout){
-  let t=15000;const bar=$("#tbar"),box=$("#tbox");
+function startQTimer(onTimeout,duration=15000){
+  let t=duration;const bar=$("#tbar"),box=$("#tbox");
   const iv=setInterval(()=>{
     t-=100;if(!bar){clearInterval(iv);return}
-    bar.style.width=Math.max(0,t/150)+"%";
-    if(t<=5000)box.classList.add("low");
+    bar.style.width=Math.max(0,t/duration*100)+"%";
+    if(t<=Math.min(5000,duration/3))box.classList.add("low");
     if(t<=0){clearInterval(iv);onTimeout()}
   },100);
   timers.push(iv);
@@ -968,11 +1032,7 @@ function startQTimer(onTimeout){
 
 function startQuiz(){const p=pool();newRound(shuf(p).slice(0,Math.min(10,p.length)).map(d=>({d,type:"quiz"})),"quiz");renderQA()}
 function startBlank(){const p=pool().filter(d=>d.b&&d.b.length);newRound(shuf(p).slice(0,Math.min(8,p.length)).map(d=>({d,type:"blank"})),"blank");renderQA()}
-function startXK(){
-  const fm=shuf(DATA).slice(0,14).map(d=>({d,type:mixType(d)}));
-  const tf=shuf(TF).slice(0,6).map(d=>({d,type:"tf"}));
-  newRound(shuf([...fm,...tf]),"xk");renderQA();
-}
+function startXK(){newRound(buildXKRound(),"xk");renderQA()}
 function startTFMode(){newRound(shuf(TF).slice(0,15).map(d=>({d,type:"tf"})),"tf");renderQA()}
 function startWrong(){
   const p=DATA.filter(d=>S.wb.includes(d.id));
@@ -995,7 +1055,11 @@ function renderQA(){
   const {d,type}=qList[qIdx];
   setBar(QA_TITLE[qMode],statHtml());
   let ask,body,optHtml;
-  if(type==="tf"){
+  if(type==="mcq"){
+    ask=`湖南学考专项 · 第${d.c}章 ${CH[d.c].nm}`;
+    body=`<span style="font-size:1.25rem;line-height:1.6">${esc(d.q)}</span>`;
+    optHtml=d.o.map((option,i)=>`<div class="opt" data-ok="${i===d.a}" onclick="answerQA(this)"><i class="ol">${i+1}</i>${esc(option)}</div>`).join("");
+  }else if(type==="tf"){
     ask=`判断对错 · 第${d.c}章 ${CH[d.c].nm}`;
     body=`<span style="font-size:1.35rem;line-height:1.6">${esc(d.q)}</span>`;
     optHtml=`<div class="opt" data-ok="${d.a===true}" onclick="answerQA(this)"><i class="ol">1</i>✔️ 对</div>
@@ -1020,16 +1084,17 @@ function renderQA(){
   $("#gBody").innerHTML=`
   <div class="quiz-wrap">
     <div class="timer" id="tbox"><i id="tbar"></i></div>
-    <div class="qcard"><div class="ask">${ask}</div>${DG[d.g]?`<div class="dg dgq">${DG[d.g]}</div>`:""}<div class="body">${body}</div></div>
+    <div class="qcard"><div class="ask">${ask}</div>${DG[d.g]||DG[refFormula(d)?.g]?`<div class="dg dgq">${DG[d.g]||DG[refFormula(d)?.g]}</div>`:""}<div class="body">${body}</div></div>
     <div class="opts">${optHtml}</div>
     <div class="feedback" id="fb"></div>
     <div class="kbd-hint">键盘 1 ~ 4 直接作答</div>
   </div>`;
-  startQTimer(()=>answerQA(null));
+  startQTimer(()=>answerQA(null),qList[qIdx].timeMs||15000);
 }
 function answerQA(el){
   if(qLock)return;qLock=true;clearTimers();
   const {d,type}=qList[qIdx];
+  const ref=refFormula(d);
   const ok=el&&el.dataset.ok==="true";
   document.querySelectorAll(".opt").forEach(o=>{
     if(o.dataset.ok==="true")o.classList.add("right");
@@ -1037,18 +1102,20 @@ function answerQA(el){
   });
   if(ok){
     qCombo++;qRight++;
-    const pts=qMode==="xk"?5:100+(qCombo-1)*20;
-    qScore+=pts;
+    const pts=qMode==="xk"?0:100+(qCombo-1)*20;
+    if(qMode!=="xk")qScore+=pts;
     ding();burst(el,"#ffd95e");
-    const extra=type==="tf"?esc(d.x||""):type==="blank"?`完整公式：${esc(d.f)}`:(qCombo>1?`连击 ×${qCombo}！`:"");
-    $("#fb").innerHTML=`<span class="okt">✓ 正确 +${pts} 分　${extra}</span>`;
-    if(type!=="tf"){bump(d,true);wrongDel(d)}
+    const extra=type==="mcq"?esc(d.x):type==="tf"?esc(d.x||""):type==="blank"?`完整公式：${esc(d.f)}`:(qCombo>1?`连击 ×${qCombo}！`:"");
+    $("#fb").innerHTML=`<span class="okt">✓ 正确${qMode==="xk"?"":" +"+pts+" 分"}　${extra}</span>`;
+    if(ref){bump(ref,true);wrongDel(ref)}
   }else{
     qCombo=0;buzz();
-    $("#fb").innerHTML=type==="tf"
-      ?`<span class="ert">${el?"✗ 错了":"⏰ 超时"}，正确答案「${d.a?"对":"错"}」——${esc(d.x||"")}</span>`
-      :`<span class="ert">${el?"✗ 错了":"⏰ 超时"}，记住：${esc(d.n)} 👉 ${esc(d.f)}${d.w?`<br><span style="font-size:.88rem">⚠ ${esc(d.w)}</span>`:""}</span>`;
-    if(type!=="tf"){bump(d,false);wrongAdd(d)}
+    $("#fb").innerHTML=type==="mcq"
+      ?`<span class="ert">${el?"✗ 错了":"⏰ 超时"}，正确答案「${esc(d.o[d.a])}」——${esc(d.x)}</span>`
+      :type==="tf"
+        ?`<span class="ert">${el?"✗ 错了":"⏰ 超时"}，正确答案「${d.a?"对":"错"}」——${esc(d.x||"")}</span>`
+        :`<span class="ert">${el?"✗ 错了":"⏰ 超时"}，记住：${esc(d.n)} 👉 ${esc(d.f)}${d.w?`<br><span style="font-size:.88rem">⚠ ${esc(d.w)}</span>`:""}</span>`;
+    if(ref){bump(ref,false);wrongAdd(ref)}
   }
   setBar(QA_TITLE[qMode],statHtml());
   timers.push(setTimeout(()=>{qIdx++;qLock=false;renderQA()},ok?1000:2100));
@@ -1069,16 +1136,15 @@ function finishQA(){
     return;
   }
   if(qMode==="xk"){
-    const gr=xkGrade(qScore),pass=qScore>=60;
-    const stars=qScore>=90?3:qScore>=70?2:qScore>=60?1:0;
+    const pct=Math.round(acc*100),level=trainingLevel(qRight,qList.length);
     const best=S.best.xk||0;
-    if(qScore>best){S.best.xk=qScore;save()}
-    lastScores.xk=Math.max(qScore,best);
-    showResult({title:"🎓 学考冲刺 结束",stars,big:qScore+" 分",
-      bigLabel:pass?"合格 ✓ · 等级 "+gr:"未合格 · 等级 "+gr,
-      lines:`答对 <b>${qRight}</b> / ${qList.length} 题 · 合格线 60 分<br>历史最佳 <b>${Math.max(qScore,best)}</b> 分${qScore>best?" · 🎉 新纪录！":""}<br>答错的公式已收进「📕 错题重刷」`,
-      extra:pass?{label:"🏆 匿名上榜",fn:()=>submitScore("xk")}:{label:"📕 去刷错题",fn:()=>startMode("wrong")},
-      extra2:pass?null:{label:"🏆 匿名上榜",fn:()=>submitScore("xk")}});
+    if(pct>best){S.best.xk=pct;save()}
+    lastScores.xk=Math.max(pct,best);
+    showResult({title:"🎓 湖南学考公式冲刺结束",stars:level.stars,big:`${qRight} / ${qList.length}`,
+      bigLabel:`训练表现：${level.label}`,
+      lines:`训练正确率 <b>${pct}%</b> · 历史最佳 <b>${Math.max(pct,best)}%</b>${pct>best?" · 🎉 新纪录！":""}<br>这是公式单选专项训练，不是完整试卷，也不预测官方合格结果<br>答错关联公式已收进「📕 错题重刷」`,
+      extra:{label:"🏆 匿名上训练榜",fn:()=>submitScore("xk")},
+      extra2:qRight<13?{label:"📕 去刷错题",fn:()=>startMode("wrong")}:null});
     return;
   }
   if(qMode==="wrong"){
@@ -1103,12 +1169,23 @@ const lvStars=c=>(S.lv&&S.lv[c])||0;
 const totalStars=()=>{let s=0;for(let c=1;c<=13;c++)s+=lvStars(c);return s};
 const RANKS=[[0,"🌱 物理萌新"],[6,"📐 公式学徒"],[14,"🔭 伽利略助手"],[22,"🍎 牛顿门生"],[30,"⚡ 麦克斯韦同桌"],[38,"🌌 爱因斯坦传人"]];
 const rankName=()=>{const s=totalStars();let r=RANKS[0][1];for(const[m,n]of RANKS)if(s>=m)r=n;return r};
-function touchStreak(){
-  const today=new Date().toISOString().slice(0,10);
+function localDateKey(input=new Date()){
+  const parts=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Shanghai",year:"numeric",month:"2-digit",day:"2-digit"})
+    .formatToParts(new Date(input));
+  const get=type=>parts.find(part=>part.type===type).value;
+  return `${get("year")}-${get("month")}-${get("day")}`;
+}
+function previousLocalDateKey(input=new Date()){
+  return localDateKey(new Date(new Date(input).getTime()-864e5));
+}
+function touchStreak(now=new Date()){
+  const today=localDateKey(now);
   S.stk=S.stk||{last:null,n:0};
   if(S.stk.last===today)return;
-  const y=new Date(Date.now()-864e5).toISOString().slice(0,10);
-  S.stk.n=S.stk.last===y?S.stk.n+1:1;S.stk.last=today;save();
+  const yesterday=previousLocalDateKey(now);
+  S.stk.n=S.stk.last===yesterday?S.stk.n+1:1;
+  S.stk.last=today;
+  save();
 }
 function startLevel(c){
   lvC=c;curMode="level";show("#scr-game");
@@ -1150,7 +1227,7 @@ function lvBattle(){
 }
 function startDaily(){
   const wrongs=shuf(DATA.filter(d=>S.wb.includes(d.id)));
-  const weak=[...DATA].sort((a,b)=>((S.m[a.id]||0)-(a.h?.5:0))-((S.m[b.id]||0)-(b.h?.5:0)));  // 同等生疏度下学考高频优先
+  const weak=[...DATA].sort((a,b)=>((S.m[a.id]||0)-(a.h?.5:0))-((S.m[b.id]||0)-(b.h?.5:0)));  // 同等生疏度下重点关系优先
   const seen=new Set(),picked=[];
   [...wrongs,...weak].forEach(d=>{if(picked.length<10&&!seen.has(d.id)){seen.add(d.id);picked.push(d)}});
   newRound(shuf(picked).map(d=>({d,type:mixType(d)})),"daily");renderQA();
@@ -1161,7 +1238,7 @@ function startDaily(){
    成绩只在玩家主动点「上榜」时上传；服务端不返回任何 id。 */
 let lastScores={};                                  // 本次会话各板块可上传的成绩
 const BOARDS={
-  xk:{label:"🎓 学考榜",hint:"学考模拟最高分",fmt:s=>`${s} 分 · ${xkGrade(s)}`},
+  xk:{label:"🎓 湖南学考训练榜",hint:"18题公式冲刺最高正确率",fmt:s=>`${s}% 正确率`},
   quiz:{label:"⚡ 问答榜",hint:"极速问答最高分（含连击）",fmt:s=>`${s} 分`},
   match:{label:"🧲 手速榜",hint:"公式连连看最快用时",fmt:s=>`${s} 秒`},
   tf:{label:"⚖️ 判断榜",hint:"概念判断最高分",fmt:s=>`${s} 分`},
@@ -1253,13 +1330,13 @@ async function renick(){
 function startSheet(){
   const chs=S.sel.length?S.sel.slice().sort((a,b)=>a-b):Object.keys(CH).map(Number);
   setBar("📖 公式手册",`<span class="stat">已掌握 <b>${DATA.filter(mastered).length}</b>/${DATA.length}</span>`);
-  $("#gBody").innerHTML=`<div class="sheet"><p style="color:var(--chalk-dim);font-size:.85rem;margin-bottom:2px">💡 点任意一行展开物理模型示意图 · ⭐ = 学考高频 · <span style="color:var(--pink)">⚠ = 易错点</span></p>${chs.map(c=>{
+  $("#gBody").innerHTML=`<div class="sheet"><p style="color:var(--chalk-dim);font-size:.85rem;margin-bottom:2px">💡 点任意一行展开物理模型示意图 · ⭐ = 重点记忆 · <span style="color:var(--pink)">⚠ = 易错点</span></p>${chs.map(c=>{
     const list=DATA.filter(d=>d.c===c);
     return `<h4>第${c}章 ${CH[c].nm} <small style="color:var(--chalk-dim)">${CH[c].bk}</small></h4>`+
       list.map(d=>`<div class="srow" onclick="this.classList.toggle('open')">
         <span class="sn">${mastered(d)?'<span class="mk">✓</span> ':''}${d.h?"⭐":""}${esc(d.n)}</span>
         ${fhtml(d.f)}
-        ${d.t||d.w?`<span class="st">${esc(d.t||"")}${d.w?`　<span style="color:var(--pink)">⚠ ${esc(d.w)}</span>`:""}</span>`:""}
+        ${d.k||d.t||d.w?`<span class="st">${d.k?`<b style="color:var(--yellow)">条件：</b>${esc(d.k)}　`:""}${esc(d.t||"")}${d.w?`　<span style="color:var(--pink)">⚠ ${esc(d.w)}</span>`:""}</span>`:""}
         ${DG[d.g]?`<div class="sdg dg">${DG[d.g]}</div>`:""}
       </div>`).join("");
   }).join("")}</div>`;

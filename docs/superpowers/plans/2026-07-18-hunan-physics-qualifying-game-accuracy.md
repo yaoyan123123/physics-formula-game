@@ -133,7 +133,7 @@ Use property `k` for the fixed “适用条件” line. For unchanged cards, use
 - Create: `tests/helpers/inline-script.mjs`
 - Create: `tests/physics-content.test.mjs`
 
-- [ ] **Step 1: Create a balanced JavaScript source extractor**
+- [x] **Step 1: Create a balanced JavaScript source extractor**
 
 ```js
 // tests/helpers/inline-script.mjs
@@ -187,7 +187,7 @@ export function extractFunction(source, name, context = {}) {
 }
 ```
 
-- [ ] **Step 2: Add failing content assertions**
+- [x] **Step 2: Add failing content assertions**
 
 ```js
 // tests/physics-content.test.mjs
@@ -239,13 +239,13 @@ test('removes reviewed misleading claims and hard-coded formula marketing', () =
 });
 ```
 
-- [ ] **Step 3: Run the new test and verify the intended failure**
+- [x] **Step 3: Run the new test and verify the intended failure**
 
 Run: `node --test tests/physics-content.test.mjs`
 
 Expected: FAIL on chapter 12/13, `DATA.length`, missing `k`, missing closed-circuit formulas, and banned wording.
 
-- [ ] **Step 4: Commit the failing tests**
+- [x] **Step 4: Commit the failing tests**
 
 ```bash
 git add tests/helpers/inline-script.mjs tests/physics-content.test.mjs
@@ -259,7 +259,7 @@ git commit -m "test: lock Hunan qualifying physics content requirements"
 - Modify by sync: `index.html`
 - Test: `tests/physics-content.test.mjs`
 
-- [ ] **Step 1: Replace chapter 12/13 and update metadata/count placeholders**
+- [x] **Step 1: Replace chapter 12/13 and update metadata/count placeholders**
 
 Use the exact `CH` contract above. Replace metadata descriptions with count-free wording:
 
@@ -278,7 +278,7 @@ Replace the two stale count placeholders; `renderHome()` remains responsible for
 
 Change the data-section comment from “第1~10章” to “第1~13章”.
 
-- [ ] **Step 2: Apply the exact formula audit contract**
+- [x] **Step 2: Apply the exact formula audit contract**
 
 Edit `DATA` in the main source so that:
 
@@ -298,7 +298,7 @@ For the new circuit and wave rows, use these complete objects:
 {c:13,n:"电磁波",f:"c = λf ≈ 3.0×10⁸ m/s",b:["λf","3.0×10⁸"],k:"真空中的电磁波",t:"c 为真空光速，λ 为波长，f 为频率",w:"电磁波在介质中的传播速度通常小于 c"}
 ```
 
-- [ ] **Step 3: Render applicability as a first-class card field**
+- [x] **Step 3: Render applicability as a first-class card field**
 
 Add CSS next to the existing card note/warning styles:
 
@@ -323,7 +323,7 @@ In the formula sheet detail, render the same semantic order:
 ${d.k||d.t||d.w?`<span class="st">${d.k?`<b style="color:var(--yellow)">条件：</b>${esc(d.k)}　`:""}${esc(d.t||"")}${d.w?`　<span style="color:var(--pink)">⚠ ${esc(d.w)}</span>`:""}</span>`:""}
 ```
 
-- [ ] **Step 4: Replace the exact conflicting TF rows**
+- [x] **Step 4: Replace the exact conflicting TF rows**
 
 Keep the standalone 42-item concept mode. Replace the nine affected rows with the following objects and leave the other 33 rows unchanged:
 
@@ -341,7 +341,7 @@ Keep the standalone 42-item concept mode. Replace the nine affected rows with th
 
 Do not change the standalone mode into Hunan exam simulation; it remains an optional concept practice activity.
 
-- [ ] **Step 5: Sync the source and run the content test**
+- [x] **Step 5: Sync the source and run the content test**
 
 ```bash
 cp /Users/mac/test/physics-formula-game.html /Users/mac/test/physics-game-deploy/index.html
@@ -351,7 +351,7 @@ cmp -s /Users/mac/test/physics-formula-game.html index.html
 
 Expected: content tests PASS; `cmp` exits 0.
 
-- [ ] **Step 6: Commit the content correction**
+- [x] **Step 6: Commit the content correction**
 
 ```bash
 git add index.html tests/physics-content.test.mjs
