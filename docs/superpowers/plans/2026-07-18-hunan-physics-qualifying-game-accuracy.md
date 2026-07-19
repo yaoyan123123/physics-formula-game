@@ -365,7 +365,7 @@ git commit -m "fix: align physics content with Hunan qualifying scope"
 - Modify by sync: `index.html`
 - Create: `tests/hunan-challenge.test.mjs`
 
-- [ ] **Step 1: Add failing challenge-structure tests**
+- [x] **Step 1: Add failing challenge-structure tests**
 
 ```js
 // tests/hunan-challenge.test.mjs
@@ -421,13 +421,13 @@ test('labels the mode as a non-complete Hunan qualifying drill', () => {
 });
 ```
 
-- [ ] **Step 2: Run the challenge test and verify failure**
+- [x] **Step 2: Run the challenge test and verify failure**（接管时 Claude 的主源预写实现已存在，首次运行直接通过，未回滚制造假红灯）
 
 Run: `node --test tests/hunan-challenge.test.mjs`
 
 Expected: FAIL because `XK_Q`, `bookOf`, `buildXKRound`, and `trainingLevel` do not exist.
 
-- [ ] **Step 3: Add the authored bank**
+- [x] **Step 3: Add the authored bank**
 
 Insert after `TF`. Use zero-based `a` indexes and these reviewed questions:
 
@@ -464,7 +464,7 @@ const XK_Q = [
 ];
 ```
 
-- [ ] **Step 4: Add pure grouping and feedback functions**
+- [x] **Step 4: Add pure grouping and feedback functions**
 
 ```js
 function bookOf(chapter){return chapter<=4?1:chapter<=8?2:3}
@@ -488,13 +488,13 @@ function trainingLevel(right,total=18){
 }
 ```
 
-- [ ] **Step 5: Replace `startXK` with the balanced builder**
+- [x] **Step 5: Replace `startXK` with the balanced builder**
 
 ```js
 function startXK(){newRound(buildXKRound(),"xk");renderQA()}
 ```
 
-- [ ] **Step 6: Sync and run the challenge test**
+- [x] **Step 6: Sync and run the challenge test**
 
 ```bash
 cp /Users/mac/test/physics-formula-game.html /Users/mac/test/physics-game-deploy/index.html
@@ -503,7 +503,7 @@ node --test tests/hunan-challenge.test.mjs
 
 Expected: all challenge-structure tests PASS.
 
-- [ ] **Step 7: Commit the bank and builder**
+- [x] **Step 7: Commit the bank and builder**
 
 ```bash
 git add index.html tests/hunan-challenge.test.mjs
