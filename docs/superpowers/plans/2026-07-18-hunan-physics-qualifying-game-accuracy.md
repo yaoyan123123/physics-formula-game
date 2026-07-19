@@ -673,13 +673,13 @@ test('shows the official Hunan paper structure without claiming full simulation'
 });
 ```
 
-- [ ] **Step 2: Run the test and verify failure**
+- [x] **Step 2: Run the test and verify failure**（接管时 Claude 的主源预写实现已存在，新增文案测试首次运行直接通过）
 
 Run: `node --test tests/hunan-challenge.test.mjs`
 
 Expected: FAIL because the exam note is absent.
 
-- [ ] **Step 3: Replace the home copy**
+- [x] **Step 3: Replace the home copy**
 
 Use:
 
@@ -704,7 +704,7 @@ Use:
 
 Change the old “学考大考” boss label to “湖南学考”，and change the mode-card description from “42 条学考高频” to “42 条必修概念与物理学史”，because the true/false activity is not the official question format.
 
-- [ ] **Step 4: Sync and run content/challenge tests**
+- [x] **Step 4: Sync and run content/challenge tests**
 
 ```bash
 cp /Users/mac/test/physics-formula-game.html /Users/mac/test/physics-game-deploy/index.html
@@ -713,7 +713,7 @@ node --test tests/physics-content.test.mjs tests/hunan-challenge.test.mjs
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit the UI boundary copy**
+- [x] **Step 5: Commit the UI boundary copy**
 
 ```bash
 git add index.html tests/hunan-challenge.test.mjs

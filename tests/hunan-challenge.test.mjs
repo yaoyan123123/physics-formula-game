@@ -56,3 +56,9 @@ test('uses accuracy-based training results and leaderboard copy', () => {
     assert.doesNotMatch(html, new RegExp(banned));
   }
 });
+
+test('shows the official Hunan paper structure without claiming full simulation', () => {
+  assert.match(html, /物理考试 60 分钟，满分 100 分/);
+  assert.match(html, /18 道单项选择题.*3 道实验题.*3 道计算题/s);
+  assert.match(html, /训练只对应单选题基础部分/);
+});
