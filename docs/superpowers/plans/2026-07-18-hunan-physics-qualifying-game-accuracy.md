@@ -727,7 +727,7 @@ git commit -m "feat: explain Hunan qualifying exam boundaries in game"
 - Modify by sync: `index.html`
 - Create: `tests/local-study-date.test.mjs`
 
-- [ ] **Step 1: Add failing local-date tests**
+- [x] **Step 1: Add failing local-date tests**
 
 ```js
 // tests/local-study-date.test.mjs
@@ -756,13 +756,13 @@ test('removes UTC ISO slicing from streak logic', () => {
 });
 ```
 
-- [ ] **Step 2: Run the date test and verify failure**
+- [x] **Step 2: Run the date test and verify failure**（接管时 Claude 的主源预写实现已存在，日期测试首次运行直接通过）
 
 Run: `node --test tests/local-study-date.test.mjs`
 
 Expected: FAIL because the two pure helpers do not exist.
 
-- [ ] **Step 3: Implement explicit `Asia/Shanghai` date keys**
+- [x] **Step 3: Implement explicit `Asia/Shanghai` date keys**
 
 ```js
 function localDateKey(input=new Date()){
@@ -785,7 +785,7 @@ function touchStreak(now=new Date()){
 }
 ```
 
-- [ ] **Step 4: Sync and run the date test**
+- [x] **Step 4: Sync and run the date test**
 
 ```bash
 cp /Users/mac/test/physics-formula-game.html /Users/mac/test/physics-game-deploy/index.html
@@ -794,7 +794,7 @@ node --test tests/local-study-date.test.mjs
 
 Expected: 3 tests PASS.
 
-- [ ] **Step 5: Commit the date fix**
+- [x] **Step 5: Commit the date fix**
 
 ```bash
 git add index.html tests/local-study-date.test.mjs
@@ -808,13 +808,13 @@ git commit -m "fix: count study streaks by China local date"
 - Verify: `/Users/mac/test/physics-game-deploy/index.html`
 - Verify: `tests/*.test.mjs`
 
-- [ ] **Step 1: Run all Node tests**
+- [x] **Step 1: Run all Node tests**
 
 Run: `node --test tests/*.test.mjs`
 
 Expected: all tests PASS, including the four pre-existing `daan-preview` tests.
 
-- [ ] **Step 2: Verify exact source/deploy parity and clean whitespace**
+- [x] **Step 2: Verify exact source/deploy parity and clean whitespace**
 
 ```bash
 cmp -s /Users/mac/test/physics-formula-game.html /Users/mac/test/physics-game-deploy/index.html
@@ -823,7 +823,7 @@ git diff --check
 
 Expected: both commands exit 0.
 
-- [ ] **Step 3: Search for stale claims and malformed content**
+- [x] **Step 3: Search for stale claims and malformed content**
 
 ```bash
 rg -n "67条|67 条|学考冲刺模拟卷|60分合格|60 分合格|合格线 60|等级 [A-E]|A ~ E|能源与可持续发展.*第13|适用于金属导体和电解液|标量，恒为正|η 永远小于|有摩擦力做功就不守恒|toISOString" /Users/mac/test/physics-formula-game.html index.html
@@ -831,13 +831,13 @@ rg -n "67条|67 条|学考冲刺模拟卷|60分合格|60 分合格|合格线 60|
 
 Expected: no matches.
 
-- [ ] **Step 4: Serve the static site locally**
+- [x] **Step 4: Serve the static site locally**
 
 Run: `python3 -m http.server 4173`
 
 Expected: server listens on `http://127.0.0.1:4173/` and remains running for the next step.
 
-- [ ] **Step 5: Perform desktop and mobile smoke checks**
+- [x] **Step 5: Perform desktop and mobile smoke checks**
 
 Using browser automation or the persistent interactive browser, verify:
 
@@ -851,13 +851,13 @@ Using browser automation or the persistent interactive browser, verify:
 8. At a 390 px viewport, exam information, cards, buttons, and result copy do not overflow horizontally.
 9. Existing `/daan`, `/scene/`, and `/park/` links still open their local routes.
 
-- [ ] **Step 6: Stop the local server and inspect the final diff**
+- [x] **Step 6: Stop the local server and inspect the final diff**
 
 Run: `git diff --stat && git status --short`
 
 Expected: only intended source-controlled files are modified/untracked; no temporary browser artifacts are present.
 
-- [ ] **Step 7: Commit final verification-only adjustments if any**
+- [x] **Step 7: Commit final verification-only adjustments if any**（无需代码调整，不创建空提交）
 
 If smoke testing required a scoped layout or wording adjustment, rerun Steps 1–3 and commit only those changes:
 
