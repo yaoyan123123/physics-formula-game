@@ -6,7 +6,7 @@
 //       match 连连看(秒,低优) / stars 关卡星数(星,高优)
 
 const CFG = {
-  xk:    { min: 0, max: 100,  step: 5 },
+  xk:    { min: 0, max: 100 },   // 湖南版=18题正确率%(任意整数0-100)，不再限5倍数
   quiz:  { min: 0, max: 1900 },
   tf:    { min: 0, max: 3600 },
   match: { min: 5, max: 3600, asc: true },   // 用时越短越好
