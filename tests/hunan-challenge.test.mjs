@@ -48,3 +48,11 @@ test('labels the mode as a non-complete Hunan qualifying drill', () => {
   assert.match(html, /不是完整试卷/);
   assert.doesNotMatch(html, /学考冲刺模拟卷/);
 });
+
+test('uses accuracy-based training results and leaderboard copy', () => {
+  assert.match(html, /训练正确率/);
+  assert.match(html, /big:`\$\{qRight\} \/ \$\{qList\.length\}`/);
+  for (const banned of ['合格线 60 分','未合格 · 等级','合格 ✓ · 等级','学考模拟最高分']) {
+    assert.doesNotMatch(html, new RegExp(banned));
+  }
+});

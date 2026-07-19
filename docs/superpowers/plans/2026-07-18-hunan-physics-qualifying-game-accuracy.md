@@ -517,7 +517,7 @@ git commit -m "feat: add balanced Hunan qualifying formula challenge"
 - Modify by sync: `index.html`
 - Test: `tests/hunan-challenge.test.mjs`
 
-- [ ] **Step 1: Add a static regression test for result and leaderboard wording**
+- [x] **Step 1: Add a static regression test for result and leaderboard wording**
 
 Append to `tests/hunan-challenge.test.mjs`:
 
@@ -531,13 +531,13 @@ test('uses accuracy-based training results and leaderboard copy', () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify failure**
+- [x] **Step 2: Run the test to verify failure**（接管时 Claude 的主源预写实现已存在，新增回归测试首次运行直接通过）
 
 Run: `node --test tests/hunan-challenge.test.mjs`
 
 Expected: FAIL on old result and leaderboard wording.
 
-- [ ] **Step 3: Support authored MCQs in `renderQA`**
+- [x] **Step 3: Support authored MCQs in `renderQA`**
 
 Add this first branch before the existing `tf` branch:
 
@@ -572,7 +572,7 @@ function startQTimer(onTimeout,duration=15000){
 }
 ```
 
-- [ ] **Step 4: Link authored questions to formula mastery and feedback**
+- [x] **Step 4: Link authored questions to formula mastery and feedback**
 
 Add:
 
@@ -603,7 +603,7 @@ if(ok){
 }
 ```
 
-- [ ] **Step 5: Replace score and result semantics**
+- [x] **Step 5: Replace score and result semantics**
 
 Remove `xkGrade`. In `statHtml`, use:
 
@@ -638,7 +638,7 @@ S.best.xk!=null?`最佳 ${S.best.xk}%`:"BOSS"
 xk:{label:"🎓 湖南学考训练榜",hint:"18题公式冲刺最高正确率",fmt:s=>`${s}% 正确率`}
 ```
 
-- [ ] **Step 6: Sync and run challenge tests**
+- [x] **Step 6: Sync and run challenge tests**
 
 ```bash
 cp /Users/mac/test/physics-formula-game.html /Users/mac/test/physics-game-deploy/index.html
@@ -647,7 +647,7 @@ node --test tests/hunan-challenge.test.mjs
 
 Expected: PASS.
 
-- [ ] **Step 7: Commit authored rendering and results**
+- [x] **Step 7: Commit authored rendering and results**
 
 ```bash
 git add index.html tests/hunan-challenge.test.mjs
@@ -661,7 +661,7 @@ git commit -m "fix: present Hunan drill results as training feedback"
 - Modify by sync: `index.html`
 - Test: `tests/hunan-challenge.test.mjs`
 
-- [ ] **Step 1: Add failing copy assertions**
+- [x] **Step 1: Add failing copy assertions**
 
 Append:
 
